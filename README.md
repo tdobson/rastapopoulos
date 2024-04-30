@@ -1,12 +1,12 @@
-# Mantine Next.js template
+# Rastapopoulos
 
-This is a template for [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
-If you want to use pages router instead, see [next-pages-template](https://github.com/mantinedev/next-pages-template).
+This is a React front end for displaying solar PV install information.
 
-## Features
 
-This template comes with the following features:
+## Tech we're using
 
+We're using Manatine with next.js and Manatine react table 
+in addition to:
 - [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Storybook](https://storybook.js.org/)
