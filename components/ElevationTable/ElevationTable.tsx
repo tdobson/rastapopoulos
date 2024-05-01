@@ -1,13 +1,8 @@
 'use client'
 
-
-// ElevationTable.tsx
+// components/ElevationTable/ElevationTable.tsx
 import React, { useMemo, useState } from 'react';
-import {
-    MRT_EditActionButtons,
-    MantineReactTable,
-    useMantineReactTable,
-} from 'mantine-react-table';
+import { MRT_EditActionButtons, MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 import { ActionIcon, Button, Flex, Stack, Text, Title, Tooltip, Menu, Divider } from '@mantine/core';
 import { IconEdit, IconTrash, IconShare, IconUser, IconDots } from '@tabler/icons-react';
 import { Elevation } from '../../types/elevation';
@@ -34,72 +29,59 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'id',
-                header: 'ID',
+                accessorKey: 'plot_id',
+                header: 'Plot ID',
                 enableEditing: false,
                 size: 80,
             },
             {
-                accessorKey: 'plotId',
-                header: 'Plot ID',
-                mantineEditTextInputProps: {
-                    required: true,
-                    error: validationErrors?.plotId,
-                    onFocus: () =>
-                        setValidationErrors({
-                            ...validationErrors,
-                            plotId: undefined,
-                        }),
-                },
-            },
-            {
-                accessorKey: 'jobCode',
+                accessorKey: 'Job Code',
                 header: 'Job Code',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.jobCode,
+                    error: validationErrors?.['Job Code'],
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            jobCode: undefined,
+                            'Job Code': undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'plotNumber',
+                accessorKey: 'plot_number',
                 header: 'Plot Number',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.plotNumber,
+                    error: validationErrors?.plot_number,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            plotNumber: undefined,
+                            plot_number: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'houseType',
+                accessorKey: 'housetype',
                 header: 'House Type',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.houseType,
+                    error: validationErrors?.housetype,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            houseType: undefined,
+                            housetype: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'houseNo',
+                accessorKey: 'house_no',
                 header: 'House No',
                 mantineEditTextInputProps: {
-                    error: validationErrors?.houseNo,
+                    error: validationErrors?.house_no,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            houseNo: undefined,
+                            house_no: undefined,
                         }),
                 },
             },
@@ -166,29 +148,29 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 },
             },
             {
-                accessorKey: 'panelKwp',
+                accessorKey: 'panelkwp',
                 header: 'Panel KWp',
                 mantineEditTextInputProps: {
                     type: 'number',
                     required: true,
-                    error: validationErrors?.panelKwp,
+                    error: validationErrors?.panelkwp,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            panelKwp: undefined,
+                            panelkwp: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'mcsCode',
+                accessorKey: 'mcscode',
                 header: 'MCS Code',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.mcsCode,
+                    error: validationErrors?.mcscode,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            mcsCode: undefined,
+                            mcscode: undefined,
                         }),
                 },
             },
@@ -248,16 +230,16 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 },
             },
             {
-                accessorKey: 'totalStrings',
+                accessorKey: 'totalstrings',
                 header: 'Total Strings',
                 mantineEditTextInputProps: {
                     type: 'number',
                     required: true,
-                    error: validationErrors?.totalStrings,
+                    error: validationErrors?.totalstrings,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            totalStrings: undefined,
+                            totalstrings: undefined,
                         }),
                 },
             },
@@ -324,53 +306,53 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 },
             },
             {
-                accessorKey: 'trackerStringNo',
+                accessorKey: 'trackerstringno',
                 header: 'Tracker String No',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.trackerStringNo,
+                    error: validationErrors?.trackerstringno,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            trackerStringNo: undefined,
+                            trackerstringno: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'inverterHybrid',
+                accessorKey: 'inverterhybrid',
                 header: 'Inverter Hybrid',
                 mantineEditTextInputProps: {
-                    error: validationErrors?.inverterHybrid,
+                    error: validationErrors?.inverterhybrid,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            inverterHybrid: undefined,
+                            inverterhybrid: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'typeTestNo',
+                accessorKey: 'typetestno',
                 header: 'Type Test No',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.typeTestNo,
+                    error: validationErrors?.typetestno,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            typeTestNo: undefined,
+                            typetestno: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'ratedOutputPower',
+                accessorKey: 'ratedoutputpower',
                 header: 'Rated Output Power',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    error: validationErrors?.ratedOutputPower,
+                    error: validationErrors?.ratedoutputpower,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            ratedOutputPower: undefined,
+                            ratedoutputpower: undefined,
                         }),
                 },
             },
@@ -388,121 +370,121 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 },
             },
             {
-                accessorKey: 'mountingKit',
+                accessorKey: 'mountingkit',
                 header: 'Mounting Kit',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.mountingKit,
+                    error: validationErrors?.mountingkit,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            mountingKit: undefined,
+                            mountingkit: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'tileType',
+                accessorKey: 'tiletype',
                 header: 'Tile Type',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.tileType,
+                    error: validationErrors?.tiletype,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            tileType: undefined,
+                            tiletype: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'roofIncline',
+                accessorKey: 'roofincline',
                 header: 'Roof Incline',
                 mantineEditTextInputProps: {
                     type: 'number',
                     required: true,
-                    error: validationErrors?.roofIncline,
+                    error: validationErrors?.roofincline,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            roofIncline: undefined,
+                            roofincline: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'variationFromSouth',
+                accessorKey: 'variationfromsouth',
                 header: 'Variation From South',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.variationFromSouth,
+                    error: validationErrors?.variationfromsouth,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            variationFromSouth: undefined,
+                            variationfromsouth: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'kwhPerKwp',
+                accessorKey: 'kwhperkwp',
                 header: 'KWh/KWp',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    error: validationErrors?.kwhPerKwp,
+                    error: validationErrors?.kwhperkwp,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            kwhPerKwp: undefined,
+                            kwhperkwp: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'inAboveRoof',
+                accessorKey: 'inaboveroof',
                 header: 'In Above Roof',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    error: validationErrors?.inAboveRoof,
+                    error: validationErrors?.inaboveroof,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            inAboveRoof: undefined,
+                            inaboveroof: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'overshadingFactor',
+                accessorKey: 'overshadingfactor',
                 header: 'Overshadowing Factor',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    error: validationErrors?.overshadingFactor,
+                    error: validationErrors?.overshadingfactor,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            overshadingFactor: undefined,
+                            overshadingfactor: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'noPanels',
+                accessorKey: 'nopanels',
                 header: 'No. of Panels',
                 mantineEditTextInputProps: {
                     type: 'number',
                     required: true,
-                    error: validationErrors?.noPanels,
+                    error: validationErrors?.nopanels,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            noPanels: undefined,
+                            nopanels: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'arrayM2',
+                accessorKey: 'arraym2',
                 header: 'Array M2',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    error: validationErrors?.arrayM2,
+                    error: validationErrors?.arraym2,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            arrayM2: undefined,
+                            arraym2: undefined,
                         }),
                 },
             },
@@ -534,94 +516,94 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 },
             },
             {
-                accessorKey: 'co2Equivalent',
+                accessorKey: 'co2equivalent',
                 header: 'CO2 Equivalent',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    error: validationErrors?.co2Equivalent,
+                    error: validationErrors?.co2equivalent,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            co2Equivalent: undefined,
+                            co2equivalent: undefined,
                         }),
                 },
             },
             {
-
-                accessorKey: 'netKwp',
+                accessorKey: 'netkwp',
                 header: 'Net KWp',
                 mantineEditTextInputProps: {
                     type: 'number',
                     required: true,
-                    error: validationErrors?.netKwp,
+                    error: validationErrors?.netkwp,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            netKwp: undefined,
+                            netkwp: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'meterMake',
+                accessorKey: 'metermake',
                 header: 'Meter Make',
                 mantineEditTextInputProps: {
-                    error: validationErrors?.meterMake,
+                type: 'number',
+                required: true,error: validationErrors?.metermake,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            meterMake: undefined,
+                            metermake: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'meterModel',
+                accessorKey: 'metermodel',
                 header: 'Meter Model',
                 mantineEditTextInputProps: {
-                    error: validationErrors?.meterModel,
+                    error: validationErrors?.metermodel,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            meterModel: undefined,
+                            metermodel: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'totalCost',
+                accessorKey: 'totalcost',
                 header: 'Total Cost',
                 mantineEditTextInputProps: {
                     type: 'number',
                     required: true,
-                    error: validationErrors?.totalCost,
+                    error: validationErrors?.totalcost,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            totalCost: undefined,
+                            totalcost: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'totalPrice',
+                accessorKey: 'totalprice',
                 header: 'Total Price',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.totalPrice,
+                    error: validationErrors?.totalprice,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            totalPrice: undefined,
+                            totalprice: undefined,
                         }),
                 },
             },
             {
-                accessorKey: 'givenEnergy',
+                accessorKey: 'givenergy',
                 header: 'Given Energy',
                 mantineEditTextInputProps: {
                     required: true,
-                    error: validationErrors?.givenEnergy,
+                    error: validationErrors?.givenergy,
                     onFocus: () =>
                         setValidationErrors({
                             ...validationErrors,
-                            givenEnergy: undefined,
+                            givenergy: undefined,
                         }),
                 },
             },
@@ -633,52 +615,51 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
         ],
         [validationErrors]
     );
-
     const table = useMantineReactTable({
         columns,
         data: elevations,
         createDisplayMode: 'modal',
         editDisplayMode: 'modal',
         enableEditing: true,
-        getRowId: (row) => row.id,
-        onCreatingRowSave: async (_, newElevation) => {
+        getRowId: (row) => row.plot_id,
+        onCreatingRowSave: async (prevData, newElevation) => {
             await onCreateElevation(newElevation);
         },
-        onEditingRowSave: async (_, updatedElevation) => {
+        onEditingRowSave: async (prevData, updatedElevation) => {
             await onUpdateElevation(updatedElevation);
         },
-        onRowClick: (row) => {
-            setSelectedElevation(row.original);
-            onElevationSelect(row.original);
-        },
-        renderRowActions: ({ row }) => (
-            <Flex gap="md">
-                <Tooltip label="Edit">
-                    <ActionIcon onClick={() => table.setEditingRow(row)}>
-                        <IconEdit />
-                    </ActionIcon>
-                </Tooltip>
-                <Tooltip label="Delete">
-                    <ActionIcon color="red" onClick={() => onDeleteElevation(row.original.id)}>
-                        <IconTrash />
-                    </ActionIcon>
-                </Tooltip>
-            </Flex>
-        ),
-        renderTopToolbarCustomActions: ({ table }) => (
-            <Button
-                onClick={() => {
-                    table.setCreatingRow(true);
-                }}
-            >
-                Create New Elevation
-            </Button>
-        ),
-    });
 
+    onRowClick: (row) => {
+        setSelectedElevation(row.original);
+        onElevationSelect(row.original);
+    },
+        renderRowActions: ({ row }) => (
+        <Flex gap="md">
+            <Tooltip label="Edit">
+                <ActionIcon onClick={() => table.setEditingRow(row)}>
+                    <IconEdit />
+                </ActionIcon>
+            </Tooltip>
+            <Tooltip label="Delete">
+                <ActionIcon color="red" onClick={() => onDeleteElevation(row.original.plot_id)}>
+                    <IconTrash />
+                </ActionIcon>
+            </Tooltip>
+        </Flex>
+    ),
+        renderTopToolbarCustomActions: ({ table }) => (
+        <Button
+            onClick={() => {
+                table.setCreatingRow(true);
+            }}
+        >
+            Create New Elevation
+        </Button>
+    ),
+});
     return (
         <div>
-               <MantineReactTable table={table} />
+            <MantineReactTable table={table} />
             {selectedElevation && (
                 <ElevationDetails
                     elevation={selectedElevation}
@@ -689,5 +670,4 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
         </div>
     );
 };
-
-    export { ElevationTable };
+export { ElevationTable };

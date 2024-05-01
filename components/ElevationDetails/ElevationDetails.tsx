@@ -1,4 +1,4 @@
-// ElevationDetails.tsx
+// components/ElevationDetails/ElevationDetails.tsx
 import React, { useState } from 'react';
 import { ActionIcon, Box, Divider, Flex, Text, Title, Tooltip, Modal, Stack, TextInput, Button } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
@@ -28,7 +28,7 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
     };
 
     const handleDeleteElevation = async () => {
-        await onDeleteElevation(elevation.id);
+        await onDeleteElevation(elevation.plot_id);
     };
 
     const handleInputChange = (field: keyof Elevation, value: string | number) => {
@@ -58,19 +58,19 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
             <Divider my="sm" />
             <Box>
                 <Text>
-                    <strong>Plot ID:</strong> {elevation.plotId}
+                    <strong>Plot ID:</strong> {elevation.plot_id}
                 </Text>
                 <Text>
-                    <strong>Job Code:</strong> {elevation.jobCode}
+                    <strong>Job Code:</strong> {elevation['Job Code']}
                 </Text>
                 <Text>
-                    <strong>Plot Number:</strong> {elevation.plotNumber}
+                    <strong>Plot Number:</strong> {elevation.plot_number}
                 </Text>
                 <Text>
-                    <strong>House Type:</strong> {elevation.houseType}
+                    <strong>House Type:</strong> {elevation.housetype || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>House No:</strong> {elevation.houseNo || 'N/A'}
+                    <strong>House No:</strong> {elevation.house_no || 'N/A'}
                 </Text>
                 <Text>
                     <strong>Street:</strong> {elevation.street || 'N/A'}
@@ -88,10 +88,10 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <strong>Panel:</strong> {elevation.panel}
                 </Text>
                 <Text>
-                    <strong>Panel KWp:</strong> {elevation.panelKwp}
+                    <strong>Panel KWp:</strong> {elevation.panelkwp}
                 </Text>
                 <Text>
-                    <strong>MCS Code:</strong> {elevation.mcsCode}
+                    <strong>MCS Code:</strong> {elevation.mcscode}
                 </Text>
                 <Text>
                     <strong>Orientation:</strong> {elevation.orientation}
@@ -106,7 +106,7 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <strong>Phase:</strong> {elevation.phase}
                 </Text>
                 <Text>
-                    <strong>Total Strings:</strong> {elevation.totalStrings}
+                    <strong>Total Strings:</strong> {elevation.totalstrings}
                 </Text>
                 <Text>
                     <strong>String 1:</strong> {elevation.string1}
@@ -124,46 +124,46 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <strong>Inverter:</strong> {elevation.inverter}
                 </Text>
                 <Text>
-                    <strong>Tracker String No:</strong> {elevation.trackerStringNo}
+                    <strong>Tracker String No:</strong> {elevation.trackerstringno}
                 </Text>
                 <Text>
-                    <strong>Inverter Hybrid:</strong> {elevation.inverterHybrid || 'N/A'}
+                    <strong>Inverter Hybrid:</strong> {elevation.inverterhybrid || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>Type Test No:</strong> {elevation.typeTestNo}
+                    <strong>Type Test No:</strong> {elevation.typetestno}
                 </Text>
                 <Text>
-                    <strong>Rated Output Power:</strong> {elevation.ratedOutputPower || 'N/A'}
+                    <strong>Rated Output Power:</strong> {elevation.ratedoutputpower || 'N/A'}
                 </Text>
                 <Text>
                     <strong>Battery:</strong> {elevation.battery}
                 </Text>
                 <Text>
-                    <strong>Mounting Kit:</strong> {elevation.mountingKit}
+                    <strong>Mounting Kit:</strong> {elevation.mountingkit}
                 </Text>
                 <Text>
-                    <strong>Tile Type:</strong> {elevation.tileType}
+                    <strong>Tile Type:</strong> {elevation.tiletype}
                 </Text>
                 <Text>
-                    <strong>Roof Incline:</strong> {elevation.roofIncline}
+                    <strong>Roof Incline:</strong> {elevation.roofincline}
                 </Text>
                 <Text>
-                    <strong>Variation From South:</strong> {elevation.variationFromSouth}
+                    <strong>Variation From South:</strong> {elevation.variationfromsouth}
                 </Text>
                 <Text>
-                    <strong>KWh/KWp:</strong> {elevation.kwhPerKwp || 'N/A'}
+                    <strong>KWh/KWp:</strong> {elevation.kwhperkwp || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>In Above Roof:</strong> {elevation.inAboveRoof || 'N/A'}
+                    <strong>In Above Roof:</strong> {elevation.inaboveroof || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>Overshadowing Factor:</strong> {elevation.overshadingFactor || 'N/A'}
+                    <strong>Overshadowing Factor:</strong> {elevation.overshadingfactor || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>No. of Panels:</strong> {elevation.noPanels}
+                    <strong>No. of Panels:</strong> {elevation.nopanels}
                 </Text>
                 <Text>
-                    <strong>Array M2:</strong> {elevation.arrayM2 || 'N/A'}
+                    <strong>Array M2:</strong> {elevation.arraym2 || 'N/A'}
                 </Text>
                 <Text>
                     <strong>KWp:</strong> {elevation.kwp}
@@ -172,25 +172,25 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <strong>KWh:</strong> {elevation.kwh || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>CO2 Equivalent:</strong> {elevation.co2Equivalent || 'N/A'}
+                    <strong>CO2 Equivalent:</strong> {elevation.co2equivalent || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>Net KWp:</strong> {elevation.netKwp}
+                    <strong>Net KWp:</strong> {elevation.netkwp}
                 </Text>
                 <Text>
-                    <strong>Meter Make:</strong> {elevation.meterMake || 'N/A'}
+                    <strong>Meter Make:</strong> {elevation.metermake || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>Meter Model:</strong> {elevation.meterModel || 'N/A'}
+                    <strong>Meter Model:</strong> {elevation.metermodel || 'N/A'}
                 </Text>
                 <Text>
-                    <strong>Total Cost:</strong> {elevation.totalCost}
+                    <strong>Total Cost:</strong> {elevation.totalcost}
                 </Text>
                 <Text>
-                    <strong>Total Price:</strong> {elevation.totalPrice}
+                    <strong>Total Price:</strong> {elevation.totalprice}
                 </Text>
                 <Text>
-                    <strong>Given Energy:</strong> {elevation.givenEnergy}
+                    <strong>Given Energy:</strong> {elevation.givenergy}
                 </Text>
                 <Text>
                     <strong>Instance ID:</strong> {elevation.instanceId}
@@ -205,28 +205,28 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                 <Stack>
                     <TextInput
                         label="Plot ID"
-                        value={updatedElevation.plotId}
-                        onChange={(e) => handleInputChange('plotId', e.target.value)}
+                        value={updatedElevation.plot_id}
+                        onChange={(e) => handleInputChange('plot_id', e.target.value)}
                     />
                     <TextInput
                         label="Job Code"
-                        value={updatedElevation.jobCode}
-                        onChange={(e) => handleInputChange('jobCode', e.target.value)}
+                        value={updatedElevation['Job Code']}
+                        onChange={(e) => handleInputChange('Job Code', e.target.value)}
                     />
                     <TextInput
                         label="Plot Number"
-                        value={updatedElevation.plotNumber}
-                        onChange={(e) => handleInputChange('plotNumber', e.target.value)}
+                        value={updatedElevation.plot_number}
+                        onChange={(e) => handleInputChange('plot_number', e.target.value)}
                     />
                     <TextInput
                         label="House Type"
-                        value={updatedElevation.houseType}
-                        onChange={(e) => handleInputChange('houseType', e.target.value)}
+                        value={updatedElevation.housetype || ''}
+                        onChange={(e) => handleInputChange('housetype', e.target.value)}
                     />
                     <TextInput
                         label="House No."
-                        value={updatedElevation.houseNo || ''}
-                        onChange={(e) => handleInputChange('houseNo', e.target.value)}
+                        value={updatedElevation.house_no || ''}
+                        onChange={(e) => handleInputChange('house_no', e.target.value)}
                     />
                     <TextInput
                         label="Street"
@@ -256,13 +256,13 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <TextInput
                         label="Panel KWp"
                         type="number"
-                        value={updatedElevation.panelKwp}
-                        onChange={(e) => handleInputChange('panelKwp', parseFloat(e.target.value))}
+                        value={updatedElevation.panelkwp}
+                        onChange={(e) => handleInputChange('panelkwp', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="MCS Code"
-                        value={updatedElevation.mcsCode}
-                        onChange={(e) => handleInputChange('mcsCode', e.target.value)}
+                        value={updatedElevation.mcscode}
+                        onChange={(e) => handleInputChange('mcscode', e.target.value)}
                     />
                     <TextInput
                         label="Orientation"
@@ -290,8 +290,8 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <TextInput
                         label="Total Strings"
                         type="number"
-                        value={updatedElevation.totalStrings}
-                        onChange={(e) => handleInputChange('totalStrings', parseInt(e.target.value))}
+                        value={updatedElevation.totalstrings}
+                        onChange={(e) => handleInputChange('totalstrings', parseInt(e.target.value))}
                     />
                     <TextInput
                         label="String 1"
@@ -320,24 +320,24 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     />
                     <TextInput
                         label="Tracker String No."
-                        value={updatedElevation.trackerStringNo}
-                        onChange={(e) => handleInputChange('trackerStringNo', e.target.value)}
+                        value={updatedElevation.trackerstringno}
+                        onChange={(e) => handleInputChange('trackerstringno', e.target.value)}
                     />
                     <TextInput
                         label="Inverter Hybrid"
-                        value={updatedElevation.inverterHybrid || ''}
-                        onChange={(e) => handleInputChange('inverterHybrid', e.target.value)}
+                        value={updatedElevation.inverterhybrid || ''}
+                        onChange={(e) => handleInputChange('inverterhybrid', e.target.value)}
                     />
                     <TextInput
                         label="Type Test No."
-                        value={updatedElevation.typeTestNo}
-                        onChange={(e) => handleInputChange('typeTestNo', e.target.value)}
+                        value={updatedElevation.typetestno}
+                        onChange={(e) => handleInputChange('typetestno', e.target.value)}
                     />
                     <TextInput
                         label="Rated Output Power"
                         type="number"
-                        value={updatedElevation.ratedOutputPower || ''}
-                        onChange={(e) => handleInputChange('ratedOutputPower', parseFloat(e.target.value))}
+                        value={updatedElevation.ratedoutputpower || ''}
+                        onChange={(e) => handleInputChange('ratedoutputpower', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="Battery"
@@ -346,54 +346,54 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     />
                     <TextInput
                         label="Mounting Kit"
-                        value={updatedElevation.mountingKit}
-                        onChange={(e) => handleInputChange('mountingKit', e.target.value)}
+                        value={updatedElevation.mountingkit}
+                        onChange={(e) => handleInputChange('mountingkit', e.target.value)}
                     />
                     <TextInput
                         label="Tile Type"
-                        value={updatedElevation.tileType}
-                        onChange={(e) => handleInputChange('tileType', e.target.value)}
+                        value={updatedElevation.tiletype}
+                        onChange={(e) => handleInputChange('tiletype', e.target.value)}
                     />
                     <TextInput
                         label="Roof Incline"
                         type="number"
-                        value={updatedElevation.roofIncline}
-                        onChange={(e) => handleInputChange('roofIncline', parseFloat(e.target.value))}
+                        value={updatedElevation.roofincline}
+                        onChange={(e) => handleInputChange('roofincline', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="Variation From South"
-                        value={updatedElevation.variationFromSouth}
-                        onChange={(e) => handleInputChange('variationFromSouth', e.target.value)}
+                        value={updatedElevation.variationfromsouth}
+                        onChange={(e) => handleInputChange('variationfromsouth', e.target.value)}
                     />
                     <TextInput
                         label="KWh/KWp"
                         type="number"
-                        value={updatedElevation.kwhPerKwp || ''}
-                        onChange={(e) => handleInputChange('kwhPerKwp', parseFloat(e.target.value))}
+                        value={updatedElevation.kwhperkwp || ''}
+                        onChange={(e) => handleInputChange('kwhperkwp', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="In Above Roof"
                         type="number"
-                        value={updatedElevation.inAboveRoof || ''}
-                        onChange={(e) => handleInputChange('inAboveRoof', parseFloat(e.target.value))}
+                        value={updatedElevation.inaboveroof || ''}
+                        onChange={(e) => handleInputChange('inaboveroof', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="Overshadowing Factor"
                         type="number"
-                        value={updatedElevation.overshadingFactor || ''}
-                        onChange={(e) => handleInputChange('overshadingFactor', parseFloat(e.target.value))}
+                        value={updatedElevation.overshadingfactor || ''}
+                        onChange={(e) => handleInputChange('overshadingfactor', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="No. of Panels"
                         type="number"
-                        value={updatedElevation.noPanels}
-                        onChange={(e) => handleInputChange('noPanels', parseInt(e.target.value))}
+                        value={updatedElevation.nopanels}
+                        onChange={(e) => handleInputChange('nopanels', parseInt(e.target.value))}
                     />
                     <TextInput
                         label="Array M2"
                         type="number"
-                        value={updatedElevation.arrayM2 || ''}
-                        onChange={(e) => handleInputChange('arrayM2', parseFloat(e.target.value))}
+                        value={updatedElevation.arraym2 || ''}
+                        onChange={(e) => handleInputChange('arraym2', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="KWp"
@@ -410,40 +410,40 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
                     <TextInput
                         label="CO2 Equivalent"
                         type="number"
-                        value={updatedElevation.co2Equivalent || ''}
-                        onChange={(e) => handleInputChange('co2Equivalent', parseFloat(e.target.value))}
+                        value={updatedElevation.co2equivalent || ''}
+                        onChange={(e) => handleInputChange('co2equivalent', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="Net KWp"
                         type="number"
-                        value={updatedElevation.netKwp}
-                        onChange={(e) => handleInputChange('netKwp', parseFloat(e.target.value))}
+                        value={updatedElevation.netkwp}
+                        onChange={(e) => handleInputChange('netkwp', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="Meter Make"
-                        value={updatedElevation.meterMake || ''}
-                        onChange={(e) => handleInputChange('meterMake', e.target.value)}
+                        value={updatedElevation.metermake || ''}
+                        onChange={(e) => handleInputChange('metermake', e.target.value)}
                     />
                     <TextInput
                         label="Meter Model"
-                        value={updatedElevation.meterModel || ''}
-                        onChange={(e) => handleInputChange('meterModel', e.target.value)}
+                        value={updatedElevation.metermodel || ''}
+                        onChange={(e) => handleInputChange('metermodel', e.target.value)}
                     />
                     <TextInput
                         label="Total Cost"
                         type="number"
-                        value={updatedElevation.totalCost}
-                        onChange={(e) => handleInputChange('totalCost', parseFloat(e.target.value))}
+                        value={updatedElevation.totalcost}
+                        onChange={(e) => handleInputChange('totalcost', parseFloat(e.target.value))}
                     />
                     <TextInput
                         label="Total Price"
-                        value={updatedElevation.totalPrice}
-                        onChange={(e) => handleInputChange('totalPrice', e.target.value)}
+                        value={updatedElevation.totalprice}
+                        onChange={(e) => handleInputChange('totalprice', e.target.value)}
                     />
                     <TextInput
                         label="Given Energy"
-                        value={updatedElevation.givenEnergy}
-                        onChange={(e) => handleInputChange('givenEnergy', e.target.value)}
+                        value={updatedElevation.givenergy}
+                        onChange={(e) => handleInputChange('givenergy', e.target.value)}
                     />
                     <Flex justify="end" gap="md">
                         <Button variant="outline" onClick={() => setIsEditModalOpen(false)}>
@@ -456,5 +456,4 @@ const ElevationDetails: React.FC<ElevationDetailsProps> = ({
         </Box>
     );
 };
-
 export { ElevationDetails };

@@ -6,8 +6,8 @@ import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
 
 export const metadata = {
-    title: 'Mantine Next.js template',
-    description: 'I am using Mantine with Next.js!',
+    title: 'Rastapopoulos Alpha',
+    description: 'I am an app for managing PV Install Data!',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
