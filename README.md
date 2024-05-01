@@ -1,102 +1,78 @@
-# Rastapopoulos
+Rastapopoulos
+=============
 
-This is a React front end for displaying solar PV install information.
+Rastapopoulos is a React-based CRUD (Create, Read, Update, Delete) application for managing solar PV install information. It provides a dynamic table interface using Mantine React Table and integrates with the Snowy API for data management.
 
-## Project Overview
+Project Overview
+----------------
 
-Rastapopoulos is a React-based CRUD (Create, Read, Update, Delete) application, showcasing a dynamic table interface using Mantine React Table. It integrates various libraries for UI components, state management, and testing.
+Rastapopoulos showcases a modular and scalable structure, utilizing various libraries for UI components, state management, and testing. The application allows users to view, create, update, and delete solar PV install information through an intuitive table interface.
 
-## Key Dependencies
+Key Dependencies
+----------------
 
-- **React**: A JavaScript library for building user interfaces.
-- **Mantine**: A suite of React components and hooks.
-- **Mantine React Table** - Table components.
-- **React Query**: Manages and synchronizes asynchronous data in React applications.
-- **Testing Library**: Provides simple and complete testing utilities for React components.
+-   **React**: A JavaScript library for building user interfaces.
+-   **Next.js**: A React framework for server-rendered applications.
+-   **Mantine**: A suite of React components and hooks for building user interfaces.
+-   **Mantine React Table**: A powerful and customizable table component for React.
+-   **React Query**: A library for managing and synchronizing server state in React applications.
+-   **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+-   **Jest** and **Testing Library**: Tools for writing and running tests for React components.
 
-## Project Structure
+Project Structure
+-----------------
 
-The project follows a modular and scalable structure, with the following main directories:
-components/: This folder contains all the reusable UI components for your application, organized by feature or functionality.
-Here's a breakdown of the folders and files:
+The project follows a modular and scalable structure, with the following main directories and files:
 
-- **`components/`**: This folder contains all the reusable UI components for your application, organized by feature or functionality.
-    - **`ElevationTable/`**: This directory contains the Elevation Table component and its related files (styles, tests, etc.).
-    - **`ProjectDetails/`**: This directory contains the Project Details component and its related files.
-    - **`shared/`**: This directory contains shared UI components, such as a generic Button or Modal component.
-- **`hooks/`**: This folder contains custom React hooks, such as `useElevations` and `useProjectDetails`, which handle data fetching and other logic.
-- **`pages/`**: This folder contains the main pages of your application, such as the Elevations page and the Projects page.
-- **`services/`**: This folder contains the API service functions for fetching data from the backend, such as `elevationsService` and `projectsService`.
-- **`types/`**: This folder contains TypeScript type definitions for your application's data models, such as `Elevation` and `Project`.
-- **`utils/`**: This folder contains utility functions, such as the `api` module for making API requests and the `validations` module for input validation.
-- **`App.tsx`**: The main React component that renders the application.
-- **`index.tsx`**: The entry point of the application.
-- **`theme.ts`**: The Mantine theme configuration for your application.
+-   **`app/`**: Contains the Next.js app structure.
+  -   **`elevations/`**: Contains the Elevations page and related components.
+    -   **`ElevationTableWrapper.tsx`**: A client component that wraps the ElevationTable and handles data fetching and mutations.
+    -   **`page.tsx`**: The server component that renders the Elevations page.
+  -   **`layout.tsx`**: Defines the root layout for the application.
+  -   **`page.tsx`**: The main page of the application.
+  -   **`QueryProvider.tsx`**: Provides the React Query client to the application.
+-   **`components/`**: Contains reusable UI components for the application.
+  -   **`ColorSchemeToggle/`**: Allows toggling between light and dark color schemes.
+  -   **`ElevationDetails/`**: Displays detailed information about a selected elevation.
+  -   **`ElevationTable/`**: Renders the table for managing elevations.
+  -   **`Welcome/`**: Displays a welcome message on the main page.
+-   **`hooks/`**: Contains custom React hooks.
+  -   **`useElevations.ts`**: A custom hook for managing elevations data using React Query.
+-   **`services/`**: Contains API service functions for interacting with the Snowy API.
+  -   **`elevationsService.ts`**: Provides functions for fetching, creating, updating, and deleting elevations.
+-   **`types/`**: Contains TypeScript type definitions for the application's data models.
+  -   **`elevation.ts`**: Defines the Elevation interface.
+-   **`utils/`**: Contains utility functions and modules.
+  -   **`api.ts`**: Defines the API request function and API service functions for interacting with the Snowy API.
+-   **`theme.ts`**: Defines the Mantine theme configuration for the application.
+-   **`next.config.mjs`**: Configuration file for Next.js.
+-   **`postcss.config.cjs`**: Configuration file for PostCSS.
+-   **`tsconfig.json`**: TypeScript configuration file.
+-   **`jest.config.cjs`** and **`jest.setup.cjs`**: Configuration files for Jest testing framework.
 
-This structure separates concerns, improves code organization, and follows common best practices for React projects. It includes folders for components, hooks, pages, services, types, and utilities, making it easier to navigate and maintain the codebase as the project grows.
+Application Flow
+----------------
 
-## Application Architecture
+1.  The user navigates to the Elevations page (`app/elevations/page.tsx`).
+2.  The `ElevationTableWrapper` component (`app/elevations/ElevationTableWrapper.tsx`) fetches the elevations data from the Snowy API using the `useQuery` hook from React Query.
+3.  The `ElevationTable` component (`components/ElevationTable/ElevationTable.tsx`) renders the table with the fetched elevations data.
+4.  The user can perform CRUD operations on the elevations:
+  -   Create: The user can click the "Create New Elevation" button to open a modal and fill in the details for a new elevation. The `createMutation` from `ElevationTableWrapper` sends a POST request to the Snowy API to create the new elevation.
+  -   Read: The user can view the elevations in the table and click on a row to see more details in the `ElevationDetails` component (`components/ElevationDetails/ElevationDetails.tsx`).
+  -   Update: The user can click the edit icon on a row to open a modal and update the elevation details. The `updateMutation` from `ElevationTableWrapper` sends a PUT request to the Snowy API to update the elevation.
+  -   Delete: The user can click the delete icon on a row to delete an elevation. The `deleteMutation` from `ElevationTableWrapper` sends a DELETE request to the Snowy API to delete the elevation.
+5.  The `useElevations` hook (`hooks/useElevations.ts`) provides the necessary data fetching and mutation functions for managing elevations data using React Query.
+6.  The `elevationsService` (`services/elevationsService.ts`) acts as an intermediary between the application and the Snowy API, providing functions for fetching, creating, updating, and deleting elevations.
+7.  The `api` utility module (`utils/api.ts`) handles the API requests and error handling, making use of the Mantine notifications system to display error messages.
 
-- **React Components**: The UI is built using functional React components.
-- **State Management**: Uses React Query for managing server state and React's useState for local state.
-- **Styling**: Mantine and custom CSS are used for styling components.
-- **Data Fetching**: React Query's hooks (`useQuery`, `useMutation`) handle data fetching, updating, and caching.
+Running the Project
+-------------------
 
-## Coding Style
+1.  Install dependencies: `npm install`
+2.  Start the development server: `npm run dev`
+3.  Open the application in your browser at `http://localhost:3000`
 
-- **Functional Components**: Utilizes React functional components with hooks.
-- **Async/Await**: Asynchronous JavaScript operations are handled using async/await syntax.
-- **Modularization**: Code is organized into small, reusable components and utility functions.
+Testing
+-------
 
-## Current TODO List
-
-- [ ] Implement error handling for API requests.
-- [ ] Add more unit tests for components and utility functions.
-- [ ] Optimize performance for large datasets.
-- [ ] Enhance mobile responsiveness of the table interface.
-- [ ] Integrate a backend API for real data management.
-
-## Running the Project
-
-1. Install dependencies: `npm install`
-2. Start the development server: `npm start`
-3. Run tests: `npm test`
-4. Build for production: `npm run build`
-
-### Build and dev scripts
-
-- `dev` – start dev server
-- `build` – bundle application for production
-- `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
-
-## Contributing
-
-Contributions are welcome. Please fork the repository, make your changes, and submit a pull request.
-
-## Tech we're using
-
-We're using Manatine with next.js and Manatine react table 
-in addition to:
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Jest](https://jestjs.io/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
-
-## npm scripts
-
-
-### Testing scripts
-
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `jest` – runs jest tests
-- `jest:watch` – starts jest watch
-- `test` – runs `jest`, `prettier:check`, `lint` and `typecheck` scripts
-
-### Other scripts
-
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+The project includes a testing setup using Jest and Testing Library. To run the tests, use the following command:
