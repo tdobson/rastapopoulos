@@ -4,11 +4,7 @@ import React from 'react';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
-
-export const metadata = {
-    title: 'Rastapopoulos Alpha',
-    description: 'I am an app for managing PV Install Data!',
-};
+import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -23,7 +19,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </head>
         <body>
         <QueryProvider>
-            <MantineProvider theme={theme}>{children}</MantineProvider>
+            <MantineProvider theme={theme}>
+                <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', height: '100vh' }}>
+                    <NavbarSimpleColored />
+                    <div style={{ overflowY: 'auto' }}>
+                        {children}
+                    </div>
+                </div>
+            </MantineProvider>
         </QueryProvider>
         </body>
         </html>
