@@ -35,7 +35,7 @@ export const useElevations = () => {
     }
 
     // CREATE Elevation
-    const { mutateAsync: createElevation, isLoading: isCreatingElevation } = useMutation({
+    const { mutateAsync: createElevation, isPending: isCreatingElevation } = useMutation({
         mutationFn: (newElevation: Partial<Elevation>) => elevationsApi.createElevation(newElevation),
         onSuccess: (newElevation) => {
             queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) => [...old, newElevation]);
@@ -49,8 +49,8 @@ export const useElevations = () => {
         },
     });
 
-// UPDATE Elevation
-    const { mutateAsync: updateElevation, isLoading: isUpdatingElevation } = useMutation({
+    // UPDATE Elevation
+    const { mutateAsync: updateElevation, isPending: isUpdatingElevation } = useMutation({
         mutationFn: (updatedElevation: Elevation) => elevationsApi.updateElevation(updatedElevation),
         onSuccess: (updatedElevation) => {
             queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) =>
@@ -66,8 +66,8 @@ export const useElevations = () => {
         },
     });
 
-// DELETE Elevation
-    const { mutateAsync: deleteElevation, isLoading: isDeletingElevation } = useMutation({
+    // DELETE Elevation
+    const { mutateAsync: deleteElevation, isPending: isDeletingElevation } = useMutation({
         mutationFn: (elevationId: string) => elevationsApi.deleteElevation(elevationId),
         onSuccess: (_, elevationId) => {
             queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) =>
@@ -82,7 +82,6 @@ export const useElevations = () => {
             });
         },
     });
-
 
     return {
         elevations,
