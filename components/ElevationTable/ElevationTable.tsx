@@ -1,8 +1,12 @@
 'use client'
 
 // components/ElevationTable/ElevationTable.tsx
-import React, { useMemo, useState } from 'react';
-import { MRT_EditActionButtons, MantineReactTable, useMantineReactTable } from 'mantine-react-table';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
+import { MRT_EditActionButtons, MantineReactTable, useMantineReactTable,
+    type MRT_ColumnDef,
+    type MRT_SortingState,
+    type MRT_RowVirtualizer,
+} from 'mantine-react-table';
 import { ActionIcon, Button, Flex, Stack, Text, Title, Tooltip, Menu, Divider } from '@mantine/core';
 import { IconEdit, IconTrash, IconShare, IconUser, IconDots } from '@tabler/icons-react';
 import { Elevation } from '../../types/elevation';
@@ -125,7 +129,6 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 accessorKey: 'mpan',
                 header: 'MPAN',
                 mantineEditTextInputProps: {
-                    required: true,
                     error: validationErrors?.mpan,
                     onFocus: () =>
                         setValidationErrors({
@@ -138,7 +141,6 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 accessorKey: 'panel',
                 header: 'Panel',
                 mantineEditTextInputProps: {
-                    required: true,
                     error: validationErrors?.panel,
                     onFocus: () =>
                         setValidationErrors({
@@ -533,7 +535,6 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 header: 'Net KWp',
                 mantineEditTextInputProps: {
                     type: 'number',
-                    required: true,
                     error: validationErrors?.netkwp,
                     onFocus: () =>
                         setValidationErrors({
@@ -615,12 +616,38 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
         ],
         [validationErrors]
     );
+
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+
+            setIsLoading(false);
+        }
+    }, []);
+
+
+
+    //optionally access the underlying virtualizer instance
+    const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [sorting, setSorting] = useState<MRT_SortingState>([]);
+
     const table = useMantineReactTable({
         columns,
         data: elevations,
         createDisplayMode: 'modal',
         editDisplayMode: 'modal',
         enableEditing: true,
+        enableColumnVirtualization: true,
+        enableRowVirtualization: false, //enable row virtualization
+        enableGlobalFilterModes: true,
+        enablePagination: true,
+        onSortingChange: setSorting,
+        state: { isLoading, sorting },
+        rowVirtualizerInstanceRef, //optional
+        rowVirtualizerOptions: { overscan: 5 }, //optionally customize the row virtualizer
+        columnVirtualizerOptions: { overscan: 2 }, //optionally customize the column virtualizer
         getRowId: (row) => row.plot_id,
         onCreatingRowSave: async (prevData, newElevation) => {
             await onCreateElevation(newElevation);
@@ -645,6 +672,11 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                     <IconTrash />
                 </ActionIcon>
             </Tooltip>
+            <Tooltip label="Duplicate">
+                <ActionIcon color="yellow" onClick={() => onDeleteElevation(row.original.plot_id)}>
+                    <IconShare />
+                </ActionIcon>
+            </Tooltip>
         </Flex>
     ),
         renderTopToolbarCustomActions: ({ table }) => (
@@ -659,7 +691,7 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
 });
     return (
         <div>
-            <MantineReactTable table={table} />
+            <MantineReactTable table={table}   />
             {selectedElevation && (
                 <ElevationDetails
                     elevation={selectedElevation}

@@ -12,7 +12,7 @@ Key Dependencies
 ----------------
 
 -   **React**: A JavaScript library for building user interfaces.
--   **Next.js**: A React framework for server-rendered applications.
+-   **Next.js**: A React framework for applications.
 -   **Mantine**: A suite of React components and hooks for building user interfaces.
 -   **Mantine React Table**: A powerful and customizable table component for React.
 -   **React Query**: A library for managing and synchronizing server state in React applications.

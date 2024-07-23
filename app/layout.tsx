@@ -20,12 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
         <QueryProvider>
             <MantineProvider theme={theme}>
-                <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', height: '100vh' }}>
-                    <NavbarSimpleColored />
-                    <div style={{ overflowY: 'auto' }}>
+
                         {children}
-                    </div>
-                </div>
+
             </MantineProvider>
         </QueryProvider>
         </body>
