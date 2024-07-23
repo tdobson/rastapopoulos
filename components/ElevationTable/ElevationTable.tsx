@@ -27,8 +27,8 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                                                            onUpdateElevation,
                                                            onDeleteElevation,
                                                        }) => {
-    const [validationErrors, setValidationErrors] = useState({});
     const [selectedElevation, setSelectedElevation] = useState<Elevation | null>(null);
+    const [validationErrors, setValidationErrors] = useState<Partial<Record<keyof Elevation, string>>>({});
 
     const columns = useMemo(
         () => [
