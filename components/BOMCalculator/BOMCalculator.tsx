@@ -1,9 +1,10 @@
 "use client";
 
 // components/BOMCalculator/BOMCalculator.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Grid, Switch, Select, Text } from '@mantine/core';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
+import './BOMCalculator.css';
 
 const gridSize = 25;
 
@@ -207,6 +208,7 @@ function BOMCalculator() {
         Error: 0
     });
     const [panelType, setPanelType] = useState<string>("DMEGC 405w");
+    const isDraggingRef = useRef(false);
 
     const bom = calculateBOM(cellTypesCount);
     const totalCost = calculateTotalCost(bom, panelType);
@@ -218,21 +220,35 @@ function BOMCalculator() {
         setCellTypesCount(countCellTypes(newGrid));
     };
 
+    const handleMouseDown = (row: number, col: number) => {
+        isDraggingRef.current = true;
+        handleCellClick(row, col);
+    };
+
+    const handleMouseEnter = (row: number, col: number) => {
+        if (isDraggingRef.current) {
+            handleCellClick(row, col);
+        }
+    };
+
+    const handleMouseUp = () => {
+        isDraggingRef.current = false;
+    };
+
     return (
         <div>
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${gridSize}, 1fr)`, gap: '2px' }}>
+            <div
+                className="grid-container"
+                onMouseLeave={handleMouseUp}
+                onMouseUp={handleMouseUp}
+            >
                 {grid.map((row, rowIndex) =>
                     row.map((cell, colIndex) => (
                         <div
                             key={`${rowIndex}-${colIndex}`}
-                            style={{
-                                backgroundColor: cell === 1 ? 'blue' : 'white',
-                                width: '20px',
-                                height: '20px',
-                                border: '1px solid black',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                            className={`grid-cell ${cell === 1 ? 'active' : ''}`}
+                            onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
+                            onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
                         />
                     ))
                 )}

@@ -1,0 +1,22 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    gap: 0;
+    background-color: #ccc;
+    user-select: none;
+    width: fit-content;
+    border: 1px solid #ccc;
+}
+
+.grid-cell {
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.grid-cell.active {
+    background-color: blue;
+}
