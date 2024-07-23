@@ -27,10 +27,12 @@ export const useElevations = () => {
     } = useQuery<Elevation[], Error>({
         queryKey: [ELEVATION_REPORTS_QUERY_KEY],
         queryFn: elevationsApi.getElevationsReport,
-        onError: (err) => {
-            console.error('Error fetching elevation reports:', err);
-        },
     });
+
+    // Handle error logging separately
+    if (isErrorElevationReports) {
+        console.error('Error fetching elevation reports:', errorElevationReports);
+    }
 
     // CREATE Elevation
     const { mutateAsync: createElevation, isLoading: isCreatingElevation } = useMutation({
