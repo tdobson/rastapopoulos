@@ -72,7 +72,61 @@ Running the Project
 2.  Start the development server: `npm run dev`
 3.  Open the application in your browser at `http://localhost:3000`
 
+Available Scripts
+-----------------
+
+The project includes several npm scripts for development, testing, and building. Here's a detailed explanation of each script:
+
+- `npm run dev`: Starts the Next.js development server. Use this for local development.
+- `npm run build`: Creates an optimized production build of the application.
+- `npm run analyze`: Builds the application and generates bundle analysis reports.
+- `npm run start`: Starts the Next.js production server. Run this after `npm run build`.
+- `npm run typecheck`: Runs TypeScript compiler to check for type errors without emitting files.
+- `npm run lint`: Runs ESLint and Stylelint to check for code style issues.
+- `npm run lint:stylelint`: Runs Stylelint specifically for CSS files.
+- `npm run jest`: Runs Jest tests once.
+- `npm run jest:watch`: Runs Jest tests in watch mode, re-running tests on file changes.
+- `npm run prettier:check`: Checks if all TypeScript and TSX files are formatted correctly.
+- `npm run prettier:write`: Automatically formats all TypeScript and TSX files.
+- `npm run test`: Runs a full test suite including Prettier checks, linting, type checking, and Jest tests.
+- `npm run storybook`: Starts the Storybook development server for component development and testing.
+- `npm run storybook:build`: Builds a static Storybook site for deployment.
+
 Testing
 -------
 
-The project includes a testing setup using Jest and Testing Library. To run the tests, use the following command:
+The project includes a comprehensive testing setup using Jest and Testing Library. To run the full test suite, use:
+
+```bash
+npm run test
+```
+
+This command will:
+1. Check code formatting with Prettier
+2. Run linting checks with ESLint and Stylelint
+3. Perform TypeScript type checking
+4. Execute Jest tests
+
+For development, you can use `npm run jest:watch` to run tests in watch mode, which will re-run tests as you make changes to your code.
+
+Storybook
+---------
+
+Storybook is integrated into the project for component development and testing. To start the Storybook development server, run:
+
+```bash
+npm run storybook
+```
+
+This will launch Storybook, allowing you to view and interact with your components in isolation.
+
+Code Quality and Formatting
+---------------------------
+
+To ensure code quality and consistent formatting:
+
+- Run `npm run lint` to check for linting issues.
+- Use `npm run prettier:check` to verify formatting.
+- Run `npm run prettier:write` to automatically format your code.
+
+These commands are also part of the `npm run test` script, which is recommended to run before committing changes or submitting pull requests.
