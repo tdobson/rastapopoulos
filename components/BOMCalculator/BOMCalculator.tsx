@@ -2,9 +2,10 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef } from 'react';
-import { Grid, Switch, Select, Text } from '@mantine/core';
+import { Grid, Switch, Select, Text, Button, Group, Collapse, Box } from '@mantine/core';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOMItem, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
+import {useDisclosure} from "@mantine/hooks";
 
 const gridSize = 25;
 
@@ -255,7 +256,7 @@ function BOMCalculator() {
     const handleMouseUp = () => {
         isDraggingRef.current = false;
     };
-
+    const [opened, { toggle }] = useDisclosure(false);
     return (
         <div>
             <div
@@ -280,7 +281,14 @@ function BOMCalculator() {
                 onChange={(value) => setPanelType(value || "DMEGC 405w")}
                 data={Object.keys(panelPrices)}
             />
-            <Text >Cell Types Count:</Text>
+
+            <Box maw={400} mx="auto">
+                <Group justify="center" mb={5}>
+                    <Button onClick={toggle}>Cell Types Count</Button>
+                </Group>
+
+                <Collapse in={opened}>
+
             <Grid>
                 {Object.entries(cellTypesCount).map(([type, count]) => (
                     <Grid.Col key={type} span={6}>
@@ -288,16 +296,19 @@ function BOMCalculator() {
                     </Grid.Col>
                 ))}
             </Grid>
+                </Collapse>
+            </Box>
 
-            <Text >Bill of Materials:</Text>
+
+            <Text size="xl">Bill of Materials:</Text>
             {Object.entries(bom).map(([component, item]) => (
                 <div key={component}>
-                    <Text>{component}:</Text>
-                    <Text ml="md">{item.explanation}</Text>
+                    <Text size="md">{component}:</Text>
+                    <Text ml="md" size="sm">{item.explanation}</Text>
                 </div>
             ))}
 
-            <Text>Total Cost: £{totalCost.toFixed(2)}</Text>
+            <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
         </div>
 
     );
