@@ -54,7 +54,7 @@ export const useElevations = () => {
         mutationFn: (updatedElevation: Elevation) => elevationsApi.updateElevation(updatedElevation),
         onSuccess: (updatedElevation) => {
             queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) =>
-                old.map((elevation) => (elevation.id === updatedElevation.id ? updatedElevation : elevation))
+                old.map((elevation) => (elevation.plot_id === updatedElevation.plot_id ? updatedElevation : elevation))
             );
         },
         onError: (err) => {
