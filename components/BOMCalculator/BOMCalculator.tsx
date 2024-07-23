@@ -2,6 +2,7 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef } from 'react';
+// eslint-disable-next-line import/order
 import { Grid, Select, Text, Button, Group, Collapse, Box, Space } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
