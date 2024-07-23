@@ -2,10 +2,11 @@
 
 // components/ElevationTable/ElevationTable.tsx
 import React, { useMemo, useState, useRef, useEffect } from 'react';
-import { MRT_EditActionButtons, MantineReactTable, useMantineReactTable,
+import {
+    MRT_EditActionButtons, MantineReactTable, useMantineReactTable,
     type MRT_ColumnDef,
     type MRT_SortingState,
-    type MRT_RowVirtualizer, MRT_Row, MRT_TableInstance
+    type MRT_RowVirtualizer, MRT_Row, MRT_TableInstance, MRT_TableOptions
 } from 'mantine-react-table';
 import { ActionIcon, Button, Flex, Stack, Text, Title, Tooltip, Menu, Divider } from '@mantine/core';
 import { IconEdit, IconTrash, IconShare, IconUser, IconDots } from '@tabler/icons-react';
@@ -657,10 +658,15 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
             exitEditingMode();
         },
 
-        onRowClick: ({ row }: { row: MRT_Row<Elevation> }) => {
-            setSelectedElevation(row.original);
-            onElevationSelect(row.original);
-        },
+        mantineTableBodyRowProps: ({ row }) => ({
+            onClick: () => {
+                setSelectedElevation(row.original);
+                onElevationSelect(row.original);
+            },
+            style: {
+                cursor: 'pointer',
+            },
+        }),
         renderRowActions: ({ row }: { row: MRT_Row<Elevation> }) => (
             <Flex gap="md">
                 <Tooltip label="Edit">
@@ -689,7 +695,7 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
                 Create New Elevation
             </Button>
         ),
-});
+} as MRT_TableOptions<Elevation>);
     return (
         <div>
             <MantineReactTable table={table}   />
