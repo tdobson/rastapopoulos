@@ -5,7 +5,7 @@ import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { MRT_EditActionButtons, MantineReactTable, useMantineReactTable,
     type MRT_ColumnDef,
     type MRT_SortingState,
-    type MRT_RowVirtualizer,
+    type MRT_RowVirtualizer, MRT_Row, MRT_TableInstance
 } from 'mantine-react-table';
 import { ActionIcon, Button, Flex, Stack, Text, Title, Tooltip, Menu, Divider } from '@mantine/core';
 import { IconEdit, IconTrash, IconShare, IconUser, IconDots } from '@tabler/icons-react';
@@ -649,45 +649,46 @@ const ElevationTable: React.FC<ElevationTableProps> = ({
         rowVirtualizerOptions: { overscan: 5 }, //optionally customize the row virtualizer
         columnVirtualizerOptions: { overscan: 2 }, //optionally customize the column virtualizer
         getRowId: (row) => row.plot_id,
-        onCreatingRowSave: async (prevData, newElevation) => {
-            await onCreateElevation(newElevation);
+        onCreatingRowSave: async ({ values }) => {
+            await onCreateElevation(values as Elevation);
         },
-        onEditingRowSave: async (prevData, updatedElevation) => {
-            await onUpdateElevation(updatedElevation);
+        onEditingRowSave: async ({ exitEditingMode, values, row }) => {
+            await onUpdateElevation(values as Elevation);
+            exitEditingMode();
         },
 
-    onRowClick: (row) => {
-        setSelectedElevation(row.original);
-        onElevationSelect(row.original);
-    },
-        renderRowActions: ({ row }) => (
-        <Flex gap="md">
-            <Tooltip label="Edit">
-                <ActionIcon onClick={() => table.setEditingRow(row)}>
-                    <IconEdit />
-                </ActionIcon>
-            </Tooltip>
-            <Tooltip label="Delete">
-                <ActionIcon color="red" onClick={() => onDeleteElevation(row.original.plot_id)}>
-                    <IconTrash />
-                </ActionIcon>
-            </Tooltip>
-            <Tooltip label="Duplicate">
-                <ActionIcon color="yellow" onClick={() => onDeleteElevation(row.original.plot_id)}>
-                    <IconShare />
-                </ActionIcon>
-            </Tooltip>
-        </Flex>
-    ),
-        renderTopToolbarCustomActions: ({ table }) => (
-        <Button
-            onClick={() => {
-                table.setCreatingRow(true);
-            }}
-        >
-            Create New Elevation
-        </Button>
-    ),
+        onRowClick: ({ row }: { row: MRT_Row<Elevation> }) => {
+            setSelectedElevation(row.original);
+            onElevationSelect(row.original);
+        },
+        renderRowActions: ({ row }: { row: MRT_Row<Elevation> }) => (
+            <Flex gap="md">
+                <Tooltip label="Edit">
+                    <ActionIcon onClick={() => table.setEditingRow(row)}>
+                        <IconEdit />
+                    </ActionIcon>
+                </Tooltip>
+                <Tooltip label="Delete">
+                    <ActionIcon color="red" onClick={() => onDeleteElevation(row.original.plot_id)}>
+                        <IconTrash />
+                    </ActionIcon>
+                </Tooltip>
+                <Tooltip label="Duplicate">
+                    <ActionIcon color="yellow" onClick={() => onDeleteElevation(row.original.plot_id)}>
+                        <IconShare />
+                    </ActionIcon>
+                </Tooltip>
+            </Flex>
+        ),
+        renderTopToolbarCustomActions: ({ table }: { table: MRT_TableInstance<Elevation> }) => (
+            <Button
+                onClick={() => {
+                    table.setCreatingRow(true);
+                }}
+            >
+                Create New Elevation
+            </Button>
+        ),
 });
     return (
         <div>
