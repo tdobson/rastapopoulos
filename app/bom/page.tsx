@@ -4,7 +4,7 @@ import BOMCalculator from '../../components/BOMCalculator/BOMCalculator';
 export default function ElevationsPage() {
     return (
         <div>
-            <h1>Elevations</h1>
+            <h1>BOM Calculator</h1>
             <BOMCalculator />
         </div>
     );

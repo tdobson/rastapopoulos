@@ -28,6 +28,17 @@ export type ComponentPrices = {
     [key: string]: number;
 };
 
-export type BOM = {
-    [key: string]: number;
+export type BOMItem = {
+    quantity: number;
+    price: number;
+    total: number;
+    explanation: string;
 };
+
+export type BOM = {
+    [key: string]: BOMItem;
+};
+export type BOMWithExplanations = {
+    [key: string]: BOMItem;
+};
+
