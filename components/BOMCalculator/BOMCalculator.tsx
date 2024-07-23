@@ -2,7 +2,7 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef } from 'react';
-import { Grid, Switch, Select, Text, Button, Group, Collapse, Box } from '@mantine/core';
+import {Grid, Switch, Select, Text, Button, Group, Collapse, Box, Space} from '@mantine/core';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOMItem, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
 import {useDisclosure} from "@mantine/hooks";
@@ -275,13 +275,15 @@ function BOMCalculator() {
                     ))
                 )}
             </div>
+            <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
+            <Space />
             <Select
                 label="Panel Type"
                 value={panelType}
                 onChange={(value) => setPanelType(value || "DMEGC 405w")}
                 data={Object.keys(panelPrices)}
             />
-
+            <Space />
             <Box maw={400} mx="auto">
                 <Group justify="center" mb={5}>
                     <Button onClick={toggle}>Cell Types Count</Button>
@@ -308,7 +310,6 @@ function BOMCalculator() {
                 </div>
             ))}
 
-            <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
         </div>
 
     );
