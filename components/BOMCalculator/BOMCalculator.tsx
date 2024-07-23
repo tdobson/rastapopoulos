@@ -271,6 +271,13 @@ function BOMCalculator() {
                             className={`grid-cell ${cell === 1 ? 'active' : ''}`}
                             onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
                             onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    handleMouseDown(rowIndex, colIndex);
+                                }
+                            }}
                         />
                     ))
                 )}
@@ -290,17 +297,15 @@ function BOMCalculator() {
                 </Group>
 
                 <Collapse in={opened}>
-
-            <Grid>
-                {Object.entries(cellTypesCount).map(([type, count]) => (
-                    <Grid.Col key={type} span={6}>
-                        <Text>{type}: {count}</Text>
-                    </Grid.Col>
-                ))}
-            </Grid>
+                    <Grid>
+                        {Object.entries(cellTypesCount).map(([type, count]) => (
+                            <Grid.Col key={type} span={6}>
+                                <Text>{type}: {count}</Text>
+                            </Grid.Col>
+                        ))}
+                    </Grid>
                 </Collapse>
             </Box>
-
 
             <Text size="xl">Bill of Materials:</Text>
             {Object.entries(bom).map(([component, item]) => (
@@ -311,6 +316,6 @@ function BOMCalculator() {
             ))}
         </div>
     );
-};
+}
 
 export default BOMCalculator;
