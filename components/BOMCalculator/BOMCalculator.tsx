@@ -1,9 +1,11 @@
-// components/BOMCalculator/BOMcalculator.ts
+"use client";
+
+// components/BOMCalculator/BOMCalculator.tsx
 import React, { useState } from 'react';
 import { Grid, Switch, Select, Text } from '@mantine/core';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
 
-const gridSize = 50;
+const gridSize = 25;
 
 type GridType = number[][];
 
@@ -204,13 +206,12 @@ function BOMCalculator() {
         EmptyCell: gridSize * gridSize,
         Error: 0
     });
-
     const [panelType, setPanelType] = useState<string>("DMEGC 405w");
 
     const bom = calculateBOM(cellTypesCount);
     const totalCost = calculateTotalCost(bom, panelType);
 
-    const handleCellChange = (row: number, col: number) => {
+    const handleCellClick = (row: number, col: number) => {
         const newGrid = [...grid];
         newGrid[row][col] = newGrid[row][col] === 0 ? 1 : 0;
         setGrid(newGrid);
@@ -219,33 +220,36 @@ function BOMCalculator() {
 
     return (
         <div>
-            <Grid>
-                {grid.map((row, rowIndex) => (
-                        <Grid.Col key={rowIndex} span={12}>
-                    {row.map((cell, colIndex) => (
-                            <Switch
-                                key={`${rowIndex}-${colIndex}`}
-                    checked={cell === 1}
-    onChange={() => handleCellChange(rowIndex, colIndex)}
-    label={`Row ${rowIndex}, Col ${colIndex}`}
-    />
-))}
-    </Grid.Col>
-))}
-    </Grid>
-    <Select
-    label="Panel Type"
-    value={panelType}
-    onChange={(value) => setPanelType(value || "DMEGC 405w")}
-    data={Object.keys(panelPrices)}
-    />
-    <Text>Cell Types Count:</Text>
-    <pre>{JSON.stringify(cellTypesCount, null, 2)}</pre>
-    <Text>Bill of Materials:</Text>
-    <pre>{JSON.stringify(bom, null, 2)}</pre>
-    <Text>Total Cost: {totalCost.toFixed(2)}</Text>
-    </div>
-);
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${gridSize}, 1fr)`, gap: '2px' }}>
+                {grid.map((row, rowIndex) =>
+                    row.map((cell, colIndex) => (
+                        <div
+                            key={`${rowIndex}-${colIndex}`}
+                            style={{
+                                backgroundColor: cell === 1 ? 'blue' : 'white',
+                                width: '20px',
+                                height: '20px',
+                                border: '1px solid black',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => handleCellClick(rowIndex, colIndex)}
+                        />
+                    ))
+                )}
+            </div>
+            <Select
+                label="Panel Type"
+                value={panelType}
+                onChange={(value) => setPanelType(value || "DMEGC 405w")}
+                data={Object.keys(panelPrices)}
+            />
+            <Text>Cell Types Count:</Text>
+            <pre>{JSON.stringify(cellTypesCount, null, 2)}</pre>
+            <Text>Bill of Materials:</Text>
+            <pre>{JSON.stringify(bom, null, 2)}</pre>
+            <Text>Total Cost: {totalCost.toFixed(2)}</Text>
+        </div>
+    );
 }
 
 export default BOMCalculator;
