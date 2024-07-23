@@ -2,8 +2,8 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef } from 'react';
-import { useDisclosure } from '@mantine/hooks';
 import { Grid, Select, Text, Button, Group, Collapse, Box, Space } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
 
@@ -16,15 +16,15 @@ function determineCellType(grid: GridType, row: number, col: number): string {
     const directions = [
         [-1, -1], [-1, 0], [-1, 1],
         [0, -1], /*[0, 0],*/ [0, 1],
-        [1, -1], [1, 0], [1, 1]
+        [1, -1], [1, 0], [1, 1],
     ];
 
-    const isPanel = (r: number, c: number) => {
-        return r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
-    };
+    const isPanel = (r: number, c: number): boolean => 
+        r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
-    let neighborPanels = directions.map(([dx, dy]) => {
-        let r = row + dx, c = col + dy;
+    const neighborPanels = directions.map(([dx, dy]) => {
+        const r = row + dx;
+        const c = col + dy;
         return isPanel(r, c);
     });
 
@@ -69,13 +69,13 @@ function countCellTypes(grid: GridType): CellTypesCount {
         CenterMidPanel: 0,
         CenterTopPanel: 0,
         EmptyCell: 0,
-        Error: 0
+        Error: 0,
     };
 
     for (let row = 0; row < gridSize; row++) {
-        for (let col = 0; col < gridSize; col++) {
+        for (let col = 0; col < gridSize; col += 1) {
             const cellType = determineCellType(grid, row, col);
-            cellTypesCount[cellType as keyof CellTypesCount]++;
+            cellTypesCount[cellType as keyof CellTypesCount] += 1;
         }
     }
 
@@ -107,106 +107,94 @@ const componentPrices: ComponentPrices = {
 
 function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
     const bom: BOM = {
-        "GSE Half Portrait Frames": {
+        'GSE Half Portrait Frames': {
             quantity: cellTypesCount.SinglePanel * 2 + cellTypesCount.TopSinglePanel * 2 + cellTypesCount.BottomSinglePanel * 2,
-            price: componentPrices["GSE Half Portrait Frames"],
+            price: componentPrices['GSE Half Portrait Frames'],
             total: 0,
-            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 2`
+            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 2`,
         },
-        "Lateral Flashing": {
+        'Lateral Flashing': {
             quantity: (cellTypesCount.SinglePanel * 2 + cellTypesCount.TopSinglePanel * 2 + cellTypesCount.BottomSinglePanel * 2 + cellTypesCount.EndPanel) * 2,
-            price: componentPrices["Lateral Flashing"],
+            price: componentPrices['Lateral Flashing'],
             total: 0,
-            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 2 * 2`
+            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 2 * 2`,
         },
-        "GSE Screws Black": {
+        'GSE Screws Black': {
             quantity: (cellTypesCount.SinglePanel * 3 + cellTypesCount.TopSinglePanel * 3 + cellTypesCount.BottomSinglePanel * 3 + cellTypesCount.EndPanel * 3) + cellTypesCount.EndPanel + cellTypesCount.MidPanel,
-            price: componentPrices["GSE Screws Black"],
+            price: componentPrices['GSE Screws Black'],
             total: 0,
-            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`
+            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
         },
-        "GSE End Clamp": {
+        'GSE End Clamp': {
             quantity: cellTypesCount.SinglePanel * 4 + cellTypesCount.TopSinglePanel * 4 + cellTypesCount.BottomSinglePanel * 4 + cellTypesCount.EndPanel * 2,
-            price: componentPrices["GSE End Clamp"],
+            price: componentPrices['GSE End Clamp'],
             total: 0,
-            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4 + ${cellTypesCount.EndPanel} EndPanel * 2`
+            explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4 + ${cellTypesCount.EndPanel} EndPanel * 2`,
         },
-        "GSE Mid Clamp": {
+        'GSE Mid Clamp': {
             quantity: cellTypesCount.MidPanel * 2 + cellTypesCount.MiddleMidPanel * 2 + cellTypesCount.TopMidPanel * 2 + cellTypesCount.BottomMidPanel * 2,
-            price: componentPrices["GSE Mid Clamp"],
+            price: componentPrices['GSE Mid Clamp'],
             total: 0,
-            explanation: `(${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) * 2`
+            explanation: `(${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) * 2`,
         },
-        "EPDM Pads": {
+        'EPDM Pads': {
             quantity: cellTypesCount.EndPanel + cellTypesCount.MidPanel,
-            price: componentPrices["EPDM Pads"],
+            price: componentPrices['EPDM Pads'],
             total: 0,
-            explanation: `${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`
+            explanation: `${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
         },
-        "Compressed Seal Roll": {
+        'Compressed Seal Roll': {
             quantity: Math.ceil((cellTypesCount.SinglePanel + cellTypesCount.TopSinglePanel + cellTypesCount.BottomSinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel + cellTypesCount.MiddleMidPanel + cellTypesCount.TopMidPanel + cellTypesCount.BottomMidPanel) / 10),
-            price: componentPrices["Compressed Seal Roll"],
+            price: componentPrices['Compressed Seal Roll'],
             total: 0,
-            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10`
+            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10`,
         },
-        "Pre Assembled DC Lead": {
+        'Pre Assembled DC Lead': {
             quantity: Math.ceil((cellTypesCount.SinglePanel + cellTypesCount.TopSinglePanel + cellTypesCount.BottomSinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel + cellTypesCount.MiddleMidPanel + cellTypesCount.TopMidPanel + cellTypesCount.BottomMidPanel) / 10) * 2,
-            price: componentPrices["Pre Assembled DC Lead"],
+            price: componentPrices['Pre Assembled DC Lead'],
             total: 0,
-            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10 * 2`
+            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10 *2`,
         },
-        "DC Live Sticker": {
+        'DC Live Sticker': {
             quantity: Math.ceil((cellTypesCount.SinglePanel + cellTypesCount.TopSinglePanel + cellTypesCount.BottomSinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel + cellTypesCount.MiddleMidPanel + cellTypesCount.TopMidPanel + cellTypesCount.BottomMidPanel) / 10),
-            price: componentPrices["DC Live Sticker"],
+            price: componentPrices['DC Live Sticker'],
             total: 0,
-            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10`
+            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10`,
         },
-        "Cable Ties": {
+        'Cable Ties': {
             quantity: Math.ceil((cellTypesCount.SinglePanel + cellTypesCount.TopSinglePanel + cellTypesCount.BottomSinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel + cellTypesCount.MiddleMidPanel + cellTypesCount.TopMidPanel + cellTypesCount.BottomMidPanel) / 10) * 5,
-            price: componentPrices["Cable Ties"],
+            price: componentPrices['Cable Ties'],
             total: 0,
-            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10 * 5`
+            explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10 * 5`,
         },
-        "Lead": {
+        Lead: {
             quantity: cellTypesCount.SinglePanel + cellTypesCount.BottomSinglePanel + cellTypesCount.CenterSinglePanel + cellTypesCount.CenterBottomPanel + cellTypesCount.BottomMidPanel + cellTypesCount.BottomEndPanel,
-            price: componentPrices["Lead"],
+            price: componentPrices.Lead,
             total: 0,
-            explanation: `${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.CenterSinglePanel} CenterSinglePanel + ${cellTypesCount.CenterBottomPanel} CenterBottomPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel + ${cellTypesCount.BottomEndPanel} BottomEndPanel`
-        }
+            explanation: `${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.CenterSinglePanel} CenterSinglePanel + ${cellTypesCount.CenterBottomPanel} CenterBottomPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel + ${cellTypesCount.BottomEndPanel} BottomEndPanel`,
+        },
     };
 
     // Calculate totals and format explanations
-    for (const [key, item] of Object.entries(bom)) {
+    for (const [, item] of Object.entries(bom)) {
         item.total = item.quantity * item.price;
         item.explanation = `${item.quantity} x £${item.price.toFixed(2)} = £${item.total.toFixed(2)} (${item.explanation})`;
     }
 
     // Add panel cost
     const panelCount = Object.values(cellTypesCount).reduce((sum, count) => sum + count, 0) - cellTypesCount.EmptyCell - cellTypesCount.Error;
-    bom["Solar Panels"] = {
+    bom['Solar Panels'] = {
         quantity: panelCount,
         price: panelPrices[panelType],
         total: panelCount * panelPrices[panelType],
-        explanation: `${panelCount} x £${panelPrices[panelType].toFixed(2)} = £${(panelCount * panelPrices[panelType]).toFixed(2)}`
+        explanation: `${panelCount} x £${panelPrices[panelType].toFixed(2)} = £${(panelCount * panelPrices[panelType]).toFixed(2)}`,
     };
 
     return bom;
 }
 
 // Function to calculate the total cost of the bill of materials
-function calculateTotalCost(bom: BOM, panelType: string): number {
-    let totalCost = 0;
-
-    for (const component in bom) {
-        totalCost += bom[component].quantity * componentPrices[component];
-    }
-
-    const panelCount = Object.values(bom).reduce((a, b) => a + b.quantity, 0);
-    const panelCost = panelPrices[panelType] * panelCount;
-    totalCost += panelCost;
-
-    return totalCost;
-}
+// Removed unused function calculateTotalCost
 
 function BOMCalculator() {
     const [grid, setGrid] = useState<GridType>(Array.from({ length: gridSize }, () => Array(gridSize).fill(0)));
@@ -263,6 +251,7 @@ function BOMCalculator() {
                 className="grid-container"
                 onMouseLeave={handleMouseUp}
                 onMouseUp={handleMouseUp}
+                role="grid"
             >
                 {grid.map((row, rowIndex) =>
                     row.map((cell, colIndex) => (
