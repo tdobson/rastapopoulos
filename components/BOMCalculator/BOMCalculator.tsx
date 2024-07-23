@@ -2,10 +2,10 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Grid, Select, Text, Button, Group, Collapse, Box, Space } from '@mantine/core';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
-import { useDisclosure } from '@mantine/hooks';
 
 const gridSize = 25;
 
