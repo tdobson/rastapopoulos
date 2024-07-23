@@ -55,7 +55,7 @@ export const elevationsApi = {
         });
     },
     updateElevation: (updatedElevation: Elevation): Promise<Elevation> => {
-        return apiRequest<Elevation>(`/elevations/${updatedElevation.id}`, {
+        return apiRequest<Elevation>(`/elevations/${updatedElevation.plot_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
