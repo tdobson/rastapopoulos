@@ -7,7 +7,6 @@ export default function ElevationsPage() {
         <div>
             <Container>
                 <h1>BOM Calculator</h1>
-
                 <BOMCalculator />
             </Container>
         </div>
