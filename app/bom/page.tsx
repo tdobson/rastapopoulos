@@ -1,6 +1,7 @@
 // elevations/page.tsx (Server Component)
-import BOMCalculator from '../../components/BOMCalculator/BOMCalculator';
 import {Container} from "@mantine/core";
+import BOMCalculator from '../../components/BOMCalculator/BOMCalculator';
+
 
 export default function ElevationsPage() {
     return (
