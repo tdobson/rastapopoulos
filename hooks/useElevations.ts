@@ -68,10 +68,10 @@ export const useElevations = () => {
 
     // DELETE Elevation
     const { mutateAsync: deleteElevation, isPending: isDeletingElevation } = useMutation({
-        mutationFn: (elevationId: string) => elevationsApi.deleteElevation(elevationId),
-        onSuccess: (_, elevationId) => {
+        mutationFn: (plotId: string) => elevationsApi.deleteElevation(plotId),
+        onSuccess: (_, plotId) => {
             queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) =>
-                old.filter((elevation) => elevation.id !== elevationId)
+                old.filter((elevation) => elevation.plot_id !== plotId)
             );
         },
         onError: (err) => {
