@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef } from 'react';
-import {Grid, Switch, Select, Text, Button, Group, Collapse, Box, Space} from '@mantine/core';
-import { CellTypesCount, PanelPrices, ComponentPrices, BOMItem, BOM } from '../../types/bomCalculator';
+import { Grid, Select, Text, Button, Group, Collapse, Box, Space } from '@mantine/core';
+import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
-import {useDisclosure} from "@mantine/hooks";
+import { useDisclosure } from '@mantine/hooks';
 
 const gridSize = 25;
 
@@ -84,25 +84,25 @@ function countCellTypes(grid: GridType): CellTypesCount {
 
 // Store the data tables from the pricing sheet as JSON objects
 const panelPrices: PanelPrices = {
-    "DMEGC 405w": 112,
-    "LONGi 405w": 121.5,
+    'DMEGC 405w': 112,
+    'LONGi 405w': 121.5,
 };
 
 const componentPrices: ComponentPrices = {
-    "GSE Half Portrait Frames": 19.52,
-    "Lateral Flashing": 13.35,
-    "GSE Screws Black": 0.26,
-    "GSE End Clamp": 1.11,
-    "GSE Mid Clamp": 1.28,
-    "EPDM Pads": 0.05,
-    "Compressed Seal Roll": 9.15,
-    "Pre Assembled DC Lead": 9.03,
-    "DC Live Sticker": 0.24,
-    "Cable Ties": 0.03,
-    "Battens": 0.24,
-    "Galvanised Nails": 0.01,
-    "Copper Nails": 0.02,
-    "Lead": 0.0228,
+    'GSE Half Portrait Frames': 19.52,
+    'Lateral Flashing': 13.35,
+    'GSE Screws Black': 0.26,
+    'GSE End Clamp': 1.11,
+    'GSE Mid Clamp': 1.28,
+    'EPDM Pads': 0.05,
+    'Compressed Seal Roll': 9.15,
+    'Pre Assembled DC Lead': 9.03,
+    'DC Live Sticker': 0.24,
+    'Cable Ties': 0.03,
+    Battens: 0.24,
+    'Galvanised Nails': 0.01,
+    'Copper Nails': 0.02,
+    Lead: 0.0228,
 };
 
 function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
@@ -229,7 +229,7 @@ function BOMCalculator() {
         EmptyCell: gridSize * gridSize,
         Error: 0
     });
-    const [panelType, setPanelType] = useState<string>("DMEGC 405w");
+    const [panelType, setPanelType] = useState<string>('DMEGC 405w');
     const isDraggingRef = useRef(false);
 
     const bom = calculateBOM(cellTypesCount, panelType);
@@ -276,14 +276,14 @@ function BOMCalculator() {
                 )}
             </div>
             <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
-            <Space />
+            <Space h="md" />
             <Select
                 label="Panel Type"
                 value={panelType}
-                onChange={(value) => setPanelType(value || "DMEGC 405w")}
+                onChange={(value) => setPanelType(value || 'DMEGC 405w')}
                 data={Object.keys(panelPrices)}
             />
-            <Space />
+            <Space h="md" />
             <Box maw={400} mx="auto">
                 <Group justify="center" mb={5}>
                     <Button onClick={toggle}>Cell Types Count</Button>
@@ -309,10 +309,8 @@ function BOMCalculator() {
                     <Text ml="md" size="sm">{item.explanation}</Text>
                 </div>
             ))}
-
         </div>
-
     );
-}
+};
 
 export default BOMCalculator;
