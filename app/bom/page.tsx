@@ -1,7 +1,6 @@
 // elevations/page.tsx (Server Component)
-import {Container} from "@mantine/core";
+import { Container } from '@mantine/core';
 import BOMCalculator from '../../components/BOMCalculator/BOMCalculator';
-
 
 export default function ElevationsPage() {
     return (
@@ -9,7 +8,7 @@ export default function ElevationsPage() {
             <Container>
                 <h1>BOM Calculator</h1>
 
-                <BOMCalculator/>
+                <BOMCalculator />
             </Container>
         </div>
     );
