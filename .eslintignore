@@ -7,6 +7,7 @@
 build/**
 .next/**
 out/**
+_next/**
 
 # Dependencies
 node_modules/**
