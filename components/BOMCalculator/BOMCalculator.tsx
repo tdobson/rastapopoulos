@@ -35,6 +35,21 @@ function determineCellType(grid: GridType, row: number, col: number): string {
     const mid = neighborPanels.slice(3, 5);
     const bot = neighborPanels.slice(5);
 
+    /*
+
+    in
+    **
+    **
+
+    REsult: 2 x top mid panels when they're actually top end panels
+    Result: 2 x bottom mid panels when they're actualls bottom mid
+
+    They should be
+    2x top end
+    2x bottom end
+
+     */
+
     if (top.every(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterMidPanel';
     if (top.every(Boolean) && mid.every(Boolean) && bot.some(Boolean)) return 'CenterTopPanel';
     if (top.some(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterBottomPanel';
