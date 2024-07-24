@@ -128,13 +128,97 @@ For development, you can use `npm run jest:watch` to run tests in watch mode, wh
 Storybook
 ---------
 
-Storybook is integrated into the project for component development and testing. To start the Storybook development server, run:
+Storybook is integrated into the project for component development, testing, and documentation. It provides an isolated environment to develop and showcase your React components.
+
+### Setting up Storybook
+
+Storybook is already configured in this project. The main configuration files are:
+
+- `.storybook/main.ts`: Configures Storybook's behavior, addons, and webpack.
+- `.storybook/preview.tsx`: Sets up the global decorators and parameters for all stories.
+
+### Running Storybook
+
+To start the Storybook development server, run:
 
 ```bash
 npm run storybook
 ```
 
-This will launch Storybook, allowing you to view and interact with your components in isolation.
+This will launch Storybook at `http://localhost:6006`, allowing you to view and interact with your components in isolation.
+
+To build a static Storybook site for deployment, use:
+
+```bash
+npm run storybook:build
+```
+
+### Creating Stories
+
+To create a story for a component:
+
+1. Create a new file named `[ComponentName].story.tsx` in the same directory as your component.
+2. Import your component and the necessary Storybook types.
+3. Define a default export for the component's metadata.
+4. Export named constants for each story variant.
+
+Example structure for `FooterSimple.story.tsx`:
+
+```typescript
+import type { Meta, StoryObj } from '@storybook/react';
+import { FooterSimple } from './FooterSimple';
+
+const meta: Meta<typeof FooterSimple> = {
+  title: 'Components/FooterSimple',
+  component: FooterSimple,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof FooterSimple>;
+
+export const Default: Story = {};
+
+export const CustomLinks: Story = {
+  args: {
+    links: [
+      { link: '#', label: 'About' },
+      { link: '#', label: 'Services' },
+      { link: '#', label: 'Contact' },
+    ],
+  },
+};
+```
+
+### Updating Components for Storybook
+
+To ensure your components work well with Storybook:
+
+1. Use TypeScript for better type inference and documentation.
+2. Define clear prop interfaces for your components.
+3. Use default props where appropriate.
+4. Consider creating multiple story variants to showcase different component states or configurations.
+
+### Best Practices
+
+- Keep stories simple and focused on showcasing the component's functionality.
+- Use args to make your stories dynamic and interactive.
+- Utilize Storybook's addons (like Controls, Actions, and Docs) to enhance your stories.
+- Write documentation in your stories using JSDoc comments or the `parameters.docs` field.
+
+### Troubleshooting
+
+If you encounter issues with Storybook:
+
+1. Ensure all dependencies are installed (`npm install`).
+2. Check for any errors in the Storybook console or build output.
+3. Verify that your component imports are correct and all necessary dependencies are available.
+4. If using custom webpack configurations, ensure they're compatible with Storybook's setup.
+
+By following these guidelines, you can effectively use Storybook to develop, test, and document your React components in isolation, improving the overall development workflow of the project.
 
 Code Quality and Formatting
 ---------------------------
