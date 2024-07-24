@@ -8,6 +8,7 @@ import {
   Menu,
   Tabs,
   rem,
+  useMantineTheme,
 } from '@mantine/core';
 import {
   IconLogout,
