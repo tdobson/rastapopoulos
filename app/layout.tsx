@@ -26,7 +26,6 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Group>
-            <Burger opened={opened} onClick={() => setOpened((o) => !o)} visibleFrom="sm" size="sm" />
             <Text>Tim's magic apps</Text>
           </Group>
           <HeaderTabs />
