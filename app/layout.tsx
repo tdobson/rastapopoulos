@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
         <QueryProvider>
             <MantineProvider theme={theme}>
-
+<NavbarSimpleColored />
                         {children}
 
             </MantineProvider>
