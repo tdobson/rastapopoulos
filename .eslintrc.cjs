@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['next', 'plugin:jest/recommended'],
+  extends: ['.next', 'plugin:jest/recommended'],
   plugins: ['testing-library', 'jest'],
   overrides: [
     {
