@@ -1,5 +1,22 @@
-*.cjs
-*.mjs
-*.js
-build/*
-.next/*
+# Config files
+*.config.js
+*.config.mjs
+*.config.cjs
+
+# Build output
+build/**
+.next/**
+out/**
+
+# Dependencies
+node_modules/**
+
+# Cache
+.cache/**
+
+# Coverage reports
+coverage/**
+
+# Misc
+*.min.js
+*.bundle.js
