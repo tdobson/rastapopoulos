@@ -2,8 +2,7 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 import React, { useState, useRef, useCallback } from 'react';
-// eslint-disable-next-line import/order
-import { Grid, Select, Text, Button, Group, Collapse, Box, Space, Flex } from '@mantine/core';
+import { Grid, Select, Text, Button, Group, Collapse, Box, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
@@ -298,16 +297,13 @@ function BOMCalculator() {
 
     const [opened, { toggle }] = useDisclosure(false);
     return (
-        <div>
-            <Flex mb="md" gap="md">
-
-                <Select
-                    label="Panel Type"
-                    value={panelType}
-                    onChange={(value) => setPanelType(value || 'DMEGC 405w')}
-                    data={Object.keys(panelPrices)}
-                />
-            </Flex>
+        <Stack spacing="md">
+            <Select
+                label="Panel Type"
+                value={panelType}
+                onChange={(value) => setPanelType(value || 'DMEGC 405w')}
+                data={Object.keys(panelPrices)}
+            />
             <div
                 className="grid-container"
                 onMouseLeave={handleMouseUp}
@@ -333,22 +329,18 @@ function BOMCalculator() {
                 )}
             </div>
             <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
-            <Space h="md" />
             <Button onClick={clearGrid}>Reset Grid</Button>
-            <Space h="md" />
             <Text size="xl">Bill of Materials:</Text>
-            {Object.entries(bom).map(([component, item]) => (
-                <div key={component}>
-                    <Text size="md">{component}:</Text>
-                    <Text ml="md" size="sm">{item.explanation}</Text>
-                </div>
-            ))}
-            <Space h="md" />
-            <Box mx="auto">
-                <Group justify="left" mb={5}>
-                    <Button onClick={toggle}>Cell Types Count</Button>
-                </Group>
-
+            <Stack spacing="xs">
+                {Object.entries(bom).map(([component, item]) => (
+                    <Box key={component}>
+                        <Text size="md">{component}:</Text>
+                        <Text ml="md" size="sm">{item.explanation}</Text>
+                    </Box>
+                ))}
+            </Stack>
+            <Box>
+                <Button onClick={toggle} mb="md">Cell Types Count</Button>
                 <Collapse in={opened}>
                     <Grid>
                         {Object.entries(cellTypesCount).map(([type, count]) => (
@@ -359,7 +351,7 @@ function BOMCalculator() {
                     </Grid>
                 </Collapse>
             </Box>
-        </div>
+        </Stack>
     );
 }
 
