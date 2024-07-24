@@ -1,9 +1,13 @@
-import attributes from './attributes.json';
-import { StoryWrapper } from '../../components/StoryWrapper/StoryWrapper';
+import type { Meta, StoryObj } from '@storybook/react';
 import { FooterSimple } from './FooterSimple';
 
-export default { title: 'FooterSimple' };
+const meta: Meta<typeof FooterSimple> = {
+  title: 'Components/FooterSimple',
+  component: FooterSimple,
+  tags: ['autodocs'],
+};
 
-export function Usage() {
-  return <StoryWrapper attributes={attributes} component={FooterSimple} />;
-}
+export default meta;
+type Story = StoryObj<typeof FooterSimple>;
+
+export const Default: Story = {};
