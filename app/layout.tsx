@@ -3,7 +3,7 @@
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, AppShell, Burger, Text, Group, Box } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell, Text, Group, Box } from '@mantine/core';
 import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
@@ -25,22 +25,20 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
-          <Group>
-            <Text>Tim's magic apps</Text>
-          </Group>
+          <Text>Tim's magic apps</Text>
           <HeaderTabs />
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="0">
+      <AppShell.Navbar p="0" h="calc(100vh - 60px)" top={60}>
         <NavbarSimpleColored />
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Box pb={60}>{children}</Box>
+        {children}
       </AppShell.Main>
 
-      <AppShell.Footer>
+      <AppShell.Footer p={0} h="auto">
         <FooterSimple />
       </AppShell.Footer>
     </AppShell>
