@@ -18,24 +18,23 @@ import {
   IconSettings,
   IconSwitchHorizontal,
   IconChevronDown,
+  IconGauge,
+  IconFingerprint,
+  IconActivity,
+  IconChevronRight,
 } from '@tabler/icons-react';
 import classes from './HeaderTabs.module.css';
 
 const user = {
-  name: 'Jane Spoonfighter',
-  email: 'janspoon@fighter.dev',
+  name: 'Graham Walden',
+  email: 'graham.walden@example.com',
   image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
 };
 
 const tabs = [
-  'Home',
-  'Orders',
-  'Education',
-  'Community',
-  'Forums',
-  'Support',
-  'Account',
-  'Helpdesk',
+  { icon: IconGauge, label: 'Dashboard', link: '/' },
+  { icon: IconFingerprint, label: 'BOM', link: '/bom' },
+  { icon: IconActivity, label: 'Elevations', link: '/elevations' },
 ];
 
 export function HeaderTabs() {
@@ -43,15 +42,15 @@ export function HeaderTabs() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
   const items = tabs.map((tab) => (
-    <Tabs.Tab value={tab} key={tab}>
-      {tab}
+    <Tabs.Tab value={tab.label} key={tab.label} leftSection={<tab.icon size="0.8rem" />}>
+      {tab.label}
     </Tabs.Tab>
   ));
 
   return (
     <Group>
       <Tabs
-        defaultValue="Home"
+        defaultValue="Dashboard"
         variant="outline"
         visibleFrom="sm"
         classNames={{
