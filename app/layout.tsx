@@ -1,7 +1,7 @@
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell } from '@mantine/core';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
 import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored'
@@ -20,9 +20,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
         <QueryProvider>
             <MantineProvider theme={theme}>
-<NavbarSimpleColored />
+                <AppShell
+                    navbar={{ width: 300, breakpoint: 'sm' }}
+                    padding="md"
+                >
+                    <AppShell.Navbar>
+                        <NavbarSimpleColored />
+                    </AppShell.Navbar>
+                    <AppShell.Main>
                         {children}
-
+                    </AppShell.Main>
+                </AppShell>
             </MantineProvider>
         </QueryProvider>
         </body>
