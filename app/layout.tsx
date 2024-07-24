@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
 import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored'
+import { HeaderTabs } from '../components/HeaderTabs/HeaderTabs'
 
 function AppShellRasta({ children }: { children: React.ReactNode }) {
   const [opened, setOpened] = useState(false);
@@ -20,6 +21,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
     >
       <AppShell.Header>
         <Group h="100%" px="md">
+            <HeaderTabs />
           <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
           <Text>Tim's magic apps</Text>
         </Group>

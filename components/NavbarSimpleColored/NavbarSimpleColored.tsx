@@ -21,7 +21,7 @@ const data = [
   { link: '', label: 'Plots', icon: IconFingerprint },
   { link: '', label: 'Plots missing data', icon: IconKey },
   { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
-  { link: '', label: 'Clients', icon: Icon2fa },
+  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
   { link: '', label: 'People', icon: IconSettings },
 ];
 
@@ -49,7 +49,7 @@ export function NavbarSimpleColored() {
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
           <Code fw={700} className={classes.version}>
-            v3.1.2
+            v0.0.2
           </Code>
         </Group>
         {links}
