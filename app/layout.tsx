@@ -38,9 +38,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
         {children}
       </AppShell.Main>
 
-      <AppShell.Footer p={0} h="auto">
-        <FooterSimple />
-      </AppShell.Footer>
+
     </AppShell>
   );
 }
