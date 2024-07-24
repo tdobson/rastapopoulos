@@ -16,7 +16,7 @@ import {
 import classes from './NavbarSimpleColored.module.css';
 
 const data = [
-  { link: '', label: 'Elevations', icon: IconBellRinging },
+  { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
   { link: '', label: 'Projects', icon: IconReceipt2 },
   { link: '', label: 'Plots', icon: IconFingerprint },
   { link: '', label: 'Plots missing data', icon: IconKey },

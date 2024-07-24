@@ -21,7 +21,7 @@ import {
   IconGauge,
   IconFingerprint,
   IconActivity,
-  IconChevronRight,
+  IconChevronRight, IconBellRinging, IconReceipt2, IconKey, IconDatabaseImport, Icon2fa,
 } from '@tabler/icons-react';
 import classes from './HeaderTabs.module.css';
 
@@ -32,9 +32,13 @@ const user = {
 };
 
 const tabs = [
-  { icon: IconGauge, label: 'Dashboard', link: '/' },
-  { icon: IconFingerprint, label: 'BOM', link: '/bom' },
-  { icon: IconActivity, label: 'Elevations', link: '/elevations' },
+  { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
+  { link: '', label: 'Projects', icon: IconReceipt2 },
+  { link: '', label: 'Plots', icon: IconFingerprint },
+  { link: '', label: 'Plots missing data', icon: IconKey },
+  { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
+  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
+  { link: '', label: 'People', icon: IconSettings },
 ];
 
 export function HeaderTabs() {
