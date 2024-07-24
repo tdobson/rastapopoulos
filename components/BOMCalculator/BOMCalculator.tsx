@@ -299,7 +299,8 @@ function BOMCalculator() {
                     <Text ml="md" size="sm">{item.explanation}</Text>
                 </div>
             ))}
-            <Box maw={400} mx="auto">
+            <Space h="md" />
+            <Box mx="auto">
                 <Group justify="left" mb={5}>
                     <Button onClick={toggle}>Cell Types Count</Button>
                 </Group>

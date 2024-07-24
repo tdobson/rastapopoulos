@@ -6,7 +6,7 @@ export default function ElevationsPage() {
     return (
         <div>
             <Container>
-                <h1>BOM Calculator</h1>
+                <h1>Tim's Magic BOM Calculatrix</h1>
                 <BOMCalculator />
             </Container>
         </div>
