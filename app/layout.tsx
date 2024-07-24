@@ -3,7 +3,7 @@
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, AppShell, Burger, Text } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell, Burger, Text, Group } from '@mantine/core';
 import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
@@ -19,8 +19,10 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       padding="md"
     >
       <AppShell.Header>
+        <Group h="100%" px="md">
+          <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
           <Text>Tim's magic apps</Text>
-        <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
+        </Group>
       </AppShell.Header>
 
       <AppShell.Navbar p="0">
