@@ -8,7 +8,7 @@ interface StoryWrapperProps {
 
 export function StoryWrapper({ children }: StoryWrapperProps) {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       {children}
     </MantineProvider>
   );
