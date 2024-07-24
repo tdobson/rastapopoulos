@@ -1,13 +1,15 @@
+'use client';
+
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, AppShell, Burger } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell, Burger, Text } from '@mantine/core';
 import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
 import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored'
 
-function AppShellDemo({ children }: { children: React.ReactNode }) {
+function AppShellRasta({ children }: { children: React.ReactNode }) {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -17,6 +19,7 @@ function AppShellDemo({ children }: { children: React.ReactNode }) {
       padding="md"
     >
       <AppShell.Header>
+          <Text>Tim's magic apps</Text>
         <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
       </AppShell.Header>
 
@@ -43,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
         <QueryProvider>
             <MantineProvider theme={theme}>
-                <AppShellDemo>{children}</AppShellDemo>
+                <AppShellRasta>{children}</AppShellRasta>
             </MantineProvider>
         </QueryProvider>
         </body>
