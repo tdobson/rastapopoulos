@@ -50,19 +50,46 @@ function determineCellType(grid: GridType, row: number, col: number): string {
 
      */
 
+    // CenterMidPanel: Surrounded by panels on all sides
     if (top.every(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterMidPanel';
+
+    // CenterTopPanel: Panels on top and sides, at least one panel below
     if (top.every(Boolean) && mid.every(Boolean) && bot.some(Boolean)) return 'CenterTopPanel';
+
+    // CenterBottomPanel: Panels on bottom and sides, at least one panel above
     if (top.some(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterBottomPanel';
+
+    // MidPanel: Panels above and below, but not completely surrounded
     if (top.some(Boolean) && !mid.every(Boolean) && bot.some(Boolean)) return 'MidPanel';
+
+    // MiddleMidPanel: Panels only on sides (left and/or right)
     if (!top.some(Boolean) && !bot.some(Boolean) && mid.some(Boolean)) return 'MiddleMidPanel';
+
+    // BottomEndPanel: Panels below and on one side, no panels above, no panel to the right
     if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean) && !mid[1]) return 'BottomEndPanel';
+
+    // BottomMidPanel: Panels below and on both sides, no panels above
     if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean) && mid[1]) return 'BottomMidPanel';
+
+    // TopEndPanel: Panels above and on one side, no panels below, no panel to the right
     if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean) && !mid[1]) return 'TopEndPanel';
+
+    // TopMidPanel: Panels above and on both sides, no panels below
     if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean) && mid[1]) return 'TopMidPanel';
+
+    // EndPanel: Panels either above or below, not on both sides, no panel to the right
     if ((top.some(Boolean) || bot.some(Boolean)) && !mid.every(Boolean) && !mid[1]) return 'EndPanel';
+
+    // SinglePanel: No panels on any side
     if (!top.some(Boolean) && !mid.every(Boolean) && !bot.some(Boolean)) return 'SinglePanel';
+
+    // TopSinglePanel: One panel above, no panels on sides or below
     if (top.filter(Boolean).length === 1 && !mid.every(Boolean) && !bot.some(Boolean)) return 'TopSinglePanel';
+
+    // BottomSinglePanel: One panel below, no panels on sides or above
     if (!top.some(Boolean) && !mid.every(Boolean) && bot.filter(Boolean).length === 1) return 'BottomSinglePanel';
+
+    // CenterSinglePanel: One panel on either left or right side, no panels above or below
     if (!top.some(Boolean) && !bot.some(Boolean) && mid.filter(Boolean).length === 1) return 'CenterSinglePanel';
 
     return 'Error';
