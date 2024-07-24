@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Group, Code, ScrollArea, rem } from '@mantine/core';
 import {
   IconNotes,

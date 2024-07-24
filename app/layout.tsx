@@ -7,9 +7,9 @@ import { MantineProvider, ColorSchemeScript, AppShell, Text, Group, Box } from '
 import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
-import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored'
-import { HeaderTabs } from '../components/HeaderTabs/HeaderTabs'
-import { FooterSimple } from '../components/FooterSimple/FooterSimple'
+import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored';
+import { HeaderTabs } from '../components/HeaderTabs/HeaderTabs';
+import { FooterSimple } from '../components/FooterSimple/FooterSimple';
 
 function AppShellRasta({ children }: { children: React.ReactNode }) {
   const [opened, setOpened] = useState(false);
@@ -35,9 +35,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Box style={{ minHeight: 'calc(100vh - 60px)' }}>
-          {children}
-        </Box>
+        <Box style={{ minHeight: 'calc(100vh - 60px)' }}>{children}</Box>
         <FooterSimple />
       </AppShell.Main>
     </AppShell>
@@ -45,23 +43,23 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <html lang="en">
-        <head>
-            <ColorSchemeScript />
-            <link rel="shortcut icon" href="/favicon.svg" />
-            <meta
-                name="viewport"
-                content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
-            />
-        </head>
-        <body>
+  return (
+    <html lang="en">
+      <head>
+        <ColorSchemeScript />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
+      </head>
+      <body>
         <QueryProvider>
-            <MantineProvider theme={theme}>
-                <AppShellRasta>{children}</AppShellRasta>
-            </MantineProvider>
+          <MantineProvider theme={theme}>
+            <AppShellRasta>{children}</AppShellRasta>
+          </MantineProvider>
         </QueryProvider>
-        </body>
-        </html>
-    );
+      </body>
+    </html>
+  );
 }

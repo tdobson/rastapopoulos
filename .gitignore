@@ -136,3 +136,7 @@ dist
 
 .DS_Store
 .aider*
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

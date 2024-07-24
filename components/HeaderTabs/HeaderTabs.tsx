@@ -21,14 +21,19 @@ import {
   IconGauge,
   IconFingerprint,
   IconActivity,
-  IconChevronRight, IconBellRinging, IconReceipt2, IconKey, IconDatabaseImport, Icon2fa,
+  IconChevronRight,
+  IconBellRinging,
+  IconReceipt2,
+  IconKey,
+  IconDatabaseImport,
+  Icon2fa,
 } from '@tabler/icons-react';
 import classes from './HeaderTabs.module.css';
 
 const user = {
   name: 'Graham Walden',
   email: 'graham.walden@example.com',
-  image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
+  image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
 };
 
 const tabs = [
@@ -75,9 +80,7 @@ export function HeaderTabs() {
         withinPortal
       >
         <Menu.Target>
-          <UnstyledButton
-            className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
-          >
+          <UnstyledButton className={cx(classes.user, { [classes.userActive]: userMenuOpened })}>
             <Group gap={7}>
               <Avatar src={user.image} alt={user.name} radius="xl" size={20} />
               <Text fw={500} size="sm" lh={1} mr={3}>
@@ -97,7 +100,7 @@ export function HeaderTabs() {
               />
             }
           >
-            Liked posts
+            My Projects
           </Menu.Item>
           <Menu.Item
             leftSection={
@@ -108,7 +111,7 @@ export function HeaderTabs() {
               />
             }
           >
-            Saved posts
+            My Bookmarked Plots
           </Menu.Item>
           <Menu.Item
             leftSection={
@@ -119,14 +122,12 @@ export function HeaderTabs() {
               />
             }
           >
-            Your comments
+            My Permits
           </Menu.Item>
 
           <Menu.Label>Settings</Menu.Label>
           <Menu.Item
-            leftSection={
-              <IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-            }
+            leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
           >
             Account settings
           </Menu.Item>
@@ -135,12 +136,10 @@ export function HeaderTabs() {
               <IconSwitchHorizontal style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
             }
           >
-            Change account
+            Change Password
           </Menu.Item>
           <Menu.Item
-            leftSection={
-              <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-            }
+            leftSection={<IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
           >
             Logout
           </Menu.Item>

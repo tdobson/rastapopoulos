@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import { Group, Code } from '@mantine/core';
 import {
@@ -49,7 +49,7 @@ export function NavbarSimpleColored() {
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
           <Code fw={700} className={classes.version}>
-            v0.0.2
+            v0.0.4
           </Code>
         </Group>
         {links}

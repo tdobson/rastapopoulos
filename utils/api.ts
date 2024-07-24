@@ -6,10 +6,7 @@ import { Elevation } from '../types/elevation';
 const apiBaseUrl = 'http://localhost:3001/api/v1';
 
 // Define the API request function
-async function apiRequest<T>(
-  path: string,
-  options: RequestInit = {}
-): Promise<T> {
+async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
   try {
     const response = await fetch(`${apiBaseUrl}${path}`, options);
     if (!response.ok) {

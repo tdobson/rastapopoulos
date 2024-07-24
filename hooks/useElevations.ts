@@ -13,7 +13,12 @@ export const useElevations = () => {
   const queryClient = useQueryClient();
 
   // GET Elevations
-  const { data: elevations, isLoading, isError, error } = useQuery<Elevation[], Error>({
+  const {
+    data: elevations,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Elevation[], Error>({
     queryKey: [ELEVATIONS_QUERY_KEY],
     queryFn: elevationsApi.getElevations,
   });
@@ -38,7 +43,10 @@ export const useElevations = () => {
   const { mutateAsync: createElevation, isPending: isCreatingElevation } = useMutation({
     mutationFn: (newElevation: Partial<Elevation>) => elevationsApi.createElevation(newElevation),
     onSuccess: (newElevation) => {
-      queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) => [...old, newElevation]);
+      queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) => [
+        ...old,
+        newElevation,
+      ]);
     },
     onError: (err) => {
       notifications.show({
@@ -54,7 +62,9 @@ export const useElevations = () => {
     mutationFn: (updatedElevation: Elevation) => elevationsApi.updateElevation(updatedElevation),
     onSuccess: (updatedElevation) => {
       queryClient.setQueryData<Elevation[]>([ELEVATIONS_QUERY_KEY], (old = []) =>
-        old.map((elevation) => (elevation.plot_id === updatedElevation.plot_id ? updatedElevation : elevation))
+        old.map((elevation) =>
+          elevation.plot_id === updatedElevation.plot_id ? updatedElevation : elevation
+        )
       );
     },
     onError: (err) => {

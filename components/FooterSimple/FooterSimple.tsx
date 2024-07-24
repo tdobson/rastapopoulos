@@ -1,6 +1,14 @@
 import { Container, Group, Anchor } from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './FooterSimple.module.css';
+import {
+  Icon2fa,
+  IconBellRinging,
+  IconDatabaseImport,
+  IconFingerprint,
+  IconKey,
+  IconReceipt2,
+  IconSettings,
+} from '@tabler/icons-react';
 
 interface FooterLink {
   link: string;
@@ -12,10 +20,13 @@ interface FooterSimpleProps {
 }
 
 const defaultLinks: FooterLink[] = [
-  { link: '#', label: 'Contact' },
-  { link: '#', label: 'Privacy' },
-  { link: '#', label: 'Blog' },
-  { link: '#', label: 'Careers' },
+  { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
+  { link: '', label: 'Projects', icon: IconReceipt2 },
+  { link: '', label: 'Plots', icon: IconFingerprint },
+  { link: '', label: 'Plots missing data', icon: IconKey },
+  { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
+  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
+  { link: '', label: 'People', icon: IconSettings },
 ];
 
 export function FooterSimple({ links = defaultLinks }: FooterSimpleProps) {
@@ -34,7 +45,6 @@ export function FooterSimple({ links = defaultLinks }: FooterSimpleProps) {
   return (
     <div className={classes.footer}>
       <Container className={classes.inner}>
-        <MantineLogo size={28} />
         <Group className={classes.links}>{items}</Group>
       </Container>
     </div>
