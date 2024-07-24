@@ -55,8 +55,8 @@ function determineCellType(grid: GridType, row: number, col: number): string {
     if (top.some(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterBottomPanel';
     if (top.some(Boolean) && !mid.every(Boolean) && bot.some(Boolean)) return 'MidPanel';
     if (!top.some(Boolean) && !bot.some(Boolean) && mid.some(Boolean)) return 'MiddleMidPanel';
-    if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean)) return 'BottomMidPanel';
-    if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean)) return 'TopMidPanel';
+    if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean)) return 'BottomEndPanel';
+    if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean)) return 'TopEndPanel';
     if ((top.some(Boolean) || bot.some(Boolean)) && !mid.every(Boolean)) return 'EndPanel';
     if (!top.some(Boolean) && !mid.every(Boolean) && !bot.some(Boolean)) return 'SinglePanel';
     if (top.filter(Boolean).length === 1 && !mid.every(Boolean) && !bot.some(Boolean)) return 'TopSinglePanel';
