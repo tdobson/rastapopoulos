@@ -19,11 +19,14 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       header={{ height: 60 }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
       padding="md"
+      layout="alt"
+      opened={opened}
+      onOpenedChange={setOpened}
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Group>
-            <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
+            <Burger opened={opened} onClick={() => setOpened((o) => !o)} visibleFrom="sm" size="sm" />
             <Text>Tim's magic apps</Text>
           </Group>
           <HeaderTabs />
