@@ -1,10 +1,33 @@
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, AppShell } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell, Burger } from '@mantine/core';
+import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
 import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored'
+
+function AppShellDemo({ children }: { children: React.ReactNode }) {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
+      </AppShell.Header>
+
+      <AppShell.Navbar p="md">
+        <NavbarSimpleColored />
+      </AppShell.Navbar>
+
+      <AppShell.Main>{children}</AppShell.Main>
+    </AppShell>
+  );
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -20,17 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
         <QueryProvider>
             <MantineProvider theme={theme}>
-                <AppShell
-                    navbar={{ width: 300, breakpoint: 'sm' }}
-                    padding="md"
-                >
-                    <AppShell.Navbar>
-                        <NavbarSimpleColored />
-                    </AppShell.Navbar>
-                    <AppShell.Main>
-                        {children}
-                    </AppShell.Main>
-                </AppShell>
+                <AppShellDemo>{children}</AppShellDemo>
             </MantineProvider>
         </QueryProvider>
         </body>
