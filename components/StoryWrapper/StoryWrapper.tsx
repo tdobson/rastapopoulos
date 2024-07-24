@@ -1,15 +1,15 @@
-import { ComponentPreview } from '../ComponentPreview/ComponentPreview';
-import { CanvasAttributes } from '../../data';
+import React from 'react';
+import { MantineProvider } from '@mantine/core';
+import { theme } from '../../theme';
 
 interface StoryWrapperProps {
-  attributes: CanvasAttributes;
-  component: React.FC<any>;
+  children: React.ReactNode;
 }
 
-export function StoryWrapper({ attributes, component: Component }: StoryWrapperProps) {
+export function StoryWrapper({ children }: StoryWrapperProps) {
   return (
-    <ComponentPreview canvas={attributes.canvas} withSpacing>
-      <Component {...(attributes.props || null)} />
-    </ComponentPreview>
+    <MantineProvider theme={theme}>
+      {children}
+    </MantineProvider>
   );
 }
