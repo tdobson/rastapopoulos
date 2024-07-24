@@ -55,9 +55,11 @@ function determineCellType(grid: GridType, row: number, col: number): string {
     if (top.some(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterBottomPanel';
     if (top.some(Boolean) && !mid.every(Boolean) && bot.some(Boolean)) return 'MidPanel';
     if (!top.some(Boolean) && !bot.some(Boolean) && mid.some(Boolean)) return 'MiddleMidPanel';
-    if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean)) return 'BottomEndPanel';
-    if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean)) return 'TopEndPanel';
-    if ((top.some(Boolean) || bot.some(Boolean)) && !mid.every(Boolean)) return 'EndPanel';
+    if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean) && !mid[1]) return 'BottomEndPanel';
+    if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean) && mid[1]) return 'BottomMidPanel';
+    if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean) && !mid[1]) return 'TopEndPanel';
+    if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean) && mid[1]) return 'TopMidPanel';
+    if ((top.some(Boolean) || bot.some(Boolean)) && !mid.every(Boolean) && !mid[1]) return 'EndPanel';
     if (!top.some(Boolean) && !mid.every(Boolean) && !bot.some(Boolean)) return 'SinglePanel';
     if (top.filter(Boolean).length === 1 && !mid.every(Boolean) && !bot.some(Boolean)) return 'TopSinglePanel';
     if (!top.some(Boolean) && !mid.every(Boolean) && bot.filter(Boolean).length === 1) return 'BottomSinglePanel';
