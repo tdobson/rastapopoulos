@@ -35,10 +35,11 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        {children}
+        <Box style={{ minHeight: 'calc(100vh - 60px)' }}>
+          {children}
+        </Box>
+        <FooterSimple />
       </AppShell.Main>
-
-
     </AppShell>
   );
 }
