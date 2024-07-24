@@ -75,7 +75,7 @@ Running the Project
 Available Scripts
 -----------------
 
-The project includes several npm scripts for development, testing, and building. Here's a detailed explanation of each script:
+The project includes several npm scripts for development, testing, building, and deployment. Here's a detailed explanation of each script:
 
 - `npm run dev`: Starts the Next.js development server. Use this for local development.
 - `npm run build`: Creates an optimized production build of the application.
@@ -91,6 +91,22 @@ The project includes several npm scripts for development, testing, and building.
 - `npm run test`: Runs a full test suite including Prettier checks, linting, type checking, and Jest tests.
 - `npm run storybook`: Starts the Storybook development server for component development and testing.
 - `npm run storybook:build`: Builds a static Storybook site for deployment.
+- `npm run deploy`: Builds and deploys the application to Cloudflare Pages using Wrangler.
+
+Deployment
+----------
+
+The project is configured to deploy to Cloudflare Pages. To deploy the application:
+
+1. Ensure you have Wrangler installed globally: `npm install -g wrangler`
+2. Authenticate with Cloudflare: `wrangler login`
+3. Run the deployment script: `npm run deploy`
+
+This will build the application and deploy it to:
+- https://rastapopoulos.pages.dev
+- https://rastapopoulos.migratingdragons.com
+
+Note: Make sure you have the necessary permissions and have set up your Cloudflare account correctly before deploying.
 
 Testing
 -------
