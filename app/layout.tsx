@@ -23,7 +23,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
         <Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar p="0">
         <NavbarSimpleColored />
       </AppShell.Navbar>
 
