@@ -1,9 +1,9 @@
 'use client';
 
 // components/BOMCalculator/BOMCalculator.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 // eslint-disable-next-line import/order
-import { Grid, Select, Text, Button, Group, Collapse, Box, Space } from '@mantine/core';
+import { Grid, Select, Text, Button, Group, Collapse, Box, Space, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM } from '../../types/bomCalculator';
 import './BOMCalculator.css';
@@ -20,7 +20,7 @@ function determineCellType(grid: GridType, row: number, col: number): string {
         [1, -1], [1, 0], [1, 1],
     ];
 
-    const isPanel = (r: number, c: number): boolean => 
+    const isPanel = (r: number, c: number): boolean =>
         r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
     const neighborPanels = directions.map(([dx, dy]) => {
@@ -245,9 +245,25 @@ function BOMCalculator() {
     const handleMouseUp = () => {
         isDraggingRef.current = false;
     };
+
+    const clearGrid = useCallback(() => {
+        const emptyGrid = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
+        setGrid(emptyGrid);
+        setCellTypesCount(countCellTypes(emptyGrid));
+    }, []);
+
     const [opened, { toggle }] = useDisclosure(false);
     return (
         <div>
+            <Flex mb="md" gap="md">
+
+                <Select
+                    label="Panel Type"
+                    value={panelType}
+                    onChange={(value) => setPanelType(value || 'DMEGC 405w')}
+                    data={Object.keys(panelPrices)}
+                />
+            </Flex>
             <div
                 className="grid-container"
                 onMouseLeave={handleMouseUp}
@@ -274,15 +290,17 @@ function BOMCalculator() {
             </div>
             <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
             <Space h="md" />
-            <Select
-                label="Panel Type"
-                value={panelType}
-                onChange={(value) => setPanelType(value || 'DMEGC 405w')}
-                data={Object.keys(panelPrices)}
-            />
+            <Button onClick={clearGrid}>Reset Grid</Button>
             <Space h="md" />
+            <Text size="xl">Bill of Materials:</Text>
+            {Object.entries(bom).map(([component, item]) => (
+                <div key={component}>
+                    <Text size="md">{component}:</Text>
+                    <Text ml="md" size="sm">{item.explanation}</Text>
+                </div>
+            ))}
             <Box maw={400} mx="auto">
-                <Group justify="center" mb={5}>
+                <Group justify="left" mb={5}>
                     <Button onClick={toggle}>Cell Types Count</Button>
                 </Group>
 
@@ -296,14 +314,6 @@ function BOMCalculator() {
                     </Grid>
                 </Collapse>
             </Box>
-
-            <Text size="xl">Bill of Materials:</Text>
-            {Object.entries(bom).map(([component, item]) => (
-                <div key={component}>
-                    <Text size="md">{component}:</Text>
-                    <Text ml="md" size="sm">{item.explanation}</Text>
-                </div>
-            ))}
         </div>
     );
 }
