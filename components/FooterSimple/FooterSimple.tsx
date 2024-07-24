@@ -2,14 +2,23 @@ import { Container, Group, Anchor } from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './FooterSimple.module.css';
 
-const links = [
+interface FooterLink {
+  link: string;
+  label: string;
+}
+
+interface FooterSimpleProps {
+  links?: FooterLink[];
+}
+
+const defaultLinks: FooterLink[] = [
   { link: '#', label: 'Contact' },
   { link: '#', label: 'Privacy' },
   { link: '#', label: 'Blog' },
   { link: '#', label: 'Careers' },
 ];
 
-export function FooterSimple() {
+export function FooterSimple({ links = defaultLinks }: FooterSimpleProps) {
   const items = links.map((link) => (
     <Anchor<'a'>
       c="dimmed"

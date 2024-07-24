@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { theme } from '../theme';
 
@@ -16,9 +16,12 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <MantineProvider theme={theme}>
-        <Story />
-      </MantineProvider>
+      <>
+        <ColorSchemeScript />
+        <MantineProvider theme={theme}>
+          <Story />
+        </MantineProvider>
+      </>
     ),
   ],
 };
