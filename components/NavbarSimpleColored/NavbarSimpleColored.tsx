@@ -49,7 +49,7 @@ export function NavbarSimpleColored() {
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
           <Code fw={700} className={classes.version}>
-            v0.0.5
+            v0.0.6
           </Code>
         </Group>
         {links}
