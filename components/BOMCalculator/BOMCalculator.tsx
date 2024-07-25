@@ -389,7 +389,7 @@ function BOMCalculator() {
 
   const [opened, { toggle }] = useDisclosure(false);
   return (
-    <Stack spacing="md">
+    <Stack gap="md">
       <Select
         label="Panel Type"
         value={panelType}
@@ -423,7 +423,7 @@ function BOMCalculator() {
       <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
       <Button onClick={clearGrid}>Reset Grid</Button>
       <Text size="xl">Bill of Materials:</Text>
-      <Stack spacing="xs">
+      <Stack gap="xs">
         {Object.entries(bom).map(([component, item]) => (
           <Box key={component}>
             <Text size="md">{component}:</Text>
