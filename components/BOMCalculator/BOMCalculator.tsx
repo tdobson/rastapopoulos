@@ -170,6 +170,20 @@ const componentPrices: ComponentPrices = {
 
 
 
+// Detailed requirements for each item in the Bill of Materials:
+// GSE Half Portrait Frames: 2x per SinglePanel, TopSinglePanel, or BottomSinglePanel
+// Lateral Flashing: 4x per SinglePanel, TopSinglePanel, BottomSinglePanel, and 2x per EndPanel
+// GSE Screws Black: 3x per SinglePanel, TopSinglePanel, BottomSinglePanel, EndPanel, plus 1x per EndPanel and MidPanel
+// GSE End Clamp: 4x per SinglePanel, TopSinglePanel, BottomSinglePanel, and 2x per EndPanel
+// GSE Mid Clamp: 2x per MidPanel, MiddleMidPanel, TopMidPanel, and BottomMidPanel
+// EPDM Pads: 1x per EndPanel and MidPanel
+// Compressed Seal Roll: 1x per 10 panels (rounded up)
+// Pre Assembled DC Lead: 2x per 10 panels (rounded up)
+// DC Live Sticker: 1x per 10 panels (rounded up)
+// Cable Ties: 5x per 10 panels (rounded up)
+// Lead: 1x per SinglePanel, BottomSinglePanel, CenterSinglePanel, CenterBottomPanel, BottomMidPanel, and BottomEndPanel
+// Solar Panels: 1x per panel (total count of all panel types)
+
 function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
   const bom: BOM = {
     'GSE Half Portrait Frames': {
