@@ -163,6 +163,7 @@ const componentPrices: ComponentPrices = {
 function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
   const bom: BOM = {
     'GSE Half Portrait Frames': {
+      // 2x of these per SinglePanel, TopSinglePanel, or BottomSinglePanel
       quantity:
         cellTypesCount.SinglePanel * 2 +
         cellTypesCount.TopSinglePanel * 2 +
@@ -172,6 +173,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 2`,
     },
     'Lateral Flashing': {
+      // 4x of these per SinglePanel, TopSinglePanel, BottomSinglePanel, and 2x per EndPanel
       quantity:
         (cellTypesCount.SinglePanel * 2 +
           cellTypesCount.TopSinglePanel * 2 +
@@ -183,6 +185,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 2 * 2`,
     },
     'GSE Screws Black': {
+      // 3x per SinglePanel, TopSinglePanel, BottomSinglePanel, EndPanel, plus 1x per EndPanel and MidPanel
       quantity:
         cellTypesCount.SinglePanel * 3 +
         cellTypesCount.TopSinglePanel * 3 +
@@ -195,6 +198,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
     },
     'GSE End Clamp': {
+      // 4x per SinglePanel, TopSinglePanel, BottomSinglePanel, and 2x per EndPanel
       quantity:
         cellTypesCount.SinglePanel * 4 +
         cellTypesCount.TopSinglePanel * 4 +
@@ -205,6 +209,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4 + ${cellTypesCount.EndPanel} EndPanel * 2`,
     },
     'GSE Mid Clamp': {
+      // 2x per MidPanel, MiddleMidPanel, TopMidPanel, and BottomMidPanel
       quantity:
         cellTypesCount.MidPanel * 2 +
         cellTypesCount.MiddleMidPanel * 2 +
@@ -215,12 +220,14 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `(${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) * 2`,
     },
     'EPDM Pads': {
+      // 1x per EndPanel and MidPanel
       quantity: cellTypesCount.EndPanel + cellTypesCount.MidPanel,
       price: componentPrices['EPDM Pads'],
       total: 0,
       explanation: `${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
     },
     'Compressed Seal Roll': {
+      // 1x per 10 panels (rounded up)
       quantity: Math.ceil(
         (cellTypesCount.SinglePanel +
           cellTypesCount.TopSinglePanel +
@@ -237,6 +244,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10`,
     },
     'Pre Assembled DC Lead': {
+      // 2x per 10 panels (rounded up)
       quantity:
         Math.ceil(
           (cellTypesCount.SinglePanel +
@@ -254,6 +262,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10 *2`,
     },
     'DC Live Sticker': {
+      // 1x per 10 panels (rounded up)
       quantity: Math.ceil(
         (cellTypesCount.SinglePanel +
           cellTypesCount.TopSinglePanel +
@@ -270,6 +279,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10`,
     },
     'Cable Ties': {
+      // 5x per 10 panels (rounded up)
       quantity:
         Math.ceil(
           (cellTypesCount.SinglePanel +
@@ -287,6 +297,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
       explanation: `Ceiling of (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) / 10 * 5`,
     },
     Lead: {
+      // 1x per SinglePanel, BottomSinglePanel, CenterSinglePanel, CenterBottomPanel, BottomMidPanel, and BottomEndPanel
       quantity:
         cellTypesCount.SinglePanel +
         cellTypesCount.BottomSinglePanel +
