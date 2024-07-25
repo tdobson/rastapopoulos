@@ -14,6 +14,7 @@ import {
 } from '@tabler/icons-react';
 //import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavbarSimpleColored.module.css';
+import { version } from '../../../package.json';
 
 const data = [
   { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
@@ -49,7 +50,7 @@ export function NavbarSimpleColored() {
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
           <Code fw={700} className={classes.version}>
-            v0.0.6
+            v{version}
           </Code>
         </Group>
         {links}
