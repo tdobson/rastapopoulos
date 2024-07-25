@@ -3,10 +3,12 @@
 // components/BOMCalculator/BOMCalculator.tsx
 
 import React, { useState, useRef, useCallback } from 'react';
-import { Grid, Select, Text, Button, Group, Collapse, Box, Stack } from '@mantine/core';
+import { Grid, Select, Text, Button, Group, Collapse, Box, Stack, NumberInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM, BOMItem } from '../../types/bomCalculator';
 import './BOMCalculator.css';
+import BOMTable from '../BOMTable/BOMTable';
+import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
 
 const gridSize = 25;
 
@@ -169,7 +171,7 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
 }
 
 // Updated calculateBOM function
-function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string): BOM {
+function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string, numberOfStrings: number): BOM {
   const { rows, columns } = getGridDimensions(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns);
   const totalPanelCount = getTotalPanelCount(cellTypesCount);
@@ -220,16 +222,16 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `Ceiling of ${totalPanelCount} total panels / 10`,
     },
     'Pre Assembled DC Lead': {
-      quantity: Math.ceil(totalPanelCount / 10) * 2,
+      quantity: numberOfStrings * 2,
       price: componentPrices['Pre Assembled DC Lead'],
       total: 0,
-      explanation: `Ceiling of ${totalPanelCount} total panels / 10 * 2`,
+      explanation: `${numberOfStrings} strings * 2`,
     },
     'DC Live Sticker': {
-      quantity: Math.ceil(totalPanelCount / 20), // This needs to be updated to 1 for every 2 Pre-assembled 10m DC leads
+      quantity: numberOfStrings,
       price: componentPrices['DC Live Sticker'],
       total: 0,
-      explanation: `Ceiling of ${totalPanelCount} total panels / 20`, // Update this explanationto0
+      explanation: `1 sticker per string, ${numberOfStrings} strings`,
     },
     'Cable Ties': {
       quantity: Math.ceil(totalPanelCount / 10) * 5,
@@ -280,16 +282,16 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `Ceiling of ${topRowPanelCount} top row panels / 4`,
     },
     'Arc Box': {
-      quantity: Math.ceil(totalPanelCount / 10) * 2,
+      quantity: numberOfStrings,
       price: componentPrices['Arc Box'],
       total: 0,
-      explanation: `Ceiling of ${totalPanelCount} total panels / 10 * 2`,
+      explanation: `1 Arc Box per string, ${numberOfStrings} strings`,
     },
     'Arc Box Bracket': {
-      quantity: Math.ceil(totalPanelCount / 10) * 2,
+      quantity: numberOfStrings,
       price: componentPrices['Arc Box Bracket'],
       total: 0,
-      explanation: `Ceiling of ${totalPanelCount} total panels / 10 * 2`,
+      explanation: `1 Arc Box Bracket per string, ${numberOfStrings} strings`,
     },
     'Roofer Guide Sheet': {
       quantity: 1,
@@ -431,7 +433,7 @@ function BOMCalculator() {
   const [numberOfStrings, setNumberOfStrings] = useState<number>(1);
   const isDraggingRef = useRef(false);
 
-  const bom = calculateBOM(cellTypesCount, grid, panelType);
+  const bom = calculateBOM(cellTypesCount, grid, panelType, numberOfStrings);
   const totalCost = Object.values(bom).reduce((sum, item) => sum + item.total, 0);
 
   const handleCellClick = (row: number, col: number) => {
@@ -464,6 +466,15 @@ function BOMCalculator() {
 
   const [opened, { toggle }] = useDisclosure(false);
 
+  const handlePrint = () => {
+    const printContent = document.createElement('div');
+    ReactDOM.render(<PrintableChecklist bom={bom} />, printContent);
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(printContent.innerHTML);
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   return (
       <Stack gap="md">
         <Select
@@ -471,6 +482,13 @@ function BOMCalculator() {
             value={panelType}
             onChange={(value) => setPanelType(value || 'DMEGC 405w')}
             data={Object.keys(panelPrices)}
+        />
+        <NumberInput
+          label="Number of Strings"
+          value={numberOfStrings}
+          onChange={(value) => setNumberOfStrings(value)}
+          min={1}
+          max={10}
         />
         <div
             className="grid-container"
@@ -515,16 +533,8 @@ function BOMCalculator() {
           </Collapse>
         </Box>
         <Text size="xl">Bill of Materials:</Text>
-        <Stack gap="xs">
-          {Object.entries(bom).map(([component, item]) => (
-              <Box key={component}>
-                <Text size="md">{component}:</Text>
-                <Text ml="md" size="sm">
-                  {item.explanation}
-                </Text>
-              </Box>
-          ))}
-        </Stack>
+        <BOMTable bom={bom} />
+        <Button onClick={handlePrint}>Print Checklist</Button>
       </Stack>
   );
 }
