@@ -27,7 +27,7 @@ function determineCellType(grid: GridType, row: number, col: number): string {
   ];
 
 
-  const doglegType = isDogleg(grid, row, col);
+  const doglegType = isCorner(grid, row, col);
   if (doglegType) return doglegType;
 
   const isPanel = (r: number, c: number): boolean =>
@@ -396,10 +396,10 @@ function BOMCalculator() {
     CenterBottomPanel: 0,
     CenterMidPanel: 0,
     CenterTopPanel: 0,
-    UpperLeftDogleg: 0,
-    UpperRightDogleg: 0,
-    LowerLeftDogleg: 0,
-    LowerRightDogleg: 0,
+    UpperLeftCorner: 0,
+    UpperRightCorner: 0,
+    LowerLeftCorner: 0,
+    LowerRightCorner: 0,
     EmptyCell: gridSize * gridSize,
     Error: 0,
   });
