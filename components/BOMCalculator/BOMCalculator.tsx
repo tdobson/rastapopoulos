@@ -13,15 +13,17 @@ type GridType = number[][];
 
 // Function to determine the type of a cell based on its neighbors
 function determineCellType(grid: GridType, row: number, col: number): string {
+  // Define the relative positions of neighboring cells
   const directions = [
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [0, -1],
-    /*[0, 0],*/ [0, 1],
-    [1, -1],
-    [1, 0],
-    [1, 1],
+    [-1, -1], // Top-left
+    [-1, 0],  // Top
+    [-1, 1],  // Top-right
+    [0, -1],  // Left
+    /*[0, 0],*/ // Current cell (commented out)
+    [0, 1],   // Right
+    [1, -1],  // Bottom-left
+    [1, 0],   // Bottom
+    [1, 1],   // Bottom-right
   ];
 
   const isPanel = (r: number, c: number): boolean =>
