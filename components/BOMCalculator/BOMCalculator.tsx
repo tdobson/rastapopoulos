@@ -2,7 +2,8 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { Grid, Select, Text, Button, Group, Collapse, Box, Stack, NumberInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM, BOMItem } from '../../types/bomCalculator';
@@ -430,10 +431,10 @@ function BOMCalculator() {
     Error: 0,
   });
   const [panelType, setPanelType] = useState<string>('DMEGC 405w');
-  const [numberOfStrings, setNumberOfStrings] = useState<number>(1);
+  const [numberOfStrings, setNumberOfStrings] = useState<number | ''>(1);
   const isDraggingRef = useRef(false);
 
-  const bom = calculateBOM(cellTypesCount, grid, panelType, numberOfStrings);
+  const bom = calculateBOM(cellTypesCount, grid, panelType, typeof numberOfStrings === 'number' ? numberOfStrings : 1);
   const totalCost = Object.values(bom).reduce((sum, item) => sum + item.total, 0);
 
   const handleCellClick = (row: number, col: number) => {
@@ -466,14 +467,18 @@ function BOMCalculator() {
 
   const [opened, { toggle }] = useDisclosure(false);
 
-  const handlePrint = () => {
-    const printContent = document.createElement('div');
-    ReactDOM.render(<PrintableChecklist bom={bom} />, printContent);
+  const handlePrint = useCallback(() => {
     const printWindow = window.open('', '_blank');
-    printWindow.document.write(printContent.innerHTML);
-    printWindow.document.close();
-    printWindow.print();
-  };
+    if (printWindow) {
+      ReactDOM.render(
+        <PrintableChecklist bom={bom} />,
+        printWindow.document.body,
+        () => {
+          printWindow.print();
+        }
+      );
+    }
+  }, [bom]);
 
   return (
       <Stack gap="md">
@@ -486,7 +491,7 @@ function BOMCalculator() {
         <NumberInput
           label="Number of Strings"
           value={numberOfStrings}
-          onChange={(value) => setNumberOfStrings(value)}
+          onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
           min={1}
           max={10}
         />
