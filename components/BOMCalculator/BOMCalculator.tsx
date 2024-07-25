@@ -51,12 +51,6 @@ function determineCellType(grid: GridType, row: number, col: number): string {
   // sides: Represents the number of panels on the sides of the current cell (0, 1, or 2)
   const sides = mid.filter(Boolean).length;
 
-  /*
-
-The comments below about the panel definitions with //todo after them are correct, but the code below each definition needs updating to match the comment
-
-     */
-
   // MidPanel: part of a single horizontal row - no panels above or below - and will have panels on both sides
   if (!above && !below && sides === 2) return 'MidPanel';
 
