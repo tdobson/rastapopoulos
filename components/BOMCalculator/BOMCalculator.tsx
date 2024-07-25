@@ -35,8 +35,11 @@ function determineCellType(grid: GridType, row: number, col: number): string {
 
   if (grid[row][col] !== 1) return 'EmptyCell';
 
+  // top: Represents whether there are panels in the three positions above the current cell
   const top = neighborPanels.slice(0, 3);
+  // mid: Represents whether there are panels to the left and right of the current cell
   const mid = neighborPanels.slice(3, 5);
+  // bot: Represents whether there are panels in the three positions below the current cell
   const bot = neighborPanels.slice(5);
 
   /*
