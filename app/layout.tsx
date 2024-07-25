@@ -17,11 +17,13 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      navbar={{
+        width: 300,
+        breakpoint: 'sm',
+        collapsed: { desktop: false, mobile: !opened }
+      }}
       padding="md"
       layout="alt"
-      opened={opened}
-      onOpenedChange={setOpened}
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
@@ -38,6 +40,8 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
         <Box style={{ minHeight: 'calc(100vh - 60px)' }}>{children}</Box>
         <FooterSimple />
       </AppShell.Main>
+
+      <AppShell.Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
     </AppShell>
   );
 }
