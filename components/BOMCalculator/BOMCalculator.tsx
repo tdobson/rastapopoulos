@@ -57,46 +57,41 @@ The comments below about the panel definitions with //todo after them are correc
 
      */
 
-  // MidPanel: part of a single horizontal row - no panels or above or below - and will have panels on both sides //todo
-  if (top.some(Boolean) && !mid.every(Boolean) && bot.some(Boolean)) return 'MidPanel';
+  // MidPanel: part of a single horizontal row - no panels above or below - and will have panels on both sides
+  if (!above && !below && sides === 2) return 'MidPanel';
 
-  // MiddleEndPanel: has a Panel above, a panel below, a panel to one side, but doesn't have panels to both sides. //todo
-  if (top.some(Boolean) && !mid.every(Boolean) && bot.some(Boolean)) return 'MiddleEndPanel';
+  // MiddleEndPanel: has a panel above, a panel below, a panel to one side, but doesn't have panels to both sides
+  if (above && below && sides === 1) return 'MiddleEndPanel';
 
-  // MiddleMidPanel: Surrounded by panels above, below, and to both sides //todo
-  if (!top.some(Boolean) && !bot.some(Boolean) && mid.some(Boolean)) return 'MiddleMidPanel';
+  // MiddleMidPanel: Surrounded by panels above, below, and to both sides
+  if (above && below && sides === 2) return 'MiddleMidPanel';
 
-  // BottomEndPanel: Panel above, and a panel to the side, but no panel below and no panels on both sides. //todo
-  if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean) && !mid[1])
-    return 'BottomEndPanel';
+  // BottomEndPanel: Panel above, and a panel to the side, but no panel below and no panels on both sides
+  if (above && !below && sides === 1) return 'BottomEndPanel';
 
-  // BottomMidPanel: has Panels above, has panels on both sides, doesn't have anything below it. //todo
-  if (!top.some(Boolean) && mid.some(Boolean) && bot.some(Boolean) && mid[1])
-    return 'BottomMidPanel';
+  // BottomMidPanel: has panels above, has panels on both sides, doesn't have anything below it
+  if (above && !below && sides === 2) return 'BottomMidPanel';
 
-  // TopEndPanel: Panel below, and a panel to the side, but no panel above and no panels on both sides. //todo
-  if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean) && !mid[1]) return 'TopEndPanel';
+  // TopEndPanel: Panel below, and a panel to the side, but no panel above and no panels on both sides
+  if (!above && below && sides === 1) return 'TopEndPanel';
 
-  // TopMidPanel: has Panels below, has panels on both sides, doesn't have anything above it. //todo
-  if (top.some(Boolean) && mid.some(Boolean) && !bot.some(Boolean) && mid[1]) return 'TopMidPanel';
+  // TopMidPanel: has panels below, has panels on both sides, doesn't have anything above it
+  if (!above && below && sides === 2) return 'TopMidPanel';
 
-  // EndPanel: Part of single horizontal row - has a panel on one side,Will not have panels above or below. doesn't have panels to both sides. //todo
-  if ((top.some(Boolean) || bot.some(Boolean)) && !mid.every(Boolean) && !mid[1]) return 'EndPanel';
+  // EndPanel: Part of single horizontal row - has a panel on one side, will not have panels above or below, doesn't have panels to both sides
+  if (!above && !below && sides === 1) return 'EndPanel';
 
-  // SinglePanel: No panels on any side - nothing above, below or to either sides. //todo
-  if (!top.some(Boolean) && !mid.every(Boolean) && !bot.some(Boolean)) return 'SinglePanel';
+  // SinglePanel: No panels on any side - nothing above, below or to either sides
+  if (!above && !below && sides === 0) return 'SinglePanel';
 
-  // TopSinglePanel: Part of a single vertical column. Has no panels on each side, or above, and has a panel below //todo
-  if (top.filter(Boolean).length === 1 && !mid.every(Boolean) && !bot.some(Boolean))
-    return 'TopSinglePanel';
+  // TopSinglePanel: Part of a single vertical column. Has no panels on each side, or above, and has a panel below
+  if (!above && below && sides === 0) return 'TopSinglePanel';
 
-  // BottomSinglePanel: Part of a single vertical column. Has no panels on each side, or below, and has a panels above. //todo
-  if (!top.some(Boolean) && !mid.every(Boolean) && bot.filter(Boolean).length === 1)
-    return 'BottomSinglePanel';
+  // BottomSinglePanel: Part of a single vertical column. Has no panels on each side, or below, and has a panel above
+  if (above && !below && sides === 0) return 'BottomSinglePanel';
 
-  // CenterSinglePanel: Part of a single vertical column. Has no panels on each side, and has a panel above and below //todo
-  if (!top.some(Boolean) && !bot.some(Boolean) && mid.filter(Boolean).length === 1)
-    return 'CenterSinglePanel';
+  // CenterSinglePanel: Part of a single vertical column. Has no panels on each side, and has a panel above and below
+  if (above && below && sides === 0) return 'CenterSinglePanel';
 
 
   /* Depreceated panel definitions */
