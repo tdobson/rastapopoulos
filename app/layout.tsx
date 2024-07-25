@@ -23,10 +23,9 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
         collapsed: { desktop: false, mobile: !opened }
       }}
       padding="md"
-      layout="alt"
     >
       <AppShell.Header>
-        <Group h="100%" px="md" justify="space-between">
+        <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Text>Tim's magic apps</Text>
           <HeaderTabs />
         </Group>
@@ -37,7 +36,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Box style={{ minHeight: 'calc(100vh - 60px)' }}>{children}</Box>
+        <Box mih="calc(100vh - 60px)">{children}</Box>
         <FooterSimple />
       </AppShell.Main>
 
