@@ -14,7 +14,8 @@ import {
 } from '@tabler/icons-react';
 //import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavbarSimpleColored.module.css';
-import { version } from '../../../package.json';
+// Define the version as a constant
+const version = '0.0.5'; // Update this manually when changing the version in package.json
 
 const data = [
   { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
