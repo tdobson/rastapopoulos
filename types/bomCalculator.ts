@@ -18,10 +18,10 @@ export type CellTypesCount = {
   CenterTopPanel: number;
   EmptyCell: number;
   Error: number;
-  UpperLeftCorner: number;
-  UpperRightCorner: number;
-  LowerLeftCorner: number;
-  LowerRightCorner: number;
+  BottomLeftCorner: number;
+  BottomRightCorner: number;
+  TopLeftCorner: number;
+  TopRightCorner: number;
 };
 
 export type PanelPrices = {

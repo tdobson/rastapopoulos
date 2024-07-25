@@ -129,10 +129,10 @@ function countCellTypes(grid: GridType): CellTypesCount {
     CenterTopPanel: 0,
     EmptyCell: 0,
     Error: 0,
-    UpperLeftCorner: 0,
-    UpperRightCorner: 0,
-    LowerLeftCorner: 0,
-    LowerRightCorner: 0,
+    BottomLeftCorner: 0,
+    BottomRightCorner: 0,
+    TopLeftCorner: 0,
+    TopRightCorner: 0,
   };
 
   for (let row = 0; row < gridSize; row++) {
@@ -363,12 +363,25 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
   const below = isPanel(row + 1, col);
   const left = isPanel(row, col - 1);
   const right = isPanel(row, col + 1);
+  const topLeft = isPanel(row - 1, col - 1);
+  const topRight = isPanel(row - 1, col + 1);
+  const bottomLeft = isPanel(row + 1, col - 1);
+  const bottomRight = isPanel(row + 1, col + 1);
 
-  // Check for corners
-  if (!above && !left && isPanel(row, col)) return 'UpperLeftCorner';
-  if (!above && !right && isPanel(row, col)) return 'UpperRightCorner';
-  if (!below && !left && isPanel(row, col)) return 'LowerLeftCorner';
-  if (!below && !right && isPanel(row, col)) return 'LowerRightCorner';
+  // Check if the current cell is a panel
+  if (!isPanel(row, col)) return null;
+
+  // Check for bottom-left inside corner
+  if (above && right && !topRight) return 'BottomLeftCorner';
+
+  // Check for bottom-right inside corner
+  if (above && left && !topLeft) return 'BottomRightCorner';
+
+  // Check for top-left inside corner
+  if (below && right && !bottomRight) return 'TopLeftCorner';
+
+  // Check for top-right inside corner
+  if (below && left && !bottomLeft) return 'TopRightCorner';
 
   return null;
 }
@@ -396,10 +409,10 @@ function BOMCalculator() {
     CenterBottomPanel: 0,
     CenterMidPanel: 0,
     CenterTopPanel: 0,
-    UpperLeftCorner: 0,
-    UpperRightCorner: 0,
-    LowerLeftCorner: 0,
-    LowerRightCorner: 0,
+    BottomLeftCorner: 0,
+    BottomRightCorner: 0,
+    TopLeftCorner: 0,
+    TopRightCorner: 0,
     EmptyCell: gridSize * gridSize,
     Error: 0,
   });
@@ -472,6 +485,22 @@ function BOMCalculator() {
       </div>
       <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
       <Button onClick={clearGrid}>Reset Grid</Button>
+      <Box>
+        <Button onClick={toggle} mb="md">
+          Cell Types Count
+        </Button>
+        <Collapse in={opened}>
+          <Grid>
+            {Object.entries(cellTypesCount).map(([type, count]) => (
+                <Grid.Col key={type} span={6}>
+                  <Text>
+                    {type}: {count}
+                  </Text>
+                </Grid.Col>
+            ))}
+          </Grid>
+        </Collapse>
+      </Box>
       <Text size="xl">Bill of Materials:</Text>
       <Stack gap="xs">
         {Object.entries(bom).map(([component, item]) => (
@@ -483,22 +512,7 @@ function BOMCalculator() {
           </Box>
         ))}
       </Stack>
-      <Box>
-        <Button onClick={toggle} mb="md">
-          Cell Types Count
-        </Button>
-        <Collapse in={opened}>
-          <Grid>
-            {Object.entries(cellTypesCount).map(([type, count]) => (
-              <Grid.Col key={type} span={6}>
-                <Text>
-                  {type}: {count}
-                </Text>
-              </Grid.Col>
-            ))}
-          </Grid>
-        </Collapse>
-      </Box>
+
     </Stack>
   );
 }
