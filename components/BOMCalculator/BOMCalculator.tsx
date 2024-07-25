@@ -53,28 +53,10 @@ function determineCellType(grid: GridType, row: number, col: number): string {
 
   /*
 
-    in
-    **
-    **
-
-    REsult: 2 x top mid panels when they're actually top end panels
-    Result: 2 x bottom mid panels when they're actualls bottom mid
-
-    They should be
-    2x top end
-    2x bottom end
+The comments below about the panel definitions with //todo after them are correct, but the code below each definition needs updating to match the comment
 
      */
-/*
-  // CenterMidPanel: Surrounded by panels on all sides
-  if (top.every(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterMidPanel';
 
-  // CenterTopPanel: Panels on top and sides, at least one panel below -- this would nothing above, at least one panel below, and panels to each side //todo?
-  if (top.every(Boolean) && mid.every(Boolean) && bot.some(Boolean)) return 'CenterTopPanel';
-
-  // CenterBottomPanel: Panel is on bottom and has panels on each side sides, and at least one panel above //todo?
-  if (top.some(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterBottomPanel';
-*/
   // MidPanel: part of a single horizontal row - no panels or above or below - and will have panels on both sides //todo
   if (top.some(Boolean) && !mid.every(Boolean) && bot.some(Boolean)) return 'MidPanel';
 
@@ -116,6 +98,21 @@ function determineCellType(grid: GridType, row: number, col: number): string {
   if (!top.some(Boolean) && !bot.some(Boolean) && mid.filter(Boolean).length === 1)
     return 'CenterSinglePanel';
 
+
+  /* Depreceated panel definitions */
+
+  /*
+  // CenterMidPanel: Surrounded by panels on all sides
+  if (top.every(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterMidPanel';
+
+  // CenterTopPanel: Panels on top and sides, at least one panel below -- this would nothing above, at least one panel below, and panels to each side //todo?
+  if (top.every(Boolean) && mid.every(Boolean) && bot.some(Boolean)) return 'CenterTopPanel';
+
+  // CenterBottomPanel: Panel is on bottom and has panels on each side sides, and at least one panel above //todo?
+  if (top.some(Boolean) && mid.every(Boolean) && bot.every(Boolean)) return 'CenterBottomPanel';
+*/
+
+  // if no definition found then return
   return 'Error';
 }
 
