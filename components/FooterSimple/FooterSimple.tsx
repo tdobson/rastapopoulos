@@ -20,13 +20,13 @@ interface FooterSimpleProps {
 }
 
 const defaultLinks: FooterLink[] = [
-  { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
-  { link: '', label: 'Projects', icon: IconReceipt2 },
-  { link: '', label: 'Plots', icon: IconFingerprint },
-  { link: '', label: 'Plots missing data', icon: IconKey },
-  { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
-  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
-  { link: '', label: 'People', icon: IconSettings },
+  { link: '/elevations', label: 'Elevations' },
+  { link: '', label: 'Projects' },
+  { link: '', label: 'Plots' },
+  { link: '', label: 'Plots missing data' },
+  { link: '', label: 'Project in Permitting' },
+  { link: '/bom', label: 'BOM Calculatrix' },
+  { link: '', label: 'People' },
 ];
 
 export function FooterSimple({ links = defaultLinks }: FooterSimpleProps) {
