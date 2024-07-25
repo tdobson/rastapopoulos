@@ -3,7 +3,7 @@
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, AppShell, Text, Group, Box } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell, Text, Group, Box, Burger } from '@mantine/core';
 import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
@@ -40,7 +40,6 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
         <FooterSimple />
       </AppShell.Main>
 
-      <AppShell.Burger opened={opened} onClick={() => setOpened((o) => !o)} hiddenFrom="sm" size="sm" />
     </AppShell>
   );
 }
