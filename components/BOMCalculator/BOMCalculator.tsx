@@ -183,7 +183,6 @@ const componentPrices: ComponentPrices = {
 // Cable Ties: 5x per 10 panels (rounded up)
 // Lead: 1x per SinglePanel, BottomSinglePanel, CenterSinglePanel, CenterBottomPanel, BottomMidPanel, and BottomEndPanel
 // Solar Panels: 1x per panel (total count of all panel types)
-
 function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
   const bom: BOM = {
     'GSE Half Portrait Frames': {
@@ -372,10 +371,12 @@ function isDogleg(grid: GridType, row: number, col: number): string | null {
   if (!above && !below && left && right) return null; // Horizontal line
   if (above && below && !left && !right) return null; // Vertical line
 
-  if (!above && below && !left && right && bottomRight) return 'UpperLeftDogleg';
-  if (!above && below && left && !right && bottomLeft) return 'UpperRightDogleg';
-  if (above && !below && !left && right && topRight) return 'LowerLeftDogleg';
-  if (above && !below && left && !right && topLeft) return 'LowerRightDogleg';
+  // Check for corners
+  if (!above && !left && topLeft) return 'UpperLeftDogleg';
+  if (!above && !right && topRight) return 'UpperRightDogleg';
+  if (!below && !left && bottomLeft) return 'LowerLeftDogleg';
+  if (!below && !right && bottomRight) return 'LowerRightDogleg';
+
 
   return null;
 }
