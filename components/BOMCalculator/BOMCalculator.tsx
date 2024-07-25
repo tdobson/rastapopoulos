@@ -122,7 +122,9 @@ function calculateLeadQuantity(panelCount: number): number {
 }
 
 function getBottomRowPanelCount(grid: GridType): number {
-  const bottomRow = grid[getTotalRows(grid) - 1];
+  const totalRows = getTotalRows(grid);
+  if (totalRows === 0) return 0;
+  const bottomRow = grid[totalRows - 1];
   return bottomRow.filter(cell => cell === 1).length;
 }
 
