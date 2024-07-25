@@ -129,10 +129,10 @@ function countCellTypes(grid: GridType): CellTypesCount {
     CenterTopPanel: 0,
     EmptyCell: 0,
     Error: 0,
-    UpperLeftDogleg: 0,
-    UpperRightDogleg: 0,
-    LowerLeftDogleg: 0,
-    LowerRightDogleg: 0,
+    UpperLeftCorner: 0,
+    UpperRightCorner: 0,
+    LowerLeftCorner: 0,
+    LowerRightCorner: 0,
   };
 
   for (let row = 0; row < gridSize; row++) {
@@ -355,7 +355,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
   return bom;
 }
 
-function isDogleg(grid: GridType, row: number, col: number): string | null {
+function isCorner(grid: GridType, row: number, col: number): string | null {
   const isPanel = (r: number, c: number): boolean =>
       r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
@@ -363,20 +363,12 @@ function isDogleg(grid: GridType, row: number, col: number): string | null {
   const below = isPanel(row + 1, col);
   const left = isPanel(row, col - 1);
   const right = isPanel(row, col + 1);
-  const topLeft = isPanel(row - 1, col - 1);
-  const topRight = isPanel(row - 1, col + 1);
-  const bottomLeft = isPanel(row + 1, col - 1);
-  const bottomRight = isPanel(row + 1, col + 1);
-
-  if (!above && !below && left && right) return null; // Horizontal line
-  if (above && below && !left && !right) return null; // Vertical line
 
   // Check for corners
-  if (!above && !left && topLeft) return 'UpperLeftDogleg';
-  if (!above && !right && topRight) return 'UpperRightDogleg';
-  if (!below && !left && bottomLeft) return 'LowerLeftDogleg';
-  if (!below && !right && bottomRight) return 'LowerRightDogleg';
-
+  if (!above && !left && isPanel(row, col)) return 'UpperLeftCorner';
+  if (!above && !right && isPanel(row, col)) return 'UpperRightCorner';
+  if (!below && !left && isPanel(row, col)) return 'LowerLeftCorner';
+  if (!below && !right && isPanel(row, col)) return 'LowerRightCorner';
 
   return null;
 }
