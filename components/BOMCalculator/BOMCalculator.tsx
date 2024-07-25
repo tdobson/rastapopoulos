@@ -44,6 +44,13 @@ function determineCellType(grid: GridType, row: number, col: number): string {
   // bot: Represents whether there are panels in the three positions below the current cell
   const bot = neighborPanels.slice(5);
 
+  // above: Represents whether there is a panel directly above the current cell (no diagonals)
+  const above = neighborPanels[1];
+  // below: Represents whether there is a panel directly below the current cell (no diagonals)
+  const below = neighborPanels[6];
+  // sides: Represents whether there are panels to both the left and right of the current cell
+  const sides = mid.every(Boolean);
+
   /*
 
     in
