@@ -26,6 +26,10 @@ function determineCellType(grid: GridType, row: number, col: number): string {
     [1, 1],   // Bottom-right
   ];
 
+
+  const doglegType = isDogleg(grid, row, col);
+  if (doglegType) return doglegType;
+
   const isPanel = (r: number, c: number): boolean =>
     r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
@@ -125,6 +129,10 @@ function countCellTypes(grid: GridType): CellTypesCount {
     CenterTopPanel: 0,
     EmptyCell: 0,
     Error: 0,
+    UpperLeftDogleg: 0,
+    UpperRightDogleg: 0,
+    LowerLeftDogleg: 0,
+    LowerRightDogleg: 0,
   };
 
   for (let row = 0; row < gridSize; row++) {
@@ -159,6 +167,8 @@ const componentPrices: ComponentPrices = {
   'Copper Nails': 0.02,
   Lead: 0.0228,
 };
+
+
 
 function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
   const bom: BOM = {
@@ -332,6 +342,30 @@ function calculateBOM(cellTypesCount: CellTypesCount, panelType: string): BOM {
   return bom;
 }
 
+function isDogleg(grid: GridType, row: number, col: number): string | null {
+  const isPanel = (r: number, c: number): boolean =>
+      r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
+
+  const above = isPanel(row - 1, col);
+  const below = isPanel(row + 1, col);
+  const left = isPanel(row, col - 1);
+  const right = isPanel(row, col + 1);
+  const topLeft = isPanel(row - 1, col - 1);
+  const topRight = isPanel(row - 1, col + 1);
+  const bottomLeft = isPanel(row + 1, col - 1);
+  const bottomRight = isPanel(row + 1, col + 1);
+
+  if (!above && !below && left && right) return null; // Horizontal line
+  if (above && below && !left && !right) return null; // Vertical line
+
+  if (!above && below && !left && right && bottomRight) return 'UpperLeftDogleg';
+  if (!above && below && left && !right && bottomLeft) return 'UpperRightDogleg';
+  if (above && !below && !left && right && topRight) return 'LowerLeftDogleg';
+  if (above && !below && left && !right && topLeft) return 'LowerRightDogleg';
+
+  return null;
+}
+
 // Function to calculate the total cost of the bill of materials
 // Removed unused function calculateTotalCost
 
@@ -355,6 +389,10 @@ function BOMCalculator() {
     CenterBottomPanel: 0,
     CenterMidPanel: 0,
     CenterTopPanel: 0,
+    UpperLeftDogleg: 0,
+    UpperRightDogleg: 0,
+    LowerLeftDogleg: 0,
+    LowerRightDogleg: 0,
     EmptyCell: gridSize * gridSize,
     Error: 0,
   });
