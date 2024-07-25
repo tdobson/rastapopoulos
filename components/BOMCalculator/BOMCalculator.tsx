@@ -48,8 +48,8 @@ function determineCellType(grid: GridType, row: number, col: number): string {
   const above = neighborPanels[1];
   // below: Represents whether there is a panel directly below the current cell (no diagonals)
   const below = neighborPanels[6];
-  // sides: Represents whether there are panels to both the left and right of the current cell
-  const sides = mid.every(Boolean);
+  // sides: Represents the number of panels on the sides of the current cell (0, 1, or 2)
+  const sides = mid.filter(Boolean).length;
 
   /*
 
