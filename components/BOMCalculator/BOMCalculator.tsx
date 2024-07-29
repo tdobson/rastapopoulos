@@ -10,6 +10,7 @@ import { CellTypesCount, PanelPrices, ComponentPrices, BOM, BOMItem } from '../.
 import './BOMCalculator.css';
 import BOMTable from '../BOMTable/BOMTable';
 import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
+import BOMRules from '../BOMRules/BOMRules';
 
 const gridSize = 25;
 
@@ -497,6 +498,14 @@ function BOMCalculator() {
           min={1}
           max={10}
         />
+        <Box>
+          <Button onClick={toggle} mb="md">
+            Toggle BOM Calculation Rules
+          </Button>
+          <Collapse in={opened}>
+            <BOMRules />
+          </Collapse>
+        </Box>
         <div
             className="grid-container"
             onMouseLeave={handleMouseUp}
