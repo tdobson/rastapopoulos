@@ -18,17 +18,9 @@ import {
   IconSettings,
   IconSwitchHorizontal,
   IconChevronDown,
-  IconGauge,
-  IconFingerprint,
-  IconActivity,
-  IconChevronRight,
-  IconBellRinging,
-  IconReceipt2,
-  IconKey,
-  IconDatabaseImport,
-  Icon2fa,
 } from '@tabler/icons-react';
 import classes from './HeaderTabs.module.css';
+import { navigationItems } from '../../utils/navigationItems';
 
 const user = {
   name: 'Graham Walden',
@@ -36,21 +28,11 @@ const user = {
   image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
 };
 
-const tabs = [
-  { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
-  { link: '', label: 'Projects', icon: IconReceipt2 },
-  { link: '', label: 'Plots', icon: IconFingerprint },
-  { link: '', label: 'Plots missing data', icon: IconKey },
-  { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
-  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
-  { link: '', label: 'People', icon: IconSettings },
-];
-
 export function HeaderTabs() {
   const theme = useMantineTheme();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  const items = tabs.map((tab) => (
+  const items = navigationItems.map((tab) => (
     <Tabs.Tab value={tab.label} key={tab.label} leftSection={<tab.icon size="0.8rem" />}>
       {tab.label}
     </Tabs.Tab>

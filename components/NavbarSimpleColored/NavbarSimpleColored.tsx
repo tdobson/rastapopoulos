@@ -2,35 +2,19 @@
 import { useState } from 'react';
 import { Group, Code } from '@mantine/core';
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconKey,
-  IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
   IconSwitchHorizontal,
   IconLogout,
 } from '@tabler/icons-react';
-//import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavbarSimpleColored.module.css';
+import { navigationItems } from '../../utils/navigationItems';
+
 // Define the version as a constant
 const version = '0.0.6'; // Update this manually when changing the version in package.json
-
-const data = [
-  { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
-  { link: '', label: 'Projects', icon: IconReceipt2 },
-  { link: '', label: 'Plots', icon: IconFingerprint },
-  { link: '', label: 'Plots missing data', icon: IconKey },
-  { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
-  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
-  { link: '', label: 'People', icon: IconSettings },
-];
 
 export function NavbarSimpleColored() {
   const [active, setActive] = useState('Billing');
 
-  const links = data.map((item) => (
+  const links = navigationItems.map((item) => (
     <a
       className={classes.link}
       data-active={item.label === active || undefined}
