@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FooterSimple } from './FooterSimple';
+import { IconHome, IconInfoCircle, IconPhone } from '@tabler/icons-react';
 
 const meta: Meta<typeof FooterSimple> = {
   title: 'Components/FooterSimple',
@@ -18,9 +19,9 @@ export const Default: Story = {};
 export const CustomLinks: Story = {
   args: {
     links: [
-      { link: '#', label: 'About' },
-      { link: '#', label: 'Services' },
-      { link: '#', label: 'Contact' },
+      { link: '#', label: 'About', icon: IconInfoCircle },
+      { link: '#', label: 'Services', icon: IconHome },
+      { link: '#', label: 'Contact', icon: IconPhone },
     ],
   },
 };
