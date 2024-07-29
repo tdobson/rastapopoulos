@@ -15,7 +15,7 @@ import {
 //import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavbarSimpleColored.module.css';
 // Define the version as a constant
-const version = '0.0.5'; // Update this manually when changing the version in package.json
+const version = '0.0.6'; // Update this manually when changing the version in package.json
 
 const data = [
   { link: '/elevations', label: 'Elevations', icon: IconBellRinging },
