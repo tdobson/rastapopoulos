@@ -220,6 +220,39 @@ If you encounter issues with Storybook:
 
 By following these guidelines, you can effectively use Storybook to develop, test, and document your React components in isolation, improving the overall development workflow of the project.
 
+Navigation Setup
+----------------
+
+The application uses a centralized navigation system defined in `utils/navigationItems.ts`. This setup allows for consistent navigation across different components of the application.
+
+### Navigation Items Structure
+
+The navigation items are defined as an array of objects, each representing a navigation link with the following properties:
+
+- `link`: The URL or path for the navigation item.
+- `label`: The display text for the navigation item.
+- `icon`: An icon component from `@tabler/icons-react` to be displayed alongside the label.
+
+### Usage in Components
+
+The centralized navigation items are used in several components:
+
+1. **HeaderTabs**: Displays the main navigation tabs in the header.
+2. **NavbarSimpleColored**: Shows the navigation items in the sidebar.
+3. **FooterSimple**: Renders navigation links in the footer.
+
+This approach ensures consistency across the application and makes it easier to update the navigation structure globally.
+
+### Customizing Navigation
+
+To add, remove, or modify navigation items:
+
+1. Open `utils/navigationItems.ts`.
+2. Edit the `navigationItems` array as needed.
+3. The changes will automatically reflect in the HeaderTabs, NavbarSimpleColored, and FooterSimple components.
+
+This centralized approach simplifies navigation management and maintains consistency throughout the application.
+
 Code Quality and Formatting
 ---------------------------
 
