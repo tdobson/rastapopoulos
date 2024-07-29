@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Group, Code } from '@mantine/core';
+import { Group, Code, Anchor } from '@mantine/core';
 import {
   IconSwitchHorizontal,
   IconLogout,
@@ -15,7 +15,7 @@ export function NavbarSimpleColored() {
   const [active, setActive] = useState('Billing');
 
   const links = navigationItems.map((item) => (
-    <a
+    <Anchor
       className={classes.link}
       data-active={item.label === active || undefined}
       href={item.link}
@@ -27,7 +27,7 @@ export function NavbarSimpleColored() {
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Anchor>
   ));
 
   return (
@@ -42,15 +42,15 @@ export function NavbarSimpleColored() {
       </div>
 
       <div className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <Anchor href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
-        </a>
+        </Anchor>
 
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <Anchor href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
-        </a>
+        </Anchor>
       </div>
     </nav>
   );

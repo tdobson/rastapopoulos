@@ -41,7 +41,7 @@ export function HeaderTabs() {
   return (
     <Group>
       <Tabs
-        defaultValue="Dashboard"
+        defaultValue={navigationItems[0].label}
         variant="outline"
         visibleFrom="sm"
         classNames={{

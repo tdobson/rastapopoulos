@@ -8,22 +8,22 @@ interface FooterSimpleProps {
 
 export function FooterSimple({ links = navigationItems }: FooterSimpleProps) {
   const items = links.map((link) => (
-    <Anchor<'a'>
-      c="dimmed"
+    <Anchor
       key={link.label}
       href={link.link}
       onClick={(event) => event.preventDefault()}
       size="sm"
+      c="dimmed"
     >
       {link.label}
     </Anchor>
   ));
 
   return (
-    <div className={classes.footer}>
+    <footer className={classes.footer}>
       <Container className={classes.inner}>
         <Group className={classes.links}>{items}</Group>
       </Container>
-    </div>
+    </footer>
   );
 }
