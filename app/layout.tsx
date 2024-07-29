@@ -3,13 +3,14 @@
 // app/layout.tsx
 import '@mantine/core/styles.css';
 import React from 'react';
-import { MantineProvider, ColorSchemeScript, AppShell, Text, Group, Box, Burger } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript, AppShell, Text, Group, Box } from '@mantine/core';
 import { useState } from 'react';
 import { theme } from '../theme';
 import { QueryProvider } from './QueryProvider';
 import { NavbarSimpleColored } from '../components/NavbarSimpleColored/NavbarSimpleColored';
 import { HeaderTabs } from '../components/HeaderTabs/HeaderTabs';
 import { FooterSimple } from '../components/FooterSimple/FooterSimple';
+import { navigationItems } from '../utils/navigationItems';
 
 function AppShellRasta({ children }: { children: React.ReactNode }) {
   const [opened, setOpened] = useState(false);
@@ -37,7 +38,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
 
       <AppShell.Main>
         <Box mih="calc(100vh - 60px)">{children}</Box>
-        <FooterSimple />
+        <FooterSimple links={navigationItems} />
       </AppShell.Main>
 
     </AppShell>
