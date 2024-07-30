@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { Container } from '@mantine/core';
+import { Container, Title } from '@mantine/core';
 
 const BOMCalculator = dynamic(() => import('../../components/BOMCalculator/BOMCalculator'), {
   ssr: false,
@@ -11,7 +11,7 @@ export default function BOMPage() {
   return (
     <div>
       <Container>
-        <h1>Tim's Magic BOM Calculatrix</h1>
+        <Title order={1}>Tim's Magic BOM Calculatrix</Title>
         <BOMCalculator />
       </Container>
     </div>
