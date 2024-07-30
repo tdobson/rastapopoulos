@@ -21,7 +21,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       navbar={{
         width: 300,
         breakpoint: 'sm',
-        collapsed: { desktop: false, mobile: !opened }
+        collapsed: { desktop: false, mobile: !opened },
       }}
       padding="md"
     >
@@ -40,7 +40,6 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
         <Box mih="calc(100vh - 60px)">{children}</Box>
         <FooterSimple links={navigationItems} />
       </AppShell.Main>
-
     </AppShell>
   );
 }

@@ -1,10 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Group, Code, Anchor } from '@mantine/core';
-import {
-  IconSwitchHorizontal,
-  IconLogout,
-} from '@tabler/icons-react';
+import { IconSwitchHorizontal, IconLogout } from '@tabler/icons-react';
 import classes from './NavbarSimpleColored.module.css';
 import { navigationItems } from '../../utils/navigationItems';
 

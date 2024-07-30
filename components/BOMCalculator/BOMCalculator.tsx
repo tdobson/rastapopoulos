@@ -4,9 +4,25 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { Grid, Select, Text, Button, Group, Collapse, Box, Stack, NumberInput } from '@mantine/core';
+import {
+  Grid,
+  Select,
+  Text,
+  Button,
+  Group,
+  Collapse,
+  Box,
+  Stack,
+  NumberInput,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { CellTypesCount, PanelPrices, ComponentPrices, BOM, BOMItem } from '../../types/bomCalculator';
+import {
+  CellTypesCount,
+  PanelPrices,
+  ComponentPrices,
+  BOM,
+  BOMItem,
+} from '../../types/bomCalculator';
 import './BOMCalculator.css';
 import BOMTable from '../BOMTable/BOMTable';
 import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
@@ -17,8 +33,8 @@ const gridSize = 25;
 type GridType = number[][];
 
 const panelPrices: PanelPrices = {
-  'DMEGC 405w': 112.00,
-  'LONGi 405w': 121.50,
+  'DMEGC 405w': 112.0,
+  'LONGi 405w': 121.5,
 };
 
 // Component prices
@@ -26,27 +42,27 @@ const componentPrices: ComponentPrices = {
   'GSE Half Portrait Frames': 19.52,
   'Lateral Flashing': 13.35,
   'GSE Screws Black': 0.26,
-  'GSE Screws Silver': 0.30, // Example price, adjust as needed
+  'GSE Screws Silver': 0.3, // Example price, adjust as needed
   'GSE End Clamp': 1.11,
   'GSE Mid Clamp': 1.28,
   'Compressed Seal Roll': 9.15,
   'Pre Assembled DC Lead': 9.03,
   'DC Live Sticker': 0.24,
   'Cable Ties': 0.03,
-  'Battens': 0.24,
+  Battens: 0.24,
   'Galvanised Nails': 0.01,
   'Copper Nails': 0.02,
-  'Lead': 34.20, // per 1500mm length
-  'Lead 600mm': 42.80, // Example price, adjust as needed
-  'Tile Kicker Bars': 5.00, // Example price, adjust as needed
-  'Kicker Bar Hooks': 1.50, // Example price, adjust as needed
-  'Flexalu Top Flashing': 15.00, // Example price, adjust as needed
-  'Arc Box': 20.00, // Example price, adjust as needed
-  'Arc Box Bracket': 5.00, // Example price, adjust as needed
-  'Roofer Guide Sheet': 1.00, // Example price, adjust as needed
-  'Lateral Flashing Hooks': 0.50, // Example price, adjust as needed
+  Lead: 34.2, // per 1500mm length
+  'Lead 600mm': 42.8, // Example price, adjust as needed
+  'Tile Kicker Bars': 5.0, // Example price, adjust as needed
+  'Kicker Bar Hooks': 1.5, // Example price, adjust as needed
+  'Flexalu Top Flashing': 15.0, // Example price, adjust as needed
+  'Arc Box': 20.0, // Example price, adjust as needed
+  'Arc Box Bracket': 5.0, // Example price, adjust as needed
+  'Roofer Guide Sheet': 1.0, // Example price, adjust as needed
+  'Lateral Flashing Hooks': 0.5, // Example price, adjust as needed
   'Lateral Flashing Nails Galv 20mm': 0.02, // Example price, adjust as needed
-  'Uberflex Carpet Flashing': 10.00, // Example price, adjust as needed
+  'Uberflex Carpet Flashing': 10.0, // Example price, adjust as needed
 };
 
 // Batten table
@@ -75,23 +91,23 @@ const battenTable: { [key: number]: { [key: number]: number } } = {
 
 //number of panels vs millimetereage of lead required. eg 1 panel requires 2100mm of lead, 6 panels require 8900mm of lead, 7 panels require 8900+1375mm of lead etc
 const leadMeterageTable = {
-  1: 2100,  // Length required for 1 panel
-  2: 3400,  // Length required for 2 panels
-  3: 4475,  // Length required for 3 panels
-  4: 6000,  // Length required for 4 panels
-  5: 7275,  // Length required for 5 panels
-  6: 8900,  // Length required for 6 panels
-  default: 1375,  // Additional length per panel after the 6th
-  standardLeadLength: 1500,  // Length of one piece of lead in mm
+  1: 2100, // Length required for 1 panel
+  2: 3400, // Length required for 2 panels
+  3: 4475, // Length required for 3 panels
+  4: 6000, // Length required for 4 panels
+  5: 7275, // Length required for 5 panels
+  6: 8900, // Length required for 6 panels
+  default: 1375, // Additional length per panel after the 6th
+  standardLeadLength: 1500, // Length of one piece of lead in mm
   conversionTable: {
-    1: 2,  // 1 panel requires 2 rolls of lead
-    2: 3,  // 2 panels require 3 rolls of lead
-    3: 3,  // 3 panels require 3 rolls of lead
-    4: 4,  // 4 panels require 4 rolls of lead
-    5: 5,  // 5 panels require 5 rolls of lead
-    6: 6,  // 6 panels require 6 rolls of lead
-    default: 1  // Additional panels require 1 roll per panel
-  }
+    1: 2, // 1 panel requires 2 rolls of lead
+    2: 3, // 2 panels require 3 rolls of lead
+    3: 3, // 3 panels require 3 rolls of lead
+    4: 4, // 4 panels require 4 rolls of lead
+    5: 5, // 5 panels require 5 rolls of lead
+    6: 6, // 6 panels require 6 rolls of lead
+    default: 1, // Additional panels require 1 roll per panel
+  },
 };
 
 /**
@@ -193,8 +209,6 @@ function isCorner(grid, row, col) {
   return corners;
 }
 
-
-
 /**
  * Returns the total number of rows in the grid that contain at least one panel.
  *
@@ -203,7 +217,7 @@ function isCorner(grid, row, col) {
  */
 function getTotalRows(grid: GridType): number {
   for (let row = grid.length - 1; row >= 0; row--) {
-    if (grid[row].some(cell => cell === 1)) {
+    if (grid[row].some((cell) => cell === 1)) {
       return row + 1;
     }
   }
@@ -250,7 +264,10 @@ function isBottomRow(grid: GridType, row: number): boolean {
  * @param nonBottomRowPanelCount - The number of panels with nothing below them that aren't on the bottom row.
  * @returns An object containing the quantities of standard and deep lead required.
  */
-function calculateLeadQuantity(bottomRowPanelCount: number, nonBottomRowPanelCount: number): { standard: number; deep: number } {
+function calculateLeadQuantity(
+  bottomRowPanelCount: number,
+  nonBottomRowPanelCount: number
+): { standard: number; deep: number } {
   const calculateLeadPieces = (panelCount: number): number => {
     if (panelCount <= 0) return 0; // No panels, no lead required
 
@@ -282,7 +299,7 @@ function calculateLeadQuantity(bottomRowPanelCount: number, nonBottomRowPanelCou
  */
 function getPanelCountInRow(grid: GridType, row: number): number {
   if (row < 0 || row >= grid.length) return 0;
-  return grid[row].filter(cell => cell === 1).length;
+  return grid[row].filter((cell) => cell === 1).length;
 }
 
 /**
@@ -332,7 +349,7 @@ function getNonBottomRowPanelCount(grid: GridType): number {
  * @returns The total number of active cells (panels).
  */
 function getTotalPanelCount(grid: GridType): number {
-  return grid.flat().filter(cell => cell === 1).length;
+  return grid.flat().filter((cell) => cell === 1).length;
 }
 
 /**
@@ -385,16 +402,16 @@ function getBattenDimensions(grid: GridType): { rows: number; columns: number } 
 
 /**
  * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
- * 
+ *
  * @param {number} rows - The number of rows in the solar panel grid.
  * @param {number} columns - The number of columns in the solar panel grid.
  * @param {number} totalPanelCount - The total number of solar panels in the grid.
  * @returns {number} The total number of battens required.
- * 
+ *
  * @description
  * This function determines the number of battens needed for a solar panel installation.
  * Battens are horizontal supports used to secure solar panels to a roof.
- * 
+ *
  * The calculation is based on the following business logic:
  * 1. If no solar panels are specified (totalPanelCount is 0), no battens are needed.
  * 2. For grids up to 20 rows and 4 columns, a predefined lookup table (battenTable) is used.
@@ -402,15 +419,15 @@ function getBattenDimensions(grid: GridType): { rows: number; columns: number } 
  *    - The base quantity is the value for a 20x4 grid from the lookup table.
  *    - For each row beyond 20, 9 additional battens are added.
  *    - For each column beyond 4, 27 additional battens are added.
- * 
+ *
  * This approach ensures accurate batten quantities for standard installations
  * while providing a reasonable estimate for larger, non-standard installations.
- * 
+ *
  * @example
  * // For a 3x2 grid with 6 panels
  * const battenCount = calculateBattenQuantity(3, 2, 6);
  * console.log(battenCount); // Output: 30
- * 
+ *
  * @example
  * // For a 25x5 grid with 125 panels
  * const largeBattenCount = calculateBattenQuantity(25, 5, 125);
@@ -462,7 +479,12 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
  * @param numberOfStrings - The number of strings in the setup.
  * @returns The BOM object containing quantities, prices, totals, and explanations for each component.
  */
-function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string, numberOfStrings: number): BOM {
+function calculateBOM(
+  cellTypesCount: CellTypesCount,
+  grid: GridType,
+  panelType: string,
+  numberOfStrings: number
+): BOM {
   const { rows, columns } = getBattenDimensions(grid);
   const totalPanelCount = getTotalPanelCount(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
@@ -474,19 +496,33 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
 
   const bom: BOM = {
     'GSE Half Portrait Frames': {
-      quantity: cellTypesCount.SinglePanel * 2 + cellTypesCount.TopSinglePanel * 2 + cellTypesCount.BottomSinglePanel * 2,
+      quantity:
+        cellTypesCount.SinglePanel * 2 +
+        cellTypesCount.TopSinglePanel * 2 +
+        cellTypesCount.BottomSinglePanel * 2,
       price: componentPrices['GSE Half Portrait Frames'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 2`,
     },
     'Lateral Flashing': {
-      quantity: (cellTypesCount.SinglePanel * 2 + cellTypesCount.TopSinglePanel * 2 + cellTypesCount.BottomSinglePanel * 2 + cellTypesCount.EndPanel) * 2,
+      quantity:
+        (cellTypesCount.SinglePanel * 2 +
+          cellTypesCount.TopSinglePanel * 2 +
+          cellTypesCount.BottomSinglePanel * 2 +
+          cellTypesCount.EndPanel) *
+        2,
       price: componentPrices['Lateral Flashing'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 2 * 2`,
     },
     'GSE Screws Black': {
-      quantity: cellTypesCount.SinglePanel * 3 + cellTypesCount.TopSinglePanel * 3 + cellTypesCount.BottomSinglePanel * 3 + cellTypesCount.EndPanel * 3 + cellTypesCount.EndPanel + cellTypesCount.MidPanel,
+      quantity:
+        cellTypesCount.SinglePanel * 3 +
+        cellTypesCount.TopSinglePanel * 3 +
+        cellTypesCount.BottomSinglePanel * 3 +
+        cellTypesCount.EndPanel * 3 +
+        cellTypesCount.EndPanel +
+        cellTypesCount.MidPanel,
       price: componentPrices['GSE Screws Black'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
@@ -498,13 +534,21 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `${totalPanelCount} total panels * 3`,
     },
     'GSE End Clamp': {
-      quantity: cellTypesCount.SinglePanel * 4 + cellTypesCount.TopSinglePanel * 4 + cellTypesCount.BottomSinglePanel * 4 + cellTypesCount.EndPanel * 2,
+      quantity:
+        cellTypesCount.SinglePanel * 4 +
+        cellTypesCount.TopSinglePanel * 4 +
+        cellTypesCount.BottomSinglePanel * 4 +
+        cellTypesCount.EndPanel * 2,
       price: componentPrices['GSE End Clamp'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4 + ${cellTypesCount.EndPanel} EndPanel * 2`,
     },
     'GSE Mid Clamp': {
-      quantity: cellTypesCount.MidPanel * 2 + cellTypesCount.MiddleMidPanel * 2 + cellTypesCount.TopMidPanel * 2 + cellTypesCount.BottomMidPanel * 2,
+      quantity:
+        cellTypesCount.MidPanel * 2 +
+        cellTypesCount.MiddleMidPanel * 2 +
+        cellTypesCount.TopMidPanel * 2 +
+        cellTypesCount.BottomMidPanel * 2,
       price: componentPrices['GSE Mid Clamp'],
       total: 0,
       explanation: `(${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) * 2`,
@@ -533,7 +577,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       total: 0,
       explanation: `Ceiling of ${totalPanelCount} total panels / 10 * 5`,
     },
-    'Battens': {
+    Battens: {
       quantity: battenQuantity,
       price: componentPrices['Battens'],
       total: 0,
@@ -545,7 +589,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       total: 0,
       explanation: `3 nails per piece of lead (${leadQuantities.standard} standard + ${leadQuantities.deep} deep)`,
     },
-    'Lead': {
+    Lead: {
       quantity: leadQuantities.standard,
       price: componentPrices['Lead'],
       total: 0,
@@ -594,13 +638,21 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `1 per plot`,
     },
     'Lateral Flashing Hooks': {
-      quantity: cellTypesCount.EndPanel * 2 + cellTypesCount.SinglePanel * 4 + cellTypesCount.TopSinglePanel * 4 + cellTypesCount.BottomSinglePanel * 4,
+      quantity:
+        cellTypesCount.EndPanel * 2 +
+        cellTypesCount.SinglePanel * 4 +
+        cellTypesCount.TopSinglePanel * 4 +
+        cellTypesCount.BottomSinglePanel * 4,
       price: componentPrices['Lateral Flashing Hooks'],
       total: 0,
       explanation: `(${cellTypesCount.EndPanel} EndPanel * 2) + (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4`,
     },
     'Lateral Flashing Nails Galv 20mm': {
-      quantity: cellTypesCount.EndPanel * 2 + cellTypesCount.SinglePanel * 4 + cellTypesCount.TopSinglePanel * 4 + cellTypesCount.BottomSinglePanel * 4,
+      quantity:
+        cellTypesCount.EndPanel * 2 +
+        cellTypesCount.SinglePanel * 4 +
+        cellTypesCount.TopSinglePanel * 4 +
+        cellTypesCount.BottomSinglePanel * 4,
       price: componentPrices['Lateral Flashing Nails Galv 20mm'],
       total: 0,
       explanation: `(${cellTypesCount.EndPanel} EndPanel * 2) + (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4`,
@@ -662,7 +714,7 @@ function countCellTypes(grid: GridType): CellTypesCount {
   for (let row = 0; row < gridSize; row++) {
     for (let col = 0; col < gridSize; col++) {
       const cellTypes = determineCellType(grid, row, col);
-      cellTypes.forEach(cellType => {
+      cellTypes.forEach((cellType) => {
         cellTypesCount[cellType as keyof CellTypesCount]++;
       });
     }
@@ -687,7 +739,8 @@ function determineCellType(grid, row, col) {
     return Object.keys(cornerTypes);
   }
 
-  const isPanel = (r, c) => r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] === 1;
+  const isPanel = (r, c) =>
+    r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] === 1;
 
   const above = isPanel(row - 1, col);
   const below = isPanel(row + 1, col);
@@ -712,13 +765,10 @@ function determineCellType(grid, row, col) {
   return ['Error'];
 }
 
-
-
-
 // BOMCalculator component
 function BOMCalculator() {
   const [grid, setGrid] = useState<GridType>(
-      Array.from({ length: gridSize }, () => Array(gridSize).fill(0))
+    Array.from({ length: gridSize }, () => Array(gridSize).fill(0))
   );
   const [cellTypesCount, setCellTypesCount] = useState<CellTypesCount>({
     SinglePanel: 0,
@@ -747,7 +797,12 @@ function BOMCalculator() {
   const [numberOfStrings, setNumberOfStrings] = useState<number | ''>(1);
   const isDraggingRef = useRef(false);
 
-  const bom = calculateBOM(cellTypesCount, grid, panelType, typeof numberOfStrings === 'number' ? numberOfStrings : 1);
+  const bom = calculateBOM(
+    cellTypesCount,
+    grid,
+    panelType,
+    typeof numberOfStrings === 'number' ? numberOfStrings : 1
+  );
   const totalCost = Object.values(bom).reduce((sum, item) => sum + item.total, 0);
 
   const handleCellClick = (row: number, col: number) => {
@@ -784,10 +839,7 @@ function BOMCalculator() {
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.body.innerHTML = '';
-      createPortal(
-        <PrintableChecklist bom={bom} />,
-        printWindow.document.body
-      );
+      createPortal(<PrintableChecklist bom={bom} />, printWindow.document.body);
       printWindow.onload = () => {
         printWindow.print();
       };
@@ -795,80 +847,82 @@ function BOMCalculator() {
   }, [bom]);
 
   return (
-      <Stack gap="md">
-        <Select
-            label="Panel Type"
-            value={panelType}
-            onChange={(value) => setPanelType(value || 'DMEGC 405w')}
-            data={Object.keys(panelPrices)}
-        />
-        <NumberInput
-          label="Number of Strings"
-          value={numberOfStrings}
-          onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
-          min={1}
-          max={10}
-        />
-        <Box>
-          <Button onClick={toggle} mb="md">
-            Toggle BOM Calculation Rules
-          </Button>
-          <Collapse in={opened}>
-            <BOMRules />
-          </Collapse>
-        </Box>
-        <div
-            className="grid-container"
-            onMouseLeave={handleMouseUp}
-            onMouseUp={handleMouseUp}
-            role="grid"
-        >
-          {grid.map((row, rowIndex) =>
-              row.map((cell, colIndex) => (
-                  <div
-                      key={`${rowIndex}-${colIndex}`}
-                      className={`grid-cell ${cell === 1 ? 'active' : ''}`}
-                      onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
-                      onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          handleMouseDown(rowIndex, colIndex);
-                        }
-                      }}
-                  />
-              ))
-          )}
-        </div>
-        <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
-        <Button onClick={clearGrid} mb="md">Reset Grid</Button>
-        <Box>
-          <Button onClick={toggle} mb="md">
-            Toggle Cell Types Count and Panel Information
-          </Button>
-          <Collapse in={opened}>
-            <Grid>
-              {Object.entries(cellTypesCount).map(([type, count]) => (
-                  <Grid.Col key={type} span={6}>
-                    <Text>
-                      {type}: {count}
-                    </Text>
-                  </Grid.Col>
-              ))}
-              <Grid.Col span={12}>
-                <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
+    <Stack gap="md">
+      <Select
+        label="Panel Type"
+        value={panelType}
+        onChange={(value) => setPanelType(value || 'DMEGC 405w')}
+        data={Object.keys(panelPrices)}
+      />
+      <NumberInput
+        label="Number of Strings"
+        value={numberOfStrings}
+        onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
+        min={1}
+        max={10}
+      />
+      <Box>
+        <Button onClick={toggle} mb="md">
+          Toggle BOM Calculation Rules
+        </Button>
+        <Collapse in={opened}>
+          <BOMRules />
+        </Collapse>
+      </Box>
+      <div
+        className="grid-container"
+        onMouseLeave={handleMouseUp}
+        onMouseUp={handleMouseUp}
+        role="grid"
+      >
+        {grid.map((row, rowIndex) =>
+          row.map((cell, colIndex) => (
+            <div
+              key={`${rowIndex}-${colIndex}`}
+              className={`grid-cell ${cell === 1 ? 'active' : ''}`}
+              onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
+              onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handleMouseDown(rowIndex, colIndex);
+                }
+              }}
+            />
+          ))
+        )}
+      </div>
+      <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
+      <Button onClick={clearGrid} mb="md">
+        Reset Grid
+      </Button>
+      <Box>
+        <Button onClick={toggle} mb="md">
+          Toggle Cell Types Count and Panel Information
+        </Button>
+        <Collapse in={opened}>
+          <Grid>
+            {Object.entries(cellTypesCount).map(([type, count]) => (
+              <Grid.Col key={type} span={6}>
+                <Text>
+                  {type}: {count}
+                </Text>
               </Grid.Col>
-              <Grid.Col span={12}>
-                <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
-              </Grid.Col>
-            </Grid>
-          </Collapse>
-        </Box>
-        <Text size="xl">Bill of Materials:</Text>
-        <BOMTable bom={bom} />
-        <Button onClick={handlePrint}>Print Checklist</Button>
-      </Stack>
+            ))}
+            <Grid.Col span={12}>
+              <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
+            </Grid.Col>
+          </Grid>
+        </Collapse>
+      </Box>
+      <Text size="xl">Bill of Materials:</Text>
+      <BOMTable bom={bom} />
+      <Button onClick={handlePrint}>Print Checklist</Button>
+    </Stack>
   );
 }
 

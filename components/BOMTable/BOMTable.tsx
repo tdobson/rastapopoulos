@@ -6,31 +6,29 @@ interface BOMTableProps {
   bom: BOM;
 }
 
-
-
 function BOMTable({ bom }: BOMTableProps) {
   return (
     <Table>
       <thead>
-      <tr>
+        <tr>
           <th>Quantity</th>
           <th>Component</th>
           <th>Price</th>
           <th>Total</th>
           <th>Explanation</th>
-      </tr>
+        </tr>
       </thead>
-        <tbody>
+      <tbody>
         {Object.entries(bom).map(([component, item]) => (
-            <tr key={component}>
-                <td>{item.quantity}</td>
-                <td>{component}</td>
-                <td>£{item.price.toFixed(2)}</td>
-                <td>£{item.total.toFixed(2)}</td>
-                <td>{item.explanation}</td>
-            </tr>
+          <tr key={component}>
+            <td>{item.quantity}</td>
+            <td>{component}</td>
+            <td>£{item.price.toFixed(2)}</td>
+            <td>£{item.total.toFixed(2)}</td>
+            <td>{item.explanation}</td>
+          </tr>
         ))}
-        </tbody>
+      </tbody>
     </Table>
   );
 }

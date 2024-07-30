@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "next build && npx wrangler pages deploy build/",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
@@ -16,8 +17,7 @@
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
     "test": "npm run prettier:check && npm run lint && npm run typecheck && npm run jest",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build",
-    "deploy": "next build --no-lint && npx wrangler pages deploy build/"
+    "storybook:build": "storybook build"
   },
   "dependencies": {
     "@mantine/charts": "^7.8.1",

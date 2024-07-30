@@ -8,17 +8,20 @@ const BOMRules: React.FC = () => {
       <List>
         <List.Item>
           <Text>
-            <strong>GSE Half Portrait Frames:</strong> 2 per SinglePanel, TopSinglePanel, and BottomSinglePanel
+            <strong>GSE Half Portrait Frames:</strong> 2 per SinglePanel, TopSinglePanel, and
+            BottomSinglePanel
           </Text>
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lateral Flashing:</strong> 2 per SinglePanel, TopSinglePanel, BottomSinglePanel, and EndPanel, then doubled
+            <strong>Lateral Flashing:</strong> 2 per SinglePanel, TopSinglePanel, BottomSinglePanel,
+            and EndPanel, then doubled
           </Text>
         </List.Item>
         <List.Item>
           <Text>
-            <strong>GSE Screws Black:</strong> 3 per SinglePanel, TopSinglePanel, BottomSinglePanel, and EndPanel, plus 1 extra per EndPanel and MidPanel
+            <strong>GSE Screws Black:</strong> 3 per SinglePanel, TopSinglePanel, BottomSinglePanel,
+            and EndPanel, plus 1 extra per EndPanel and MidPanel
           </Text>
         </List.Item>
         <List.Item>
@@ -28,12 +31,14 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>GSE End Clamp:</strong> 4 per SinglePanel, TopSinglePanel, and BottomSinglePanel, 2 per EndPanel
+            <strong>GSE End Clamp:</strong> 4 per SinglePanel, TopSinglePanel, and
+            BottomSinglePanel, 2 per EndPanel
           </Text>
         </List.Item>
         <List.Item>
           <Text>
-            <strong>GSE Mid Clamp:</strong> 2 per MidPanel, MiddleMidPanel, TopMidPanel, and BottomMidPanel
+            <strong>GSE Mid Clamp:</strong> 2 per MidPanel, MiddleMidPanel, TopMidPanel, and
+            BottomMidPanel
           </Text>
         </List.Item>
         <List.Item>
@@ -63,20 +68,34 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lead:</strong> Calculated based on the number of panels across the bottom row of the array and the maximum width of non-bottom rows. Lead comes in two types:
+            <strong>Lead:</strong> Calculated based on the number of panels across the bottom row of
+            the array and the maximum width of non-bottom rows. Lead comes in two types:
             <List withPadding>
               <List.Item>
-                <strong>Normal Lead (1500mm length):</strong> Calculated based on the number of panels across the bottom row of the array. The required length is determined using the leadMeterageTable and then divided by 1500mm (rounded up) to get the number of pieces.
+                <strong>Normal Lead (1500mm length):</strong> Calculated based on the number of
+                panels across the bottom row of the array. The required length is determined using
+                the leadMeterageTable and then divided by 1500mm (rounded up) to get the number of
+                pieces.
               </List.Item>
               <List.Item>
-                <strong>Deep Lead (800mm width, 1500mm length):</strong> Calculated based on the total width of the array, minus the bottom row. The required length is determined using the leadMeterageTable and then divided by 1500mm (rounded up) to get the number of pieces.
+                <strong>Deep Lead (800mm width, 1500mm length):</strong> Calculated based on the
+                total width of the array, minus the bottom row. The required length is determined
+                using the leadMeterageTable and then divided by 1500mm (rounded up) to get the
+                number of pieces.
               </List.Item>
               <List.Item>
                 Example calculations:
                 <List withPadding>
-                  <List.Item>1 panel: 2 pieces of normal lead (2100mm / 1500mm = 1.4, rounded up to 2)</List.Item>
-                  <List.Item>3 panels: 3 pieces of normal lead (4475mm / 1500mm = 2.98, rounded up to 3)</List.Item>
-                  <List.Item>8 panels: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8)</List.Item>
+                  <List.Item>
+                    1 panel: 2 pieces of normal lead (2100mm / 1500mm = 1.4, rounded up to 2)
+                  </List.Item>
+                  <List.Item>
+                    3 panels: 3 pieces of normal lead (4475mm / 1500mm = 2.98, rounded up to 3)
+                  </List.Item>
+                  <List.Item>
+                    8 panels: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77,
+                    rounded up to 8)
+                  </List.Item>
                 </List>
               </List.Item>
             </List>
@@ -119,7 +138,8 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lateral Flashing Hooks:</strong> 2 per EndPanel, 4 per SinglePanel, TopSinglePanel, and BottomSinglePanel
+            <strong>Lateral Flashing Hooks:</strong> 2 per EndPanel, 4 per SinglePanel,
+            TopSinglePanel, and BottomSinglePanel
           </Text>
         </List.Item>
         <List.Item>
