@@ -142,46 +142,48 @@ const leadMeterageTable = {
  *    - If the conditions are met, set the corresponding corner type to true in the result object.
  * 4. Return the result object containing the corner types found in the cell.
  */
-function isCorner(grid: GridType, row: number, col: number): { [key: string]: boolean } {
-  const isPanel = (r: number, c: number): boolean =>
-      r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
+function isCorner(grid, row, col) {
+  const gridSize = grid.length;
+  const isPanel = (r, c) => r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
   // Check if the current cell is a panel
   if (!isPanel(row, col)) return {};
 
-  const above = isPanel(row - 1, col); // Panel above
-  const below = isPanel(row + 1, col); // Panel below
-  const left = isPanel(row, col - 1); // Panel to the left
-  const right = isPanel(row, col + 1); // Panel to the right
-  const topLeft = isPanel(row - 1, col - 1); // Panel in the top-left corner
-  const topRight = isPanel(row - 1, col + 1); // Panel in the top-right corner
-  const bottomLeft = isPanel(row + 1, col - 1); // Panel in the bottom-left corner
-  const bottomRight = isPanel(row + 1, col + 1); // Panel in the bottom-right corner
+  const above = isPanel(row - 1, col);
+  const below = isPanel(row + 1, col);
+  const left = isPanel(row, col - 1);
+  const right = isPanel(row, col + 1);
+  const topLeft = isPanel(row - 1, col - 1);
+  const topRight = isPanel(row - 1, col + 1);
+  const bottomLeft = isPanel(row + 1, col - 1);
+  const bottomRight = isPanel(row + 1, col + 1);
 
-  const corners: { [key: string]: boolean } = {};
+  const corners = {};
 
-  // Check for BottomLeftCorner
-  if ((above && right && !topRight) || (above && below && left && !bottomLeft)) {
-    corners['BottomLeftCorner'] = true;
-  }
-
-  // Check for BottomRightCorner
-  if ((above && left && !topLeft) || (above && below && right && !bottomRight)) {
-    corners['BottomRightCorner'] = true;
-  }
-
-  // Check for TopLeftCorner
-  if ((below && right && !bottomRight) || (above && below && left && !topLeft)) {
+  // Top-left corner check
+  if (!topLeft && above && left) {
     corners['TopLeftCorner'] = true;
   }
 
-  // Check for TopRightCorner
-  if ((below && left && !bottomLeft) || (above && below && right && !topRight)) {
+  // Top-right corner check
+  if (!topRight && above && right) {
     corners['TopRightCorner'] = true;
+  }
+
+  // Bottom-left corner check
+  if (!bottomLeft && below && left) {
+    corners['BottomLeftCorner'] = true;
+  }
+
+  // Bottom-right corner check
+  if (!bottomRight && below && right) {
+    corners['BottomRightCorner'] = true;
   }
 
   return corners;
 }
+
+
 
 /**
  * Returns the total number of rows in the grid that contain at least one panel.
@@ -602,18 +604,15 @@ function countCellTypes(grid: GridType): CellTypesCount {
  * @param col - The column index of the cell to determine the type for.
  * @returns A string indicating the type of the cell.
  */
-function determineCellType(grid: GridType, row: number, col: number): string[] {
+function determineCellType(grid, row, col) {
   if (grid[row][col] === 0) return ['EmptyCell'];
 
   const cornerTypes = isCorner(grid, row, col);
-  if (Object.values(cornerTypes).some(Boolean)) {
-    return Object.entries(cornerTypes)
-      .filter(([, value]) => value)
-      .map(([key]) => key);
+  if (Object.keys(cornerTypes).length > 0) {
+    return Object.keys(cornerTypes);
   }
 
-  const isPanel = (r: number, c: number): boolean =>
-      r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
+  const isPanel = (r, c) => r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] === 1;
 
   const above = isPanel(row - 1, col);
   const below = isPanel(row + 1, col);
@@ -637,6 +636,9 @@ function determineCellType(grid: GridType, row: number, col: number): string[] {
 
   return ['Error'];
 }
+
+
+
 
 // BOMCalculator component
 function BOMCalculator() {
