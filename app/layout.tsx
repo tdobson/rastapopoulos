@@ -35,7 +35,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       </AppShell.Header>
 
       <AppShell.Navbar p="0" h="calc(100vh - 60px)" top={60}>
-        <NavbarSimpleColored opened={opened} toggle={toggleNavbar} />
+        <NavbarSimpleColored />
       </AppShell.Navbar>
 
       <AppShell.Main>

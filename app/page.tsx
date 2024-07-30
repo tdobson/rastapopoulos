@@ -5,7 +5,7 @@ import { Container, Stack } from '@mantine/core';
 export default function HomePage() {
   return (
     <Container size="lg">
-      <Stack spacing="xl">
+      <Stack gap="xl">
         <Welcome />
         <ColorSchemeToggle />
       </Stack>
