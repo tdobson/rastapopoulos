@@ -85,51 +85,69 @@ const leadMeterageTable = {
 };
 
 /**
- * Determines if a cell in the grid is a corner based on its surrounding cells.
- * 
- * A corner is defined as a cell that is part of a panel and has a specific configuration of adjacent panels:
- * - 'BottomLeftCorner': A cell with a panel above and to the right, but no panel in the top-right corner.
- * - 'BottomRightCorner': A cell with a panel above and to the left, but no panel in the top-left corner.
- * - 'TopLeftCorner': A cell with a panel below and to the right, but no panel in the bottom-right corner.
- * - 'TopRightCorner': A cell with a panel below and to the left, but no panel in the bottom-left corner.
- * 
- * Here is an ASCII diagram to illustrate the corners:
- * 
- * ```
- * TopLeftCorner:
- * ┌───┐
- * │   │
- * └───┘
- * 
- * TopRightCorner:
- * ┌───┐
- * │   │
- * └───┘
- * 
- * BottomLeftCorner:
- * ┌───┐
- * │   │
- * └───┘
- * 
- * BottomRightCorner:
- * ┌───┐
- * │   │
- * └───┘
- * ```
- * 
- * Additionally, the function will detect T-shapes and the inside corners of squares.
- * 
- * @param grid - The grid representing the layout of panels.
- * @param row - The row index of the cell to check.
- * @param col - The column index of the cell to check.
- * @returns A string indicating the type of corner ('BottomLeftCorner', 'BottomRightCorner', 'TopLeftCorner', 'TopRightCorner') or null if it's not a corner.
+ * Determines the types of corners present in a cell of a grid representing solar panels.
+ *
+ * @param {GridType} grid - A 2D array representing the layout of solar panels. Each cell contains either 0 (no panel) or 1 (panel).
+ * @param {number} row - The row index of the cell to check for corners.
+ * @param {number} col - The column index of the cell to check for corners.
+ *
+ * @returns {Object} An object indicating the types of corners found in the cell. The keys are corner types, and the corresponding values are booleans.
+ *                   - 'TopLeftCorner': true if the cell is a top-left corner.
+ *                   - 'TopRightCorner': true if the cell is a top-right corner.
+ *                   - 'BottomLeftCorner': true if the cell is a bottom-left corner.
+ *                   - 'BottomRightCorner': true if the cell is a bottom-right corner.
+ *                   If no corners are found, an empty object is returned.
+ *
+ * @example
+ * // Input grid:
+ * [
+ *   [1, 1, 1],
+ *   [1, 0, 1],
+ *   [1, 1, 1]
+ * ]
+ *
+ * isCorner(grid, 0, 0); // Returns { TopLeftCorner: true }
+ * isCorner(grid, 0, 2); // Returns { TopRightCorner: true }
+ * isCorner(grid, 1, 1); // Returns {}
+ * isCorner(grid, 2, 0); // Returns { BottomLeftCorner: true }
+ * isCorner(grid, 2, 2); // Returns { BottomRightCorner: true }
+ *
+ * @description
+ * The `isCorner` function takes a 2D grid representing the layout of solar panels and the coordinates of a specific cell.
+ * It determines the types of corners present in that cell based on the presence or absence of panels in the adjacent cells.
+ *
+ * The function considers the following corner types:
+ * - Top-left corner: The cell is a top-left corner if there is a panel below and to the right, but no panel in the bottom-right diagonal.
+ * - Top-right corner: The cell is a top-right corner if there is a panel below and to the left, but no panel in the bottom-left diagonal.
+ * - Bottom-left corner: The cell is a bottom-left corner if there is a panel above and to the right, but no panel in the top-right diagonal.
+ * - Bottom-right corner: The cell is a bottom-right corner if there is a panel above and to the left, but no panel in the top-left diagonal.
+ *
+ * The function also handles special cases where a cell can be considered multiple types of corners simultaneously.
+ * For example, in the following grid:
+ * [
+ *   [1, 1, 1],
+ *   [1, 1, 0],
+ *   [1, 1, 1]
+ * ]
+ * The cell at position (1, 1) is considered both a top-right corner and a bottom-right corner.
+ *
+ * The function returns an object where the keys are the corner types and the corresponding values are booleans indicating the presence of that corner type.
+ * If no corners are found, an empty object is returned.
+ *
+ * @logic
+ * 1. Check if the current cell is a panel. If not, return an empty object.
+ * 2. Check the presence of panels in the adjacent cells (above, below, left, right) and diagonal cells (top-left, top-right, bottom-left, bottom-right).
+ * 3. For each corner type:
+ *    - Check the specific conditions for that corner type based on the presence/absence of panels in the relevant adjacent and diagonal cells.
+ *    - If the conditions are met, set the corresponding corner type to true in the result object.
+ * 4. Return the result object containing the corner types found in the cell.
  */
-function isCorner(grid: GridType, row: number, col: number): string | null {
+function isCorner(grid: GridType, row: number, col: number): { [key: string]: boolean } {
   const isPanel = (r: number, c: number): boolean =>
       r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
   // Check if the current cell is a panel
-  if (!isPanel(row, col)) return null;
+  if (!isPanel(row, col)) return {};
 
   const above = isPanel(row - 1, col); // Panel above
   const below = isPanel(row + 1, col); // Panel below
@@ -140,30 +158,30 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
   const bottomLeft = isPanel(row + 1, col - 1); // Panel in the bottom-left corner
   const bottomRight = isPanel(row + 1, col + 1); // Panel in the bottom-right corner
 
-  // Check for BottomLeftCorner: Panel above and to the right, but no panel in the top-right corner
-  if (above && right && !topRight) return 'BottomLeftCorner';
+  const corners: { [key: string]: boolean } = {};
 
-  // Check for BottomRightCorner: Panel above and to the left, but no panel in the top-left corner
-  if (above && left && !topLeft) return 'BottomRightCorner';
-
-  // Check for TopLeftCorner: Panel below and to the right, but no panel in the bottom-right corner
-  if (below && right && !bottomRight) return 'TopLeftCorner';
-
-  // Check for TopRightCorner: Panel below and to the left, but no panel in the bottom-left corner
-  if (below && left && !bottomLeft) return 'TopRightCorner';
-
-  // Check for T-shapes and inside corners of squares
-  if (above && below && left && right) {
-    if (!topLeft && !bottomLeft) return 'BottomLeftCorner';
-    if (!topRight && !bottomRight) return 'BottomRightCorner';
-    if (!topLeft && !topRight) return 'TopLeftCorner';
-    if (!bottomLeft && !bottomRight) return 'TopRightCorner';
+  // Check for BottomLeftCorner
+  if ((above && right && !topRight) || (above && below && left && !bottomLeft)) {
+    corners['BottomLeftCorner'] = true;
   }
 
-  // If none of the conditions are met, return null indicating it's not a corner
-  return null;
-}
+  // Check for BottomRightCorner
+  if ((above && left && !topLeft) || (above && below && right && !bottomRight)) {
+    corners['BottomRightCorner'] = true;
+  }
 
+  // Check for TopLeftCorner
+  if ((below && right && !bottomRight) || (above && below && left && !topLeft)) {
+    corners['TopLeftCorner'] = true;
+  }
+
+  // Check for TopRightCorner
+  if ((below && left && !bottomLeft) || (above && below && right && !topRight)) {
+    corners['TopRightCorner'] = true;
+  }
+
+  return corners;
+}
 
 /**
  * Returns the total number of rows in the grid that contain at least one panel.
