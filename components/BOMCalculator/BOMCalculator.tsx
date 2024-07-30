@@ -21,7 +21,7 @@ const panelPrices: PanelPrices = {
   'LONGi 405w': 121.50,
 };
 
-// Updated component prices
+// Component prices
 const componentPrices: ComponentPrices = {
   'GSE Half Portrait Frames': 19.52,
   'Lateral Flashing': 13.35,
@@ -84,10 +84,9 @@ const leadMeterageTable = {
   default: 1375
 };
 
-// Updated utility functions
 /**
  * Determines if a cell in the grid is a corner based on its surrounding cells.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index of the cell to check.
  * @param col - The column index of the cell to check.
@@ -116,14 +115,10 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
   return null;
 }
 
+
 /**
  * Returns the total number of rows in the grid that contain at least one panel.
- * @param grid - The grid representing the layout of panels.
- * @returns The number of rows containing panels.
- */
-/**
- * Returns the total number of rows in the grid that contain at least one panel.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @returns The number of rows containing panels.
  */
@@ -138,7 +133,7 @@ function getTotalRows(grid: GridType): number {
 
 /**
  * Determines if a given row is the bottom row of the grid that contains panels.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index to check.
  * @returns True if the row is the bottom row containing panels, otherwise false.
@@ -148,7 +143,6 @@ function isBottomRow(grid: GridType, row: number): boolean {
   return row === totalRows - 1;
 }
 
-// this is currently incorrect in its logic. it takes the right arguments, and returns the right values, but the logic is incorrect.
 /*
 This is the correct logic - please update this into a detailed jsodc header
 
@@ -176,7 +170,7 @@ if you an array with 8 non bottom row panels requiring deep lead, then you'd loo
 */
 /**
  * Calculates the quantity of lead required for both standard and deep types based on the number of panels in the bottom row and the maximum width of non-bottom rows.
- * 
+ *
  * @param bottomRowPanelCount - The number of panels in the bottom row.
  * @param maxNonBottomRowWidth - The maximum width of non-bottom rows.
  * @returns An object containing the quantities of standard and deep lead required.
@@ -196,10 +190,9 @@ function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth
   return { standard, deep };
 }
 
-// Utility function to calculate the number of panels in a specific row
 /**
  * Calculates the number of panels in a specific row of the grid.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index to count the panels in.
  * @returns The number of panels in the specified row.
@@ -209,10 +202,9 @@ function getPanelCountInRow(grid: GridType, row: number): number {
   return grid[row].filter(cell => cell === 1).length;
 }
 
-// Calculate the number of panels in the bottom row
 /**
  * Calculates the number of panels in the bottom row of the grid.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @returns The number of panels in the bottom row.
  */
@@ -221,16 +213,9 @@ function getBottomRowPanelCount(grid: GridType): number {
   return getPanelCountInRow(grid, totalRows - 1);
 }
 
-// Calculate the number of panels without any panel directly below them
-/**
- * Returns the count of panels that are not on the bottom row and do not have a panel directly below them.
- *
- * @param grid - The grid representing the layout of panels.
- * @returns The count of panels that meet the specified criteria.
- */
 /**
  * Calculates the number of panels that are not on the bottom row and do not have a panel directly below them.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
@@ -259,7 +244,7 @@ function getNonBottomWidthPanelCount(grid: GridType): number {
 
 /**
  * Calculates the total number of panels in the grid, excluding empty cells and error cells.
- * 
+ *
  * @param cellTypesCount - An object containing counts of different cell types.
  * @returns The total number of panels.
  */
@@ -269,7 +254,7 @@ function getTotalPanelCount(cellTypesCount: CellTypesCount): number {
 
 /**
  * Determines the dimensions (rows and columns) of the grid based on the presence of panels.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @returns An object containing the number of rows and columns with panels.
  */
@@ -291,7 +276,7 @@ function getGridDimensions(grid: GridType): { rows: number; columns: number } {
 
 /**
  * Calculates the quantity of battens required based on the dimensions of the grid.
- * 
+ *
  * @param rows - The number of rows in the grid.
  * @param columns - The number of columns in the grid.
  * @returns The total number of battens required.
@@ -319,7 +304,7 @@ function calculateBattenQuantity(rows: number, columns: number): number {
 
 /**
  * Calculates the number of panels in the top row of the grid.
- * 
+ *
  * @param cellTypesCount - An object containing counts of different cell types.
  * @returns The number of panels in the top row.
  */
@@ -330,7 +315,7 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
 // Updated calculateBOM function
 /**
  * Calculates the Bill of Materials (BOM) based on the grid layout, panel type, and number of strings.
- * 
+ *
  * @param cellTypesCount - An object containing counts of different cell types.
  * @param grid - The grid representing the layout of panels.
  * @param panelType - The type of panel being used.
@@ -505,7 +490,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
 
 /**
  * Counts the occurrences of each cell type in the grid.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @returns An object containing the counts of each cell type.
  */
@@ -546,7 +531,7 @@ function countCellTypes(grid: GridType): CellTypesCount {
 
 /**
  * Determines the type of a cell in the grid based on its position and surrounding cells.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index of the cell to determine the type for.
  * @param col - The column index of the cell to determine the type for.
