@@ -170,7 +170,28 @@ if you an array with 8 non bottom row panels requiring deep lead, then you'd loo
 */
 /**
  * Calculates the quantity of lead required for both standard and deep types based on the number of panels in the bottom row and the maximum width of non-bottom rows.
- *
+ * 
+ * Lead comes in two types that have separate uses and come in separate quantities:
+ * 
+ * 1. **Normal Lead**:
+ *    - Calculated based on the number of panels across the bottom row of the array.
+ *    - It comes in 1500mm lengths.
+ *    - The required length is determined using the `leadMeterageTable` constant.
+ *    - The total length required for the bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `bottomRowPanelCount`.
+ *    - The total length is then divided by 1500mm and rounded up to determine the number of pieces of normal lead required.
+ * 
+ * 2. **Deep Lead (800mm width)**:
+ *    - Calculated based on the total width of the array, minus the bottom row.
+ *    - It also comes in 1500mm lengths.
+ *    - The required length is determined using the `leadMeterageTable` constant.
+ *    - The total length required for the non-bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `maxNonBottomRowWidth`.
+ *    - The total length is then divided by 1500mm and rounded up to determine the number of pieces of deep lead required.
+ * 
+ * Example calculations:
+ * - For 1 panel requiring normal lead: 2 pieces of normal lead (2100mm / 1500mm = 1.4, rounded up to 2).
+ * - For 3 panels requiring normal lead: 3 pieces of normal lead (4475mm / 1500mm = 2.98, rounded up to 3).
+ * - For 8 panels requiring normal lead: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8).
+ * 
  * @param bottomRowPanelCount - The number of panels in the bottom row.
  * @param maxNonBottomRowWidth - The maximum width of non-bottom rows.
  * @returns An object containing the quantities of standard and deep lead required.
