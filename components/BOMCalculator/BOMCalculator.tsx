@@ -73,6 +73,7 @@ const battenTable: { [key: number]: { [key: number]: number } } = {
   20: { 1: 99, 2: 165, 3: 231, 4: 297 },
 };
 
+//number of panels vs millimetereage of lead required. eg 1 panel requires 2100mm of lead, 6 panels require 8900mm of lead, 7 panels require 8900+1375mm of lead etc
 const leadMeterageTable = {
   1: 2100,
   2: 3400,
@@ -274,10 +275,10 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `${battenQuantity} battens for ${rows} rows and ${columns} columns`,
     },
     'Copper Nails': {
-      quantity: calculateLeadQuantity(totalPanelCount) * 3,
+      quantity: (leadQuantities.standard + leadQuantities.deep) * 3,
       price: componentPrices['Copper Nails'],
       total: 0,
-      explanation: `3 nails per piece of lead for ${totalPanelCount} total panels`,
+      explanation: `3 nails per piece of lead (${leadQuantities.standard} standard + ${leadQuantities.deep} deep)`,
     },
     'Lead': {
       quantity: leadQuantities.standard,
