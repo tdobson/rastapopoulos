@@ -75,13 +75,23 @@ const battenTable: { [key: number]: { [key: number]: number } } = {
 
 //number of panels vs millimetereage of lead required. eg 1 panel requires 2100mm of lead, 6 panels require 8900mm of lead, 7 panels require 8900+1375mm of lead etc
 const leadMeterageTable = {
-  1: 2100,
-  2: 3400,
-  3: 4475,
-  4: 6000,
-  5: 7275,
-  6: 8900,
-  default: 1375
+  1: 2100,  // Length required for 1 panel
+  2: 3400,  // Length required for 2 panels
+  3: 4475,  // Length required for 3 panels
+  4: 6000,  // Length required for 4 panels
+  5: 7275,  // Length required for 5 panels
+  6: 8900,  // Length required for 6 panels
+  default: 1375,  // Additional length per panel after the 6th
+  standardLeadLength: 1500,  // Length of one piece of lead in mm
+  conversionTable: {
+    1: 2,  // 1 panel requires 2 rolls of lead
+    2: 3,  // 2 panels require 3 rolls of lead
+    3: 3,  // 3 panels require 3 rolls of lead
+    4: 4,  // 4 panels require 4 rolls of lead
+    5: 5,  // 5 panels require 5 rolls of lead
+    6: 6,  // 6 panels require 6 rolls of lead
+    default: 1  // Additional panels require 1 roll per panel
+  }
 };
 
 /**
@@ -242,11 +252,20 @@ function isBottomRow(grid: GridType, row: number): boolean {
  */
 function calculateLeadQuantity(bottomRowPanelCount: number, nonBottomRowPanelCount: number): { standard: number; deep: number } {
   const calculateLeadPieces = (panelCount: number): number => {
+    if (panelCount <= 0) return 0; // No panels, no lead required
+
+    // Use conversion table if available
+    if (leadMeterageTable.conversionTable[panelCount] !== undefined) {
+      return leadMeterageTable.conversionTable[panelCount];
+    }
+
+    // For more panels, calculate using the default value
     let totalLength = 0;
     for (let i = 1; i <= panelCount; i++) {
       totalLength += leadMeterageTable[i] || leadMeterageTable.default;
     }
-    return Math.ceil(totalLength / 1500);
+
+    return Math.ceil(totalLength / leadMeterageTable.standardLeadLength);
   };
 
   const standard = calculateLeadPieces(bottomRowPanelCount);
@@ -254,7 +273,6 @@ function calculateLeadQuantity(bottomRowPanelCount: number, nonBottomRowPanelCou
 
   return { standard, deep };
 }
-
 /**
  * Calculates the number of panels in a specific row of the grid.
  *
