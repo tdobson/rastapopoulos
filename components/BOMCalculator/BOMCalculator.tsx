@@ -358,6 +358,32 @@ function getGridDimensions(grid: GridType): { rows: number; columns: number } {
 }
 
 /**
+ * Determines the actual dimensions of the panel layout for batten calculation.
+ *
+ * @param grid - The grid representing the layout of panels.
+ * @returns An object containing the number of rows with panels and the maximum number of columns with panels.
+ */
+function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
+  let rows = 0;
+  let maxColumns = 0;
+
+  for (let row = 0; row < grid.length; row++) {
+    let columnsInRow = 0;
+    for (let col = 0; col < grid[row].length; col++) {
+      if (grid[row][col] === 1) {
+        columnsInRow++;
+      }
+    }
+    if (columnsInRow > 0) {
+      rows++;
+      maxColumns = Math.max(maxColumns, columnsInRow);
+    }
+  }
+
+  return { rows, columns: maxColumns };
+}
+
+/**
  * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
  * 
  * @param {number} rows - The number of rows in the solar panel grid.
@@ -437,7 +463,7 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
  * @returns The BOM object containing quantities, prices, totals, and explanations for each component.
  */
 function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string, numberOfStrings: number): BOM {
-  const { rows, columns } = getGridDimensions(grid);
+  const { rows, columns } = getBattenDimensions(grid);
   const totalPanelCount = getTotalPanelCount(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
