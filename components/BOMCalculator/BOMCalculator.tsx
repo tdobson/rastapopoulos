@@ -181,19 +181,25 @@ function getBottomRowPanelCount(grid: GridType): number {
 }
 
 // Calculate the number of panels without any panel directly below them
+/**
+ * Returns the count of panels that are not on the bottom row and do not have a panel directly below them.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @returns The count of panels that meet the specified criteria.
+ */
 function getNonBottomWidthPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
+  const bottomRowIndex = totalRows - 1;
 
   // If there's only one row or less, return 0 as there are no non-bottom rows
   if (totalRows <= 1) return 0;
 
-  // Count panels in each column that don't have a panel directly below them
   let count = 0;
-  for (let col = 0; col < grid[0].length; col++) {
-    for (let row = 0; row < totalRows - 1; row++) {
+
+  for (let row = 0; row < bottomRowIndex; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
       if (grid[row][col] === 1 && grid[row + 1][col] === 0) {
         count++;
-        break; // Move to the next column
       }
     }
   }
