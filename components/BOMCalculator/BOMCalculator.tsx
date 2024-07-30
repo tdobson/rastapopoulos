@@ -197,12 +197,25 @@ function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth
 }
 
 // Utility function to calculate the number of panels in a specific row
+/**
+ * Calculates the number of panels in a specific row of the grid.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @param row - The row index to count the panels in.
+ * @returns The number of panels in the specified row.
+ */
 function getPanelCountInRow(grid: GridType, row: number): number {
   if (row < 0 || row >= grid.length) return 0;
   return grid[row].filter(cell => cell === 1).length;
 }
 
 // Calculate the number of panels in the bottom row
+/**
+ * Calculates the number of panels in the bottom row of the grid.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @returns The number of panels in the bottom row.
+ */
 function getBottomRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   return getPanelCountInRow(grid, totalRows - 1);
@@ -212,6 +225,12 @@ function getBottomRowPanelCount(grid: GridType): number {
 /**
  * Returns the count of panels that are not on the bottom row and do not have a panel directly below them.
  *
+ * @param grid - The grid representing the layout of panels.
+ * @returns The count of panels that meet the specified criteria.
+ */
+/**
+ * Calculates the number of panels that are not on the bottom row and do not have a panel directly below them.
+ * 
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
@@ -238,10 +257,22 @@ function getNonBottomWidthPanelCount(grid: GridType): number {
   return count;
 }
 
+/**
+ * Calculates the total number of panels in the grid, excluding empty cells and error cells.
+ * 
+ * @param cellTypesCount - An object containing counts of different cell types.
+ * @returns The total number of panels.
+ */
 function getTotalPanelCount(cellTypesCount: CellTypesCount): number {
   return Object.values(cellTypesCount).reduce((sum, count) => sum + count, 0) - cellTypesCount.EmptyCell - cellTypesCount.Error;
 }
 
+/**
+ * Determines the dimensions (rows and columns) of the grid based on the presence of panels.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @returns An object containing the number of rows and columns with panels.
+ */
 function getGridDimensions(grid: GridType): { rows: number; columns: number } {
   let maxRow = 0;
   let maxCol = 0;
@@ -258,6 +289,13 @@ function getGridDimensions(grid: GridType): { rows: number; columns: number } {
   return { rows: maxRow + 1, columns: maxCol + 1 };
 }
 
+/**
+ * Calculates the quantity of battens required based on the dimensions of the grid.
+ * 
+ * @param rows - The number of rows in the grid.
+ * @param columns - The number of columns in the grid.
+ * @returns The total number of battens required.
+ */
 function calculateBattenQuantity(rows: number, columns: number): number {
   const safeRows = Math.min(rows, 20);
   const safeColumns = Math.min(columns, 4);
@@ -279,11 +317,26 @@ function calculateBattenQuantity(rows: number, columns: number): number {
   return baseQuantity;
 }
 
+/**
+ * Calculates the number of panels in the top row of the grid.
+ * 
+ * @param cellTypesCount - An object containing counts of different cell types.
+ * @returns The number of panels in the top row.
+ */
 function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
   return cellTypesCount.TopSinglePanel + cellTypesCount.TopMidPanel + cellTypesCount.TopEndPanel;
 }
 
 // Updated calculateBOM function
+/**
+ * Calculates the Bill of Materials (BOM) based on the grid layout, panel type, and number of strings.
+ * 
+ * @param cellTypesCount - An object containing counts of different cell types.
+ * @param grid - The grid representing the layout of panels.
+ * @param panelType - The type of panel being used.
+ * @param numberOfStrings - The number of strings in the setup.
+ * @returns The BOM object containing quantities, prices, totals, and explanations for each component.
+ */
 function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string, numberOfStrings: number): BOM {
   const { rows, columns } = getGridDimensions(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns);
@@ -450,6 +503,12 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
   return bom;
 }
 
+/**
+ * Counts the occurrences of each cell type in the grid.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @returns An object containing the counts of each cell type.
+ */
 function countCellTypes(grid: GridType): CellTypesCount {
   const cellTypesCount: CellTypesCount = {
     SinglePanel: 0,
@@ -485,6 +544,14 @@ function countCellTypes(grid: GridType): CellTypesCount {
   return cellTypesCount;
 }
 
+/**
+ * Determines the type of a cell in the grid based on its position and surrounding cells.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @param row - The row index of the cell to determine the type for.
+ * @param col - The column index of the cell to determine the type for.
+ * @returns A string indicating the type of the cell.
+ */
 function determineCellType(grid: GridType, row: number, col: number): string {
   if (grid[row][col] === 0) return 'EmptyCell';
 
