@@ -15,13 +15,15 @@ import { navigationItems } from '../utils/navigationItems';
 function AppShellRasta({ children }: { children: React.ReactNode }) {
   const [opened, setOpened] = useState(false);
 
+  const toggleNavbar = () => setOpened((o) => !o);
+
   return (
     <AppShell
       header={{ height: 60 }}
       navbar={{
         width: 300,
         breakpoint: 'sm',
-        collapsed: { desktop: false, mobile: !opened },
+        collapsed: { mobile: !opened },
       }}
       padding="md"
     >
@@ -33,7 +35,7 @@ function AppShellRasta({ children }: { children: React.ReactNode }) {
       </AppShell.Header>
 
       <AppShell.Navbar p="0" h="calc(100vh - 60px)" top={60}>
-        <NavbarSimpleColored />
+        <NavbarSimpleColored opened={opened} toggle={toggleNavbar} />
       </AppShell.Navbar>
 
       <AppShell.Main>
