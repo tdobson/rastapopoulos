@@ -175,12 +175,23 @@ function getBottomRowPanelCount(grid: GridType): number {
   return getPanelCountInRow(grid, totalRows - 1);
 }
 
-// Calculate the width of the entire array minus the bottom row
-function getMaxNonBottomRowWidth(grid: GridType): number {
+// Calculate the number of panels in the widest non-bottom row
+function getNonBottomWidthPanelCount(grid: GridType): number {
+  // Get the total number of rows in the grid
   const totalRows = getTotalRows(grid);
+
+  // If there's only one row or less, return 0 as there are no non-bottom rows
   if (totalRows <= 1) return 0;
+
+  // Calculate the width (number of panels) of the widest row in the entire grid
+  // This is done by mapping each row to its panel count and then finding the maximum
   const totalWidth = Math.max(...grid.map(row => row.filter(cell => cell === 1).length));
+
+  // Get the number of panels in the bottom row
   const bottomRowWidth = getBottomRowPanelCount(grid);
+
+  // Return the difference between the widest row and the bottom row
+  // This gives us the number of panels in the widest non-bottom row
   return totalWidth - bottomRowWidth;
 }
 
