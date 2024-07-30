@@ -86,7 +86,37 @@ const leadMeterageTable = {
 
 /**
  * Determines if a cell in the grid is a corner based on its surrounding cells.
- *
+ * 
+ * A corner is defined as a cell that is part of a panel and has a specific configuration of adjacent panels:
+ * - 'BottomLeftCorner': A cell with a panel above and to the right, but no panel in the top-right corner.
+ * - 'BottomRightCorner': A cell with a panel above and to the left, but no panel in the top-left corner.
+ * - 'TopLeftCorner': A cell with a panel below and to the right, but no panel in the bottom-right corner.
+ * - 'TopRightCorner': A cell with a panel below and to the left, but no panel in the bottom-left corner.
+ * 
+ * Here is an ASCII diagram to illustrate the corners:
+ * 
+ * ```
+ * TopLeftCorner:
+ * ┌───┐
+ * │   │
+ * └───┘
+ * 
+ * TopRightCorner:
+ * ┌───┐
+ * │   │
+ * └───┘
+ * 
+ * BottomLeftCorner:
+ * ┌───┐
+ * │   │
+ * └───┘
+ * 
+ * BottomRightCorner:
+ * ┌───┐
+ * │   │
+ * └───┘
+ * ```
+ * 
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index of the cell to check.
  * @param col - The column index of the cell to check.
@@ -96,22 +126,31 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
   const isPanel = (r: number, c: number): boolean =>
       r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
-  const above = isPanel(row - 1, col);
-  const below = isPanel(row + 1, col);
-  const left = isPanel(row, col - 1);
-  const right = isPanel(row, col + 1);
-  const topLeft = isPanel(row - 1, col - 1);
-  const topRight = isPanel(row - 1, col + 1);
-  const bottomLeft = isPanel(row + 1, col - 1);
-  const bottomRight = isPanel(row + 1, col + 1);
-
+  // Check if the current cell is a panel
   if (!isPanel(row, col)) return null;
 
+  const above = isPanel(row - 1, col); // Panel above
+  const below = isPanel(row + 1, col); // Panel below
+  const left = isPanel(row, col - 1); // Panel to the left
+  const right = isPanel(row, col + 1); // Panel to the right
+  const topLeft = isPanel(row - 1, col - 1); // Panel in the top-left corner
+  const topRight = isPanel(row - 1, col + 1); // Panel in the top-right corner
+  const bottomLeft = isPanel(row + 1, col - 1); // Panel in the bottom-left corner
+  const bottomRight = isPanel(row + 1, col + 1); // Panel in the bottom-right corner
+
+  // Check for BottomLeftCorner: Panel above and to the right, but no panel in the top-right corner
   if (above && right && !topRight) return 'BottomLeftCorner';
+
+  // Check for BottomRightCorner: Panel above and to the left, but no panel in the top-left corner
   if (above && left && !topLeft) return 'BottomRightCorner';
+
+  // Check for TopLeftCorner: Panel below and to the right, but no panel in the bottom-right corner
   if (below && right && !bottomRight) return 'TopLeftCorner';
+
+  // Check for TopRightCorner: Panel below and to the left, but no panel in the bottom-left corner
   if (below && left && !bottomLeft) return 'TopRightCorner';
 
+  // If none of the conditions are met, return null indicating it's not a corner
   return null;
 }
 
