@@ -785,7 +785,7 @@ function BOMCalculator() {
                 <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
               </Grid.Col>
               <Grid.Col span={12}>
-                <Text>Non-Bottom Row Panel Count: {getNonBottomWidthPanelCount(grid)}</Text>
+                <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
               </Grid.Col>
             </Grid>
           </Collapse>
