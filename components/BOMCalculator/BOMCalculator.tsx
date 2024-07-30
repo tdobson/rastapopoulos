@@ -73,6 +73,16 @@ const battenTable: { [key: number]: { [key: number]: number } } = {
   20: { 1: 99, 2: 165, 3: 231, 4: 297 },
 };
 
+const leadMeterageTable = {
+  1: 2100,
+  2: 3400,
+  3: 4475,
+  4: 6000,
+  5: 7275,
+  6: 8900,
+  default: 1375
+};
+
 // Updated utility functions
 function isCorner(grid: GridType, row: number, col: number): string | null {
   const isPanel = (r: number, c: number): boolean =>
@@ -115,7 +125,7 @@ function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth
   if (bottomRowPanelCount <= 0) return { standard: 0, deep: 0 };
   if (bottomRowPanelCount === 1) return { standard: 1, deep: 1 };
   if (bottomRowPanelCount === 2) return { standard: 2, deep: 1 };
-  
+
   const standard = bottomRowPanelCount;
   const deep = maxNonBottomRowWidth;
   return { standard, deep };
