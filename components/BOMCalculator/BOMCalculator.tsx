@@ -326,13 +326,13 @@ function getNonBottomRowPanelCount(grid: GridType): number {
 }
 
 /**
- * Calculates the total number of panels in the grid, excluding empty cells and error cells.
+ * Calculates the total number of active cells (panels) in the grid.
  *
- * @param cellTypesCount - An object containing counts of different cell types.
- * @returns The total number of panels.
+ * @param grid - The grid representing the layout of panels.
+ * @returns The total number of active cells (panels).
  */
-function getTotalPanelCount(cellTypesCount: CellTypesCount): number {
-  return Object.values(cellTypesCount).reduce((sum, count) => sum + count, 0) - cellTypesCount.EmptyCell - cellTypesCount.Error;
+function getTotalPanelCount(grid: GridType): number {
+  return grid.flat().filter(cell => cell === 1).length;
 }
 
 /**
@@ -408,7 +408,7 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
 function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string, numberOfStrings: number): BOM {
   const { rows, columns } = getGridDimensions(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns);
-  const totalPanelCount = getTotalPanelCount(cellTypesCount);
+  const totalPanelCount = getTotalPanelCount(grid);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
   const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
