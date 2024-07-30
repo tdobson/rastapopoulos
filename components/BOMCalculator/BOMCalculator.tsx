@@ -108,6 +108,11 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
   return null;
 }
 
+/**
+ * Returns the total number of rows in the grid that contain at least one panel.
+ * @param grid - The grid representing the layout of panels.
+ * @returns The number of rows containing panels.
+ */
 function getTotalRows(grid: GridType): number {
   for (let row = grid.length - 1; row >= 0; row--) {
     if (grid[row].some(cell => cell === 1)) {
@@ -182,10 +187,10 @@ function getNonBottomWidthPanelCount(grid: GridType): number {
   // If there's only one row or less, return 0 as there are no non-bottom rows
   if (totalRows <= 1) return 0;
 
-  // Count panels in each column that don't have a panel below them
+  // Count panels in each column that don't have a panel directly below them
   let count = 0;
   for (let col = 0; col < grid[0].length; col++) {
-    for (let row = totalRows - 2; row >= 0; row--) {
+    for (let row = 0; row < totalRows - 1; row++) {
       if (grid[row][col] === 1 && grid[row + 1][col] === 0) {
         count++;
         break; // Move to the next column
@@ -193,9 +198,7 @@ function getNonBottomWidthPanelCount(grid: GridType): number {
     }
   }
 
-  const bottomRows = getBottomRowPanelCount(grid)
-
-  return count - bottomRows;
+  return count;
 }
 
 function getTotalPanelCount(cellTypesCount: CellTypesCount): number {

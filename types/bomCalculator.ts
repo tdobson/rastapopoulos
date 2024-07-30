@@ -42,6 +42,10 @@ export type BOMItem = {
 export type BOM = {
   [key: string]: BOMItem;
 };
+
+/**
+ * Represents a Bill of Materials with explanations for each item.
+ */
 export type BOMWithExplanations = {
   [key: string]: BOMItem;
 };
