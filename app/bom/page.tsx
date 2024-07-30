@@ -1,8 +1,13 @@
-// elevations/page.tsx (Server Component)
-import { Container } from '@mantine/core';
-import BOMCalculator from '../../components/BOMCalculator/BOMCalculator';
+'use client';
 
-export default function ElevationsPage() {
+import dynamic from 'next/dynamic';
+import { Container } from '@mantine/core';
+
+const BOMCalculator = dynamic(() => import('../../components/BOMCalculator/BOMCalculator'), {
+  ssr: false,
+});
+
+export default function BOMPage() {
   return (
     <div>
       <Container>
