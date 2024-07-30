@@ -168,7 +168,7 @@ const leadMeterageTable = {
  *    - If the conditions are met, set the corresponding corner type to true in the result object.
  * 4. Return the result object containing the corner types found in the cell.
  */
-function isCorner(grid, row, col) {
+export function isCorner(grid, row, col) {
   const gridSize = grid.length;
   const isPanel = (r, c) => r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
 
@@ -215,7 +215,7 @@ function isCorner(grid, row, col) {
  * @param grid - The grid representing the layout of panels.
  * @returns The number of rows containing panels.
  */
-function getTotalRows(grid: GridType): number {
+export function getTotalRows(grid: GridType): number {
   for (let row = grid.length - 1; row >= 0; row--) {
     if (grid[row].some((cell) => cell === 1)) {
       return row + 1;
@@ -231,7 +231,7 @@ function getTotalRows(grid: GridType): number {
  * @param row - The row index to check.
  * @returns True if the row is the bottom row containing panels, otherwise false.
  */
-function isBottomRow(grid: GridType, row: number): boolean {
+export function isBottomRow(grid: GridType, row: number): boolean {
   const totalRows = getTotalRows(grid);
   return row === totalRows - 1;
 }
@@ -264,7 +264,7 @@ function isBottomRow(grid: GridType, row: number): boolean {
  * @param nonBottomRowPanelCount - The number of panels with nothing below them that aren't on the bottom row.
  * @returns An object containing the quantities of standard and deep lead required.
  */
-function calculateLeadQuantity(
+export function calculateLeadQuantity(
   bottomRowPanelCount: number,
   nonBottomRowPanelCount: number
 ): { standard: number; deep: number } {
@@ -297,7 +297,7 @@ function calculateLeadQuantity(
  * @param row - The row index to count the panels in.
  * @returns The number of panels in the specified row.
  */
-function getPanelCountInRow(grid: GridType, row: number): number {
+export function getPanelCountInRow(grid: GridType, row: number): number {
   if (row < 0 || row >= grid.length) return 0;
   return grid[row].filter((cell) => cell === 1).length;
 }
@@ -308,7 +308,7 @@ function getPanelCountInRow(grid: GridType, row: number): number {
  * @param grid - The grid representing the layout of panels.
  * @returns The number of panels in the bottom row.
  */
-function getBottomRowPanelCount(grid: GridType): number {
+export function getBottomRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   return getPanelCountInRow(grid, totalRows - 1);
 }
@@ -319,7 +319,7 @@ function getBottomRowPanelCount(grid: GridType): number {
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
-function getNonBottomRowPanelCount(grid: GridType): number {
+export function getNonBottomRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   const bottomRowIndex = totalRows - 1;
 
@@ -348,7 +348,7 @@ function getNonBottomRowPanelCount(grid: GridType): number {
  * @param grid - The grid representing the layout of panels.
  * @returns The total number of active cells (panels).
  */
-function getTotalPanelCount(grid: GridType): number {
+export function getTotalPanelCount(grid: GridType): number {
   return grid.flat().filter((cell) => cell === 1).length;
 }
 
@@ -358,7 +358,7 @@ function getTotalPanelCount(grid: GridType): number {
  * @param grid - The grid representing the layout of panels.
  * @returns An object containing the number of rows and columns with panels.
  */
-function getGridDimensions(grid: GridType): { rows: number; columns: number } {
+export function getGridDimensions(grid: GridType): { rows: number; columns: number } {
   let maxRow = 0;
   let maxCol = 0;
 
@@ -380,7 +380,7 @@ function getGridDimensions(grid: GridType): { rows: number; columns: number } {
  * @param grid - The grid representing the layout of panels.
  * @returns An object containing the number of rows with panels and the maximum number of columns with panels.
  */
-function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
+export function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
   let rows = 0;
   let maxColumns = 0;
 
@@ -433,7 +433,7 @@ function getBattenDimensions(grid: GridType): { rows: number; columns: number } 
  * const largeBattenCount = calculateBattenQuantity(25, 5, 125);
  * console.log(largeBattenCount); // Output: 252
  */
-function calculateBattenQuantity(rows: number, columns: number, totalPanelCount: number): number {
+export function calculateBattenQuantity(rows: number, columns: number, totalPanelCount: number): number {
   // Return 0 if no solar panels are specified
   if (totalPanelCount === 0) {
     return 0;
@@ -465,7 +465,7 @@ function calculateBattenQuantity(rows: number, columns: number, totalPanelCount:
  * @param cellTypesCount - An object containing counts of different cell types.
  * @returns The number of panels in the top row.
  */
-function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
+export function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
   return cellTypesCount.TopSinglePanel + cellTypesCount.TopMidPanel + cellTypesCount.TopEndPanel;
 }
 
@@ -479,7 +479,7 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
  * @param numberOfStrings - The number of strings in the setup.
  * @returns The BOM object containing quantities, prices, totals, and explanations for each component.
  */
-function calculateBOM(
+export function calculateBOM(
   cellTypesCount: CellTypesCount,
   grid: GridType,
   panelType: string,
@@ -686,7 +686,7 @@ function calculateBOM(
  * @param grid - The grid representing the layout of panels.
  * @returns An object containing the counts of each cell type.
  */
-function countCellTypes(grid: GridType): CellTypesCount {
+export function countCellTypes(grid: GridType): CellTypesCount {
   const cellTypesCount: CellTypesCount = {
     SinglePanel: 0,
     MidPanel: 0,
@@ -731,7 +731,7 @@ function countCellTypes(grid: GridType): CellTypesCount {
  * @param col - The column index of the cell to determine the type for.
  * @returns A string indicating the type of the cell.
  */
-function determineCellType(grid, row, col) {
+export function determineCellType(grid, row, col) {
   if (grid[row][col] === 0) return ['EmptyCell'];
 
   const cornerTypes = isCorner(grid, row, col);
