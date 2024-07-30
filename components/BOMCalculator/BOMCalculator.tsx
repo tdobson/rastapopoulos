@@ -480,7 +480,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       quantity: leadQuantities.deep,
       price: componentPrices['Lead 600mm'],
       total: 0,
-      explanation: `Deep lead for ${maxNonBottomRowWidth} maximum width of non-bottom rows`,
+      explanation: `Deep lead for ${maxNonBottomRowWidth} panels on non-bottom rows`,
     },
     'Tile Kicker Bars': {
       quantity: topRowPanelCount,
