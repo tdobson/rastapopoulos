@@ -180,7 +180,7 @@ function getMaxNonBottomRowWidth(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   if (totalRows <= 1) return 0;
   const totalWidth = Math.max(...grid.map(row => row.filter(cell => cell === 1).length));
-  const bottomRowWidth = grid[totalRows - 1].filter(cell => cell === 1).length;
+  const bottomRowWidth = getBottomRowPanelCount(grid);
   return totalWidth - bottomRowWidth;
 }
 
