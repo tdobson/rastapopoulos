@@ -37,7 +37,7 @@ const componentPrices: ComponentPrices = {
   'Galvanised Nails': 0.01,
   'Copper Nails': 0.02,
   'Lead': 34.20, // per 1500mm length
-  'Lead 600mm': 22.80, // Example price, adjust as needed
+  'Lead 600mm': 42.80, // Example price, adjust as needed
   'Tile Kicker Bars': 5.00, // Example price, adjust as needed
   'Kicker Bar Hooks': 1.50, // Example price, adjust as needed
   'Flexalu Top Flashing': 15.00, // Example price, adjust as needed
@@ -122,6 +122,32 @@ function isBottomRow(grid: GridType, row: number): boolean {
   return row === totalRows - 1;
 }
 
+// this is currently incorrect in its logic. it takes the right arguments, and returns the right values, but the logic is incorrect.
+/*
+This is the correct logic - please update this into a detailed jsodc header
+
+Lead comes in two types that have seperate uses and come in seperate quantities
+
+Normal lead:
+Calculated based on the number of panels across the bottom row of the array. It comes in 1500mm lengths, and must be calculated using the leadMeterageTable const.
+
+If you have 1 panel requiring normal lead, then you must check the leadMeterageTable. If it says you need 2100mm of lead, then you need 2100 divided by 1500 = 1.4 - which we round up. Therefore you need two pieces of normal lead.
+
+if you have an array of 3 bottom row panels requiring normal lead, then you'd look at the leadmeteragetable. If it says you need 4475 of lead, then you need 4475/1500 = 2.9 - which means you need three pieces of normal lead.
+
+if you an array with 8 bottom row panels requiring normal lead, then you'd look at the table. It'd say you need (8900 + 1375 + 1375) / 1500 = 7.7 which means you need 8 pieces of normal lead
+
+Deep lead (800mm width):
+Calculated based on the total width of the array, minus the bottom row for which normal lead has been calculated. eg so an array with a top row of 10, and a bottom row of 2, would need 8 pieces of deep lead.
+
+deep lead is 800mm deep, and comes in 1500mm lengths, and must be calculated using the leadMeterageTable const.
+
+If you have 1 panel requiring deep lead, then you must check the leadMeterageTable. If it says you need 2100mm of lead, then you need 2100 divided by 1500 = 1.4 - which we round up. Therefore you need two pieces of deep lead.
+
+if you have an array of 3 non bottom row panels requiring deep lead, then you'd look at the leadmeteragetable. If it says you need 4475 of lead, then you need 4475/1500 = 2.9 - which means you need three pieces of deep lead.
+
+if you an array with 8 non bottom row panels requiring deep lead, then you'd look at the table. It'd say you need (8900 + 1375 + 1375) / 1500 = 7.7 which means you need 8 pieces of deep lead
+*/
 function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth: number): { standard: number; deep: number } {
   if (bottomRowPanelCount <= 0) return { standard: 0, deep: 0 };
   if (bottomRowPanelCount === 1) return { standard: 1, deep: 1 };
