@@ -240,7 +240,7 @@ function isBottomRow(grid: GridType, row: number): boolean {
  * @param maxNonBottomRowWidth - The maximum width of non-bottom rows.
  * @returns An object containing the quantities of standard and deep lead required.
  */
-function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth: number): { standard: number; deep: number } {
+function calculateLeadQuantity(bottomRowPanelCount: number, nonBottomRowPanelCount: number): { standard: number; deep: number } {
   const calculateLeadPieces = (panelCount: number): number => {
     let totalLength = 0;
     for (let i = 1; i <= panelCount; i++) {
@@ -250,7 +250,7 @@ function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth
   };
 
   const standard = calculateLeadPieces(bottomRowPanelCount);
-  const deep = calculateLeadPieces(maxNonBottomRowWidth);
+  const deep = calculateLeadPieces(nonBottomRowPanelCount);
 
   return { standard, deep };
 }
@@ -284,7 +284,7 @@ function getBottomRowPanelCount(grid: GridType): number {
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
-function getNonBottomWidthPanelCount(grid: GridType): number {
+function getNonBottomRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   const bottomRowIndex = totalRows - 1;
 
@@ -392,10 +392,10 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
   const battenQuantity = calculateBattenQuantity(rows, columns);
   const totalPanelCount = getTotalPanelCount(cellTypesCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
-  const maxNonBottomRowWidth = getNonBottomWidthPanelCount(grid);
+  const nonBottomRowPanelCount = getNonBottomWidthPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
 
-  const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, maxNonBottomRowWidth);
+  const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, nonBottomRowPanelCount);
 
   const bom: BOM = {
     'GSE Half Portrait Frames': {
@@ -480,7 +480,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       quantity: leadQuantities.deep,
       price: componentPrices['Lead 600mm'],
       total: 0,
-      explanation: `Deep lead for ${maxNonBottomRowWidth} panels on non-bottom rows`,
+      explanation: `Deep lead for ${nonBottomRowPanelCount} panels on non-bottom rows`,
     },
     'Tile Kicker Bars': {
       quantity: topRowPanelCount,
@@ -785,7 +785,7 @@ function BOMCalculator() {
                 <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
               </Grid.Col>
               <Grid.Col span={12}>
-                <Text>Max Non-Bottom Row Width: {getNonBottomWidthPanelCount(grid)}</Text>
+                <Text>Non-Bottom Row Panel Count: {getNonBottomWidthPanelCount(grid)}</Text>
               </Grid.Col>
             </Grid>
           </Collapse>
