@@ -392,7 +392,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
   const battenQuantity = calculateBattenQuantity(rows, columns);
   const totalPanelCount = getTotalPanelCount(cellTypesCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
-  const nonBottomRowPanelCount = getNonBottomWidthPanelCount(grid);
+  const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
 
   const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, nonBottomRowPanelCount);
