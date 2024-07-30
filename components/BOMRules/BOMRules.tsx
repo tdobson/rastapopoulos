@@ -63,14 +63,20 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lead:</strong> Calculated based on the number of panels across the bottom row of the array and the maximum width of non-bottom rows. Lead comes in 1500mm lengths and is used for both standard and 600mm deep applications. The quantity is determined as follows:
+            <strong>Lead:</strong> Calculated based on the number of panels across the bottom row of the array and the maximum width of non-bottom rows. Lead comes in two types:
             <List withPadding>
-              <List.Item>Standard Lead: 1 piece per panel in the bottom row</List.Item>
-              <List.Item>Deep Lead (600mm): 1 piece per panel in the widest non-bottom row</List.Item>
-              <List.Item>Special cases:
+              <List.Item>
+                <strong>Normal Lead (1500mm length):</strong> Calculated based on the number of panels across the bottom row of the array. The required length is determined using the leadMeterageTable and then divided by 1500mm (rounded up) to get the number of pieces.
+              </List.Item>
+              <List.Item>
+                <strong>Deep Lead (800mm width, 1500mm length):</strong> Calculated based on the total width of the array, minus the bottom row. The required length is determined using the leadMeterageTable and then divided by 1500mm (rounded up) to get the number of pieces.
+              </List.Item>
+              <List.Item>
+                Example calculations:
                 <List withPadding>
-                  <List.Item>1 panel: 1 standard, 1 deep</List.Item>
-                  <List.Item>2 panels: 2 standard, 1 deep</List.Item>
+                  <List.Item>1 panel: 2 pieces of normal lead (2100mm / 1500mm = 1.4, rounded up to 2)</List.Item>
+                  <List.Item>3 panels: 3 pieces of normal lead (4475mm / 1500mm = 2.98, rounded up to 3)</List.Item>
+                  <List.Item>8 panels: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8)</List.Item>
                 </List>
               </List.Item>
             </List>

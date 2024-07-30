@@ -149,12 +149,17 @@ if you have an array of 3 non bottom row panels requiring deep lead, then you'd 
 if you an array with 8 non bottom row panels requiring deep lead, then you'd look at the table. It'd say you need (8900 + 1375 + 1375) / 1500 = 7.7 which means you need 8 pieces of deep lead
 */
 function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth: number): { standard: number; deep: number } {
-  if (bottomRowPanelCount <= 0) return { standard: 0, deep: 0 };
-  if (bottomRowPanelCount === 1) return { standard: 1, deep: 1 };
-  if (bottomRowPanelCount === 2) return { standard: 2, deep: 1 };
+  const calculateLeadPieces = (panelCount: number): number => {
+    let totalLength = 0;
+    for (let i = 1; i <= panelCount; i++) {
+      totalLength += leadMeterageTable[i] || leadMeterageTable.default;
+    }
+    return Math.ceil(totalLength / 1500);
+  };
 
-  const standard = bottomRowPanelCount;
-  const deep = maxNonBottomRowWidth;
+  const standard = calculateLeadPieces(bottomRowPanelCount);
+  const deep = calculateLeadPieces(maxNonBottomRowWidth);
+
   return { standard, deep };
 }
 
