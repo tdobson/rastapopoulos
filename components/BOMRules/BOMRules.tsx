@@ -63,12 +63,16 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lead:</strong> Calculated based on the number of bottom row panels (1500mm segments)
-          </Text>
-        </List.Item>
-        <List.Item>
-          <Text>
-            <strong>Lead 600mm:</strong> Calculated based on the number of upper row panels (600mm segments)
+            <strong>Lead:</strong> Calculated based on the total number of panels. Lead comes in 1500mm lengths and is used for both standard and 600mm deep applications. The quantity is determined by this table:
+            <List withPadding>
+              <List.Item>1 panel: 2100mm (2 pieces)</List.Item>
+              <List.Item>2 panels: 3400mm (3 pieces)</List.Item>
+              <List.Item>3 panels: 4475mm (3 pieces)</List.Item>
+              <List.Item>4 panels: 6000mm (4 pieces)</List.Item>
+              <List.Item>5 panels: 7275mm (5 pieces)</List.Item>
+              <List.Item>6 panels: 8900mm (6 pieces)</List.Item>
+              <List.Item>7+ panels: 8900mm + 1375mm per additional panel</List.Item>
+            </List>
           </Text>
         </List.Item>
         <List.Item>
