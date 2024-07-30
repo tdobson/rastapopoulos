@@ -117,6 +117,8 @@ const leadMeterageTable = {
  * └───┘
  * ```
  * 
+ * Additionally, the function will detect T-shapes and the inside corners of squares.
+ * 
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index of the cell to check.
  * @param col - The column index of the cell to check.
@@ -149,6 +151,14 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
 
   // Check for TopRightCorner: Panel below and to the left, but no panel in the bottom-left corner
   if (below && left && !bottomLeft) return 'TopRightCorner';
+
+  // Check for T-shapes and inside corners of squares
+  if (above && below && left && right) {
+    if (!topLeft && !bottomLeft) return 'BottomLeftCorner';
+    if (!topRight && !bottomRight) return 'BottomRightCorner';
+    if (!topLeft && !topRight) return 'TopLeftCorner';
+    if (!bottomLeft && !bottomRight) return 'TopRightCorner';
+  }
 
   // If none of the conditions are met, return null indicating it's not a corner
   return null;
