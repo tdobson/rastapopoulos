@@ -215,30 +215,85 @@ describe('getTotalPanelCount function', () => {
 });
 
 describe('isCorner function', () => {
-  const grid = [
-    [1, 1, 1],
-    [1, 0, 1],
-    [1, 1, 1],
-  ];
-
   it('identifies top-left corner correctly', () => {
+    const grid = [
+      [1, 1, 0],
+      [1, 0, 0],
+      [0, 0, 0],
+    ];
     expect(isCorner(grid, 0, 0)).toEqual({ TopLeftCorner: true });
   });
 
   it('identifies top-right corner correctly', () => {
+    const grid = [
+      [0, 1, 1],
+      [0, 0, 1],
+      [0, 0, 0],
+    ];
     expect(isCorner(grid, 0, 2)).toEqual({ TopRightCorner: true });
   });
 
   it('identifies bottom-left corner correctly', () => {
+    const grid = [
+      [0, 0, 0],
+      [1, 0, 0],
+      [1, 1, 0],
+    ];
     expect(isCorner(grid, 2, 0)).toEqual({ BottomLeftCorner: true });
   });
 
   it('identifies bottom-right corner correctly', () => {
+    const grid = [
+      [0, 0, 0],
+      [0, 0, 1],
+      [0, 1, 1],
+    ];
     expect(isCorner(grid, 2, 2)).toEqual({ BottomRightCorner: true });
   });
 
+  it('identifies multiple corners for a single cell', () => {
+    const grid = [
+      [0, 1, 0],
+      [1, 1, 1],
+      [0, 1, 0],
+    ];
+    expect(isCorner(grid, 1, 1)).toEqual({
+      TopLeftCorner: true,
+      TopRightCorner: true,
+      BottomLeftCorner: true,
+      BottomRightCorner: true,
+    });
+  });
+
   it('returns an empty object for non-corner cells', () => {
+    const grid = [
+      [1, 1, 1],
+      [1, 1, 1],
+      [1, 1, 1],
+    ];
     expect(isCorner(grid, 1, 1)).toEqual({});
+  });
+
+  it('handles edge cases correctly', () => {
+    const grid = [
+      [1, 0, 1],
+      [0, 1, 0],
+      [1, 0, 1],
+    ];
+    expect(isCorner(grid, 0, 0)).toEqual({ TopLeftCorner: true, BottomRightCorner: true });
+    expect(isCorner(grid, 0, 2)).toEqual({ TopRightCorner: true, BottomLeftCorner: true });
+    expect(isCorner(grid, 2, 0)).toEqual({ BottomLeftCorner: true, TopRightCorner: true });
+    expect(isCorner(grid, 2, 2)).toEqual({ BottomRightCorner: true, TopLeftCorner: true });
+  });
+
+  it('handles single cell grid', () => {
+    const grid = [[1]];
+    expect(isCorner(grid, 0, 0)).toEqual({
+      TopLeftCorner: true,
+      TopRightCorner: true,
+      BottomLeftCorner: true,
+      BottomRightCorner: true,
+    });
   });
 });
 
