@@ -383,11 +383,28 @@ describe('getPanelCountInRow function', () => {
 
 describe('getTopRowPanelCount function', () => {
   it('counts top row panels correctly', () => {
-    const cellTypesCount = {
+    const cellTypesCount: CellTypesCount = {
       TopSinglePanel: 1,
       TopMidPanel: 2,
       TopEndPanel: 1,
-      // ... other properties
+      SinglePanel: 0,
+      MidPanel: 0,
+      EndPanel: 0,
+      MiddleMidPanel: 0,
+      MiddleEndPanel: 0,
+      BottomMidPanel: 0,
+      BottomEndPanel: 0,
+      BottomSinglePanel: 0,
+      CenterSinglePanel: 0,
+      CenterBottomPanel: 0,
+      CenterMidPanel: 0,
+      CenterTopPanel: 0,
+      EmptyCell: 0,
+      Error: 0,
+      BottomLeftCorner: 0,
+      BottomRightCorner: 0,
+      TopLeftCorner: 0,
+      TopRightCorner: 0,
     };
     expect(getTopRowPanelCount(cellTypesCount)).toBe(4);
   });
