@@ -25,21 +25,7 @@ const renderWithProvider = (ui: React.ReactElement) => {
     </MantineProvider>
   );
 };
-import {
-  calculateLeadQuantity,
-  determineCellType,
-  getBattenDimensions,
-  calculateBattenQuantity,
-  getBottomRowPanelCount,
-  getNonBottomRowPanelCount,
-  getTotalPanelCount,
-  isCorner,
-  countCellTypes,
-  getTotalRows,
-  isBottomRow,
-  getPanelCountInRow,
-  getTopRowPanelCount,
-} from './BOMCalculator';
+
 
 // Mock the createPortal function
 jest.mock('react-dom', () => ({
