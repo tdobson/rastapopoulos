@@ -175,24 +175,25 @@ function getBottomRowPanelCount(grid: GridType): number {
   return getPanelCountInRow(grid, totalRows - 1);
 }
 
-// Calculate the number of panels in the widest non-bottom row
+// Calculate the number of panels without any panel directly below them
 function getNonBottomWidthPanelCount(grid: GridType): number {
-  // Get the total number of rows in the grid
   const totalRows = getTotalRows(grid);
 
   // If there's only one row or less, return 0 as there are no non-bottom rows
   if (totalRows <= 1) return 0;
 
-  // Calculate the width (number of panels) of the widest row in the entire grid
-  // This is done by mapping each row to its panel count and then finding the maximum
-  const totalWidth = Math.max(...grid.map(row => row.filter(cell => cell === 1).length));
+  // Count panels in each column that don't have a panel below them
+  let count = 0;
+  for (let col = 0; col < grid[0].length; col++) {
+    for (let row = totalRows - 2; row >= 0; row--) {
+      if (grid[row][col] === 1 && grid[row + 1][col] === 0) {
+        count++;
+        break; // Move to the next column
+      }
+    }
+  }
 
-  // Get the number of panels in the bottom row
-  const bottomRowWidth = getBottomRowPanelCount(grid);
-
-  // Return the difference between the widest row and the bottom row
-  // This gives us the number of panels in the widest non-bottom row
-  return totalWidth - bottomRowWidth;
+  return count;
 }
 
 function getTotalPanelCount(cellTypesCount: CellTypesCount): number {
@@ -246,7 +247,7 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
   const battenQuantity = calculateBattenQuantity(rows, columns);
   const totalPanelCount = getTotalPanelCount(cellTypesCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
-  const maxNonBottomRowWidth = getMaxNonBottomRowWidth(grid);
+  const maxNonBottomRowWidth = getNonBottomWidthPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
 
   const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, maxNonBottomRowWidth);
@@ -619,7 +620,7 @@ function BOMCalculator() {
                 <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
               </Grid.Col>
               <Grid.Col span={12}>
-                <Text>Max Non-Bottom Row Width: {getMaxNonBottomRowWidth(grid)}</Text>
+                <Text>Max Non-Bottom Row Width: {getNonBottomWidthPanelCount(grid)}</Text>
               </Grid.Col>
             </Grid>
           </Collapse>
