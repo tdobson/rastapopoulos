@@ -85,6 +85,14 @@ const leadMeterageTable = {
 };
 
 // Updated utility functions
+/**
+ * Determines if a cell in the grid is a corner based on its surrounding cells.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @param row - The row index of the cell to check.
+ * @param col - The column index of the cell to check.
+ * @returns A string indicating the type of corner ('BottomLeftCorner', 'BottomRightCorner', 'TopLeftCorner', 'TopRightCorner') or null if it's not a corner.
+ */
 function isCorner(grid: GridType, row: number, col: number): string | null {
   const isPanel = (r: number, c: number): boolean =>
       r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
@@ -113,6 +121,12 @@ function isCorner(grid: GridType, row: number, col: number): string | null {
  * @param grid - The grid representing the layout of panels.
  * @returns The number of rows containing panels.
  */
+/**
+ * Returns the total number of rows in the grid that contain at least one panel.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @returns The number of rows containing panels.
+ */
 function getTotalRows(grid: GridType): number {
   for (let row = grid.length - 1; row >= 0; row--) {
     if (grid[row].some(cell => cell === 1)) {
@@ -122,6 +136,13 @@ function getTotalRows(grid: GridType): number {
   return 0;
 }
 
+/**
+ * Determines if a given row is the bottom row of the grid that contains panels.
+ * 
+ * @param grid - The grid representing the layout of panels.
+ * @param row - The row index to check.
+ * @returns True if the row is the bottom row containing panels, otherwise false.
+ */
 function isBottomRow(grid: GridType, row: number): boolean {
   const totalRows = getTotalRows(grid);
   return row === totalRows - 1;
@@ -153,6 +174,13 @@ if you have an array of 3 non bottom row panels requiring deep lead, then you'd 
 
 if you an array with 8 non bottom row panels requiring deep lead, then you'd look at the table. It'd say you need (8900 + 1375 + 1375) / 1500 = 7.7 which means you need 8 pieces of deep lead
 */
+/**
+ * Calculates the quantity of lead required for both standard and deep types based on the number of panels in the bottom row and the maximum width of non-bottom rows.
+ * 
+ * @param bottomRowPanelCount - The number of panels in the bottom row.
+ * @param maxNonBottomRowWidth - The maximum width of non-bottom rows.
+ * @returns An object containing the quantities of standard and deep lead required.
+ */
 function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth: number): { standard: number; deep: number } {
   const calculateLeadPieces = (panelCount: number): number => {
     let totalLength = 0;
