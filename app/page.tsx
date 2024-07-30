@@ -1,13 +1,14 @@
 import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
-import { ElevationTable } from '@/components/ElevationTable/ElevationTable';
-import { Elevation } from '@/types/elevation';
+import { Container, Stack } from '@mantine/core';
 
 export default function HomePage() {
   return (
-    <>
-      <Welcome />
-      <ColorSchemeToggle />
-    </>
+    <Container size="lg">
+      <Stack spacing="xl">
+        <Welcome />
+        <ColorSchemeToggle />
+      </Stack>
+    </Container>
   );
 }
