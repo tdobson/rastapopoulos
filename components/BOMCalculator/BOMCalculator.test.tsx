@@ -1,7 +1,30 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import BOMCalculator from './BOMCalculator';
+import { MantineProvider } from '@mantine/core';
+import BOMCalculator, {
+  calculateLeadQuantity,
+  determineCellType,
+  getBattenDimensions,
+  calculateBattenQuantity,
+  getBottomRowPanelCount,
+  getNonBottomRowPanelCount,
+  getTotalPanelCount,
+  isCorner,
+  countCellTypes,
+  getTotalRows,
+  isBottomRow,
+  getPanelCountInRow,
+  getTopRowPanelCount,
+} from './BOMCalculator';
+
+const renderWithProvider = (ui: React.ReactElement) => {
+  return render(
+    <MantineProvider>
+      {ui}
+    </MantineProvider>
+  );
+};
 import {
   calculateLeadQuantity,
   determineCellType,
@@ -26,7 +49,7 @@ jest.mock('react-dom', () => ({
 
 describe('BOMCalculator Component', () => {
   it('renders without crashing', () => {
-    render(<BOMCalculator />);
+    renderWithProvider(<BOMCalculator />);
     expect(screen.getByText('Panel Type')).toBeInTheDocument();
     expect(screen.getByText('Number of Strings')).toBeInTheDocument();
     expect(screen.getByText('Toggle BOM Calculation Rules')).toBeInTheDocument();
@@ -35,28 +58,28 @@ describe('BOMCalculator Component', () => {
   });
 
   it('allows selecting panel type', () => {
-    render(<BOMCalculator />);
+    renderWithProvider(<BOMCalculator />);
     const select = screen.getByRole('combobox');
     fireEvent.change(select, { target: { value: 'LONGi 405w' } });
     expect(select).toHaveValue('LONGi 405w');
   });
 
   it('allows setting number of strings', () => {
-    render(<BOMCalculator />);
+    renderWithProvider(<BOMCalculator />);
     const input = screen.getByRole('spinbutton');
     fireEvent.change(input, { target: { value: '3' } });
     expect(input).toHaveValue(3);
   });
 
   it('toggles BOM calculation rules', () => {
-    render(<BOMCalculator />);
+    renderWithProvider(<BOMCalculator />);
     const toggleButton = screen.getByText('Toggle BOM Calculation Rules');
     fireEvent.click(toggleButton);
     expect(screen.getByText('BOM Calculation Rules')).toBeInTheDocument();
   });
 
   it('resets the grid when reset button is clicked', () => {
-    render(<BOMCalculator />);
+    renderWithProvider(<BOMCalculator />);
     const resetButton = screen.getByText('Reset Grid');
     fireEvent.click(resetButton);
     expect(screen.getByText('Total Cost: £0.00')).toBeInTheDocument();
