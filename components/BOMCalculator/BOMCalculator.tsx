@@ -2,8 +2,8 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Grid, Select, Text, Button, Group, Collapse, Box, Stack, NumberInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CellTypesCount, PanelPrices, ComponentPrices, BOM, BOMItem } from '../../types/bomCalculator';
@@ -467,13 +467,14 @@ function BOMCalculator() {
   const handlePrint = useCallback(() => {
     const printWindow = window.open('', '_blank');
     if (printWindow) {
-      ReactDOM.render(
+      printWindow.document.body.innerHTML = '';
+      createPortal(
         <PrintableChecklist bom={bom} />,
-        printWindow.document.body,
-        () => {
-          printWindow.print();
-        }
+        printWindow.document.body
       );
+      printWindow.onload = () => {
+        printWindow.print();
+      };
     }
   }, [bom]);
 
