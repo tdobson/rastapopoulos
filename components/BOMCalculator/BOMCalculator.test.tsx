@@ -10,6 +10,12 @@ import {
   getBottomRowPanelCount,
   getNonBottomRowPanelCount,
   getTotalPanelCount,
+  isCorner,
+  countCellTypes,
+  getTotalRows,
+  isBottomRow,
+  getPanelCountInRow,
+  getTopRowPanelCount,
 } from './BOMCalculator';
 
 // Mock the createPortal function
@@ -205,5 +211,120 @@ describe('getTotalPanelCount function', () => {
       [0, 0, 0],
     ];
     expect(getTotalPanelCount(grid)).toBe(0);
+  });
+});
+
+describe('isCorner function', () => {
+  const grid = [
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+  ];
+
+  it('identifies top-left corner correctly', () => {
+    expect(isCorner(grid, 0, 0)).toEqual({ TopLeftCorner: true });
+  });
+
+  it('identifies top-right corner correctly', () => {
+    expect(isCorner(grid, 0, 2)).toEqual({ TopRightCorner: true });
+  });
+
+  it('identifies bottom-left corner correctly', () => {
+    expect(isCorner(grid, 2, 0)).toEqual({ BottomLeftCorner: true });
+  });
+
+  it('identifies bottom-right corner correctly', () => {
+    expect(isCorner(grid, 2, 2)).toEqual({ BottomRightCorner: true });
+  });
+
+  it('returns an empty object for non-corner cells', () => {
+    expect(isCorner(grid, 1, 1)).toEqual({});
+  });
+});
+
+describe('countCellTypes function', () => {
+  it('counts cell types correctly', () => {
+    const grid = [
+      [1, 1, 1],
+      [1, 0, 1],
+      [1, 1, 1],
+    ];
+    const result = countCellTypes(grid);
+    expect(result.SinglePanel).toBe(0);
+    expect(result.MidPanel).toBe(1);
+    expect(result.TopLeftCorner).toBe(1);
+    expect(result.TopRightCorner).toBe(1);
+    expect(result.BottomLeftCorner).toBe(1);
+    expect(result.BottomRightCorner).toBe(1);
+    expect(result.EmptyCell).toBe(1);
+  });
+});
+
+describe('getTotalRows function', () => {
+  it('returns correct number of rows with panels', () => {
+    const grid = [
+      [1, 1, 1],
+      [1, 0, 1],
+      [1, 1, 1],
+      [0, 0, 0],
+    ];
+    expect(getTotalRows(grid)).toBe(3);
+  });
+
+  it('returns 0 for an empty grid', () => {
+    const grid = [
+      [0, 0, 0],
+      [0, 0, 0],
+    ];
+    expect(getTotalRows(grid)).toBe(0);
+  });
+});
+
+describe('isBottomRow function', () => {
+  const grid = [
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 0, 0],
+  ];
+
+  it('identifies bottom row correctly', () => {
+    expect(isBottomRow(grid, 2)).toBe(true);
+  });
+
+  it('identifies non-bottom rows correctly', () => {
+    expect(isBottomRow(grid, 0)).toBe(false);
+    expect(isBottomRow(grid, 1)).toBe(false);
+  });
+});
+
+describe('getPanelCountInRow function', () => {
+  const grid = [
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 0],
+  ];
+
+  it('counts panels in a row correctly', () => {
+    expect(getPanelCountInRow(grid, 0)).toBe(3);
+    expect(getPanelCountInRow(grid, 1)).toBe(2);
+    expect(getPanelCountInRow(grid, 2)).toBe(2);
+  });
+
+  it('returns 0 for out-of-bounds rows', () => {
+    expect(getPanelCountInRow(grid, -1)).toBe(0);
+    expect(getPanelCountInRow(grid, 3)).toBe(0);
+  });
+});
+
+describe('getTopRowPanelCount function', () => {
+  it('counts top row panels correctly', () => {
+    const cellTypesCount = {
+      TopSinglePanel: 1,
+      TopMidPanel: 2,
+      TopEndPanel: 1,
+      // ... other properties
+    };
+    expect(getTopRowPanelCount(cellTypesCount)).toBe(4);
   });
 });
