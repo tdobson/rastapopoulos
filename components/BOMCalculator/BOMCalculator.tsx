@@ -113,13 +113,13 @@ function isBottomRow(grid: GridType, row: number): boolean {
 
 function calculateLeadQuantity(panelCount: number): number {
   if (panelCount <= 0) return 0;
-  if (panelCount === 1) return 2100;
-  if (panelCount === 2) return 3400;
-  if (panelCount === 3) return 4475;
-  if (panelCount === 4) return 6000;
-  if (panelCount === 5) return 7275;
-  if (panelCount === 6) return 8900;
-  return 8900 + (panelCount - 6) * 1375;
+  if (panelCount === 1) return 2;
+  if (panelCount === 2) return 3;
+  if (panelCount === 3) return 3;
+  if (panelCount === 4) return 4;
+  if (panelCount === 5) return 5;
+  if (panelCount === 6) return 6;
+  return 6 + Math.ceil((panelCount - 6) * 1375 / 1500);
 }
 
 function getBottomRowPanelCount(grid: GridType): number {
@@ -250,22 +250,16 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `${battenQuantity} battens for ${rows} rows and ${columns} columns`,
     },
     'Copper Nails': {
-      quantity: (calculateLeadQuantity(bottomRowPanelCount) + calculateLeadQuantity(totalPanelCount - bottomRowPanelCount)) * 3,
+      quantity: calculateLeadQuantity(totalPanelCount) * 3,
       price: componentPrices['Copper Nails'],
       total: 0,
-      explanation: `3 nails per piece of lead for ${bottomRowPanelCount} bottom row panels and ${totalPanelCount - bottomRowPanelCount} upper row panels`,
+      explanation: `3 nails per piece of lead for ${totalPanelCount} total panels`,
     },
     'Lead': {
-      quantity: calculateLeadQuantity(bottomRowPanelCount),
+      quantity: calculateLeadQuantity(totalPanelCount),
       price: componentPrices['Lead'],
       total: 0,
-      explanation: `Lead quantity for ${bottomRowPanelCount} bottom row panels`,
-    },
-    'Lead 600mm': {
-      quantity: calculateLeadQuantity(totalPanelCount - bottomRowPanelCount),
-      price: componentPrices['Lead 600mm'],
-      total: 0,
-      explanation: `600mm lead quantity for ${totalPanelCount - bottomRowPanelCount} upper row panels`,
+      explanation: `Lead quantity for ${totalPanelCount} total panels`,
     },
     'Tile Kicker Bars': {
       quantity: topRowPanelCount,
