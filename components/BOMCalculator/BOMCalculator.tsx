@@ -584,8 +584,10 @@ function countCellTypes(grid: GridType): CellTypesCount {
 
   for (let row = 0; row < gridSize; row++) {
     for (let col = 0; col < gridSize; col++) {
-      const cellType = determineCellType(grid, row, col);
-      cellTypesCount[cellType as keyof CellTypesCount]++;
+      const cellTypes = determineCellType(grid, row, col);
+      cellTypes.forEach(cellType => {
+        cellTypesCount[cellType as keyof CellTypesCount]++;
+      });
     }
   }
 
@@ -600,11 +602,15 @@ function countCellTypes(grid: GridType): CellTypesCount {
  * @param col - The column index of the cell to determine the type for.
  * @returns A string indicating the type of the cell.
  */
-function determineCellType(grid: GridType, row: number, col: number): string {
-  if (grid[row][col] === 0) return 'EmptyCell';
+function determineCellType(grid: GridType, row: number, col: number): string[] {
+  if (grid[row][col] === 0) return ['EmptyCell'];
 
-  const cornerType = isCorner(grid, row, col);
-  if (cornerType) return cornerType;
+  const cornerTypes = isCorner(grid, row, col);
+  if (Object.values(cornerTypes).some(Boolean)) {
+    return Object.entries(cornerTypes)
+      .filter(([, value]) => value)
+      .map(([key]) => key);
+  }
 
   const isPanel = (r: number, c: number): boolean =>
       r >= 0 && r < gridSize && c >= 0 && c < gridSize && grid[r][c] === 1;
@@ -614,22 +620,22 @@ function determineCellType(grid: GridType, row: number, col: number): string {
   const left = isPanel(row, col - 1);
   const right = isPanel(row, col + 1);
 
-  if (!above && !below && !left && !right) return 'SinglePanel';
-  if (!above && below && !left && !right) return 'TopSinglePanel';
-  if (above && !below && !left && !right) return 'BottomSinglePanel';
-  if (above && below && !left && !right) return 'CenterSinglePanel';
+  if (!above && !below && !left && !right) return ['SinglePanel'];
+  if (!above && below && !left && !right) return ['TopSinglePanel'];
+  if (above && !below && !left && !right) return ['BottomSinglePanel'];
+  if (above && below && !left && !right) return ['CenterSinglePanel'];
 
-  if (!above && !below && left && right) return 'MidPanel';
-  if (above && below && left && right) return 'MiddleMidPanel';
-  if (!above && below && left && right) return 'TopMidPanel';
-  if (above && !below && left && right) return 'BottomMidPanel';
+  if (!above && !below && left && right) return ['MidPanel'];
+  if (above && below && left && right) return ['MiddleMidPanel'];
+  if (!above && below && left && right) return ['TopMidPanel'];
+  if (above && !below && left && right) return ['BottomMidPanel'];
 
-  if (!above && !below && ((left && !right) || (!left && right))) return 'EndPanel';
-  if (above && below && ((left && !right) || (!left && right))) return 'MiddleEndPanel';
-  if (!above && below && ((left && !right) || (!left && right))) return 'TopEndPanel';
-  if (above && !below && ((left && !right) || (!left && right))) return 'BottomEndPanel';
+  if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];
+  if (above && below && ((left && !right) || (!left && right))) return ['MiddleEndPanel'];
+  if (!above && below && ((left && !right) || (!left && right))) return ['TopEndPanel'];
+  if (above && !below && ((left && !right) || (!left && right))) return ['BottomEndPanel'];
 
-  return 'Error';
+  return ['Error'];
 }
 
 // BOMCalculator component
