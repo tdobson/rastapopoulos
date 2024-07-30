@@ -193,9 +193,9 @@ function getNonBottomWidthPanelCount(grid: GridType): number {
     }
   }
 
-  const bottomrows = getBottomRowPanelCount(grid)
+  const bottomRows = getBottomRowPanelCount(grid)
 
-  return count - bottomrows;
+  return count - bottomRows;
 }
 
 function getTotalPanelCount(cellTypesCount: CellTypesCount): number {
