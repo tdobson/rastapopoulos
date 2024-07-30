@@ -358,13 +358,44 @@ function getGridDimensions(grid: GridType): { rows: number; columns: number } {
 }
 
 /**
- * Calculates the quantity of battens required based on the dimensions of the grid.
- *
- * @param rows - The number of rows in the grid.
- * @param columns - The number of columns in the grid.
- * @returns The total number of battens required.
+ * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
+ * 
+ * @param {number} rows - The number of rows in the solar panel grid.
+ * @param {number} columns - The number of columns in the solar panel grid.
+ * @param {number} totalPanelCount - The total number of solar panels in the grid.
+ * @returns {number} The total number of battens required.
+ * 
+ * @description
+ * This function determines the number of battens needed for a solar panel installation.
+ * Battens are horizontal supports used to secure solar panels to a roof.
+ * 
+ * The calculation is based on the following business logic:
+ * 1. If no solar panels are specified (totalPanelCount is 0), no battens are needed.
+ * 2. For grids up to 20 rows and 4 columns, a predefined lookup table (battenTable) is used.
+ * 3. For larger grids, a base quantity is calculated and then adjusted:
+ *    - The base quantity is the value for a 20x4 grid from the lookup table.
+ *    - For each row beyond 20, 9 additional battens are added.
+ *    - For each column beyond 4, 27 additional battens are added.
+ * 
+ * This approach ensures accurate batten quantities for standard installations
+ * while providing a reasonable estimate for larger, non-standard installations.
+ * 
+ * @example
+ * // For a 3x2 grid with 6 panels
+ * const battenCount = calculateBattenQuantity(3, 2, 6);
+ * console.log(battenCount); // Output: 30
+ * 
+ * @example
+ * // For a 25x5 grid with 125 panels
+ * const largeBattenCount = calculateBattenQuantity(25, 5, 125);
+ * console.log(largeBattenCount); // Output: 252
  */
-function calculateBattenQuantity(rows: number, columns: number): number {
+function calculateBattenQuantity(rows: number, columns: number, totalPanelCount: number): number {
+  // Return 0 if no solar panels are specified
+  if (totalPanelCount === 0) {
+    return 0;
+  }
+
   const safeRows = Math.min(rows, 20);
   const safeColumns = Math.min(columns, 4);
 
@@ -407,8 +438,8 @@ function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
  */
 function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType: string, numberOfStrings: number): BOM {
   const { rows, columns } = getGridDimensions(grid);
-  const battenQuantity = calculateBattenQuantity(rows, columns);
   const totalPanelCount = getTotalPanelCount(grid);
+  const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
   const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
