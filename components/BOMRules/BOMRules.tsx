@@ -63,15 +63,17 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lead:</strong> Calculated based on the number of panels across the bottom row of the array. Lead comes in 1500mm lengths and is used for both standard and 600mm deep applications. The quantity is determined as follows:
+            <strong>Lead:</strong> Calculated based on the number of panels across the bottom row of the array and the maximum width of non-bottom rows. Lead comes in 1500mm lengths and is used for both standard and 600mm deep applications. The quantity is determined as follows:
             <List withPadding>
-              <List.Item>1 panel: 2 pieces (1 standard, 1 deep)</List.Item>
-              <List.Item>2 panels: 3 pieces (2 standard, 1 deep)</List.Item>
-              <List.Item>3 panels: 3 pieces (3 standard)</List.Item>
-              <List.Item>4 panels: 4 pieces (4 standard)</List.Item>
-              <List.Item>5+ panels: 1 piece per panel in the bottom row</List.Item>
+              <List.Item>Standard Lead: 1 piece per panel in the bottom row</List.Item>
+              <List.Item>Deep Lead (600mm): 1 piece per panel in the widest non-bottom row</List.Item>
+              <List.Item>Special cases:
+                <List withPadding>
+                  <List.Item>1 panel: 1 standard, 1 deep</List.Item>
+                  <List.Item>2 panels: 2 standard, 1 deep</List.Item>
+                </List>
+              </List.Item>
             </List>
-            For arrays with multiple rows, deep lead is used for panels not in the bottom row.
           </Text>
         </List.Item>
         <List.Item>

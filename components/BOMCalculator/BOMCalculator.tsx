@@ -111,23 +111,33 @@ function isBottomRow(grid: GridType, row: number): boolean {
   return row === totalRows - 1;
 }
 
-function calculateLeadQuantity(bottomRowPanelCount: number, totalPanelCount: number): { standard: number; deep: number } {
+function calculateLeadQuantity(bottomRowPanelCount: number, maxNonBottomRowWidth: number): { standard: number; deep: number } {
   if (bottomRowPanelCount <= 0) return { standard: 0, deep: 0 };
   if (bottomRowPanelCount === 1) return { standard: 1, deep: 1 };
   if (bottomRowPanelCount === 2) return { standard: 2, deep: 1 };
-  if (bottomRowPanelCount >= 3) {
-    const standard = bottomRowPanelCount;
-    const deep = Math.max(0, totalPanelCount - bottomRowPanelCount);
-    return { standard, deep };
-  }
-  return { standard: 0, deep: 0 }; // This should never happen, but TypeScript likes it
+  
+  const standard = bottomRowPanelCount;
+  const deep = maxNonBottomRowWidth;
+  return { standard, deep };
 }
 
+// Utility function to calculate the number of panels in a specific row
+function getPanelCountInRow(grid: GridType, row: number): number {
+  if (row < 0 || row >= grid.length) return 0;
+  return grid[row].filter(cell => cell === 1).length;
+}
+
+// Calculate the number of panels in the bottom row
 function getBottomRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
-  if (totalRows === 0) return 0;
-  const bottomRow = grid[totalRows - 1];
-  return bottomRow.filter(cell => cell === 1).length;
+  return getPanelCountInRow(grid, totalRows - 1);
+}
+
+// Calculate the maximum width of panels in non-bottom rows
+function getMaxNonBottomRowWidth(grid: GridType): number {
+  const totalRows = getTotalRows(grid);
+  if (totalRows <= 1) return 0;
+  return Math.max(...grid.slice(0, totalRows - 1).map(row => row.filter(cell => cell === 1).length));
 }
 
 function getTotalPanelCount(cellTypesCount: CellTypesCount): number {
@@ -181,7 +191,10 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
   const battenQuantity = calculateBattenQuantity(rows, columns);
   const totalPanelCount = getTotalPanelCount(cellTypesCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
+  const maxNonBottomRowWidth = getMaxNonBottomRowWidth(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
+
+  const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, maxNonBottomRowWidth);
 
   const bom: BOM = {
     'GSE Half Portrait Frames': {
@@ -257,16 +270,16 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `3 nails per piece of lead for ${totalPanelCount} total panels`,
     },
     'Lead': {
-      quantity: calculateLeadQuantity(bottomRowPanelCount, totalPanelCount).standard,
+      quantity: leadQuantities.standard,
       price: componentPrices['Lead'],
       total: 0,
       explanation: `Standard lead for ${bottomRowPanelCount} bottom row panels`,
     },
     'Lead 600mm': {
-      quantity: calculateLeadQuantity(bottomRowPanelCount, totalPanelCount).deep,
+      quantity: leadQuantities.deep,
       price: componentPrices['Lead 600mm'],
       total: 0,
-      explanation: `Deep lead for ${totalPanelCount - bottomRowPanelCount} non-bottom row panels`,
+      explanation: `Deep lead for ${maxNonBottomRowWidth} maximum width of non-bottom rows`,
     },
     'Tile Kicker Bars': {
       quantity: topRowPanelCount,
@@ -536,7 +549,7 @@ function BOMCalculator() {
         <Button onClick={clearGrid} mb="md">Reset Grid</Button>
         <Box>
           <Button onClick={toggle} mb="md">
-            Toggle Cell Types Count
+            Toggle Cell Types Count and Panel Information
           </Button>
           <Collapse in={opened}>
             <Grid>
@@ -547,6 +560,12 @@ function BOMCalculator() {
                     </Text>
                   </Grid.Col>
               ))}
+              <Grid.Col span={12}>
+                <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <Text>Max Non-Bottom Row Width: {getMaxNonBottomRowWidth(grid)}</Text>
+              </Grid.Col>
             </Grid>
           </Collapse>
         </Box>
