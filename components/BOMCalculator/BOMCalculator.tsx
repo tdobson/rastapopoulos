@@ -237,7 +237,7 @@ function isBottomRow(grid: GridType, row: number): boolean {
  * - For 8 panels requiring normal lead: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8).
  *
  * @param bottomRowPanelCount - The number of panels in the bottom row.
- * @param maxNonBottomRowWidth - The maximum width of non-bottom rows.
+ * @param nonBottomRowPanelCount - The number of panels with nothing below them that aren't on the bottom row.
  * @returns An object containing the quantities of standard and deep lead required.
  */
 function calculateLeadQuantity(bottomRowPanelCount: number, nonBottomRowPanelCount: number): { standard: number; deep: number } {
