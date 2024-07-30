@@ -6,6 +6,16 @@ interface BOMTableProps {
   bom: BOM;
 }
 
+const leadMeterageTable = {
+  1: 2100,
+  2: 3400,
+  3: 4475,
+  4: 6000,
+  5: 7275,
+  6: 8900,
+  default: 1375
+};
+
 function BOMTable({ bom }: BOMTableProps) {
   return (
     <Table>
