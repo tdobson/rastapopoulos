@@ -143,55 +143,30 @@ function isBottomRow(grid: GridType, row: number): boolean {
   return row === totalRows - 1;
 }
 
-/*
-This is the correct logic - please update this into a detailed jsodc header
-
-Lead comes in two types that have seperate uses and come in seperate quantities
-
-Normal lead:
-Calculated based on the number of panels across the bottom row of the array. It comes in 1500mm lengths, and must be calculated using the leadMeterageTable const.
-
-If you have 1 panel requiring normal lead, then you must check the leadMeterageTable. If it says you need 2100mm of lead, then you need 2100 divided by 1500 = 1.4 - which we round up. Therefore you need two pieces of normal lead.
-
-if you have an array of 3 bottom row panels requiring normal lead, then you'd look at the leadmeteragetable. If it says you need 4475 of lead, then you need 4475/1500 = 2.9 - which means you need three pieces of normal lead.
-
-if you an array with 8 bottom row panels requiring normal lead, then you'd look at the table. It'd say you need (8900 + 1375 + 1375) / 1500 = 7.7 which means you need 8 pieces of normal lead
-
-Deep lead (800mm width):
-Calculated based on the total width of the array, minus the bottom row for which normal lead has been calculated. eg so an array with a top row of 10, and a bottom row of 2, would need 8 pieces of deep lead.
-
-deep lead is 800mm deep, and comes in 1500mm lengths, and must be calculated using the leadMeterageTable const.
-
-If you have 1 panel requiring deep lead, then you must check the leadMeterageTable. If it says you need 2100mm of lead, then you need 2100 divided by 1500 = 1.4 - which we round up. Therefore you need two pieces of deep lead.
-
-if you have an array of 3 non bottom row panels requiring deep lead, then you'd look at the leadmeteragetable. If it says you need 4475 of lead, then you need 4475/1500 = 2.9 - which means you need three pieces of deep lead.
-
-if you an array with 8 non bottom row panels requiring deep lead, then you'd look at the table. It'd say you need (8900 + 1375 + 1375) / 1500 = 7.7 which means you need 8 pieces of deep lead
-*/
 /**
  * Calculates the quantity of lead required for both standard and deep types based on the number of panels in the bottom row and the maximum width of non-bottom rows.
- * 
+ *
  * Lead comes in two types that have separate uses and come in separate quantities:
- * 
+ *
  * 1. **Normal Lead**:
  *    - Calculated based on the number of panels across the bottom row of the array.
  *    - It comes in 1500mm lengths.
  *    - The required length is determined using the `leadMeterageTable` constant.
  *    - The total length required for the bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `bottomRowPanelCount`.
  *    - The total length is then divided by 1500mm and rounded up to determine the number of pieces of normal lead required.
- * 
+ *
  * 2. **Deep Lead (800mm width)**:
  *    - Calculated based on the total width of the array, minus the bottom row.
  *    - It also comes in 1500mm lengths.
  *    - The required length is determined using the `leadMeterageTable` constant.
  *    - The total length required for the non-bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `maxNonBottomRowWidth`.
  *    - The total length is then divided by 1500mm and rounded up to determine the number of pieces of deep lead required.
- * 
+ *
  * Example calculations:
  * - For 1 panel requiring normal lead: 2 pieces of normal lead (2100mm / 1500mm = 1.4, rounded up to 2).
  * - For 3 panels requiring normal lead: 3 pieces of normal lead (4475mm / 1500mm = 2.98, rounded up to 3).
  * - For 8 panels requiring normal lead: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8).
- * 
+ *
  * @param bottomRowPanelCount - The number of panels in the bottom row.
  * @param maxNonBottomRowWidth - The maximum width of non-bottom rows.
  * @returns An object containing the quantities of standard and deep lead required.
