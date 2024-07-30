@@ -111,15 +111,16 @@ function isBottomRow(grid: GridType, row: number): boolean {
   return row === totalRows - 1;
 }
 
-function calculateLeadQuantity(panelCount: number): number {
-  if (panelCount <= 0) return 0;
-  if (panelCount === 1) return 2;
-  if (panelCount === 2) return 3;
-  if (panelCount === 3) return 3;
-  if (panelCount === 4) return 4;
-  if (panelCount === 5) return 5;
-  if (panelCount === 6) return 6;
-  return 6 + Math.ceil((panelCount - 6) * 1375 / 1500);
+function calculateLeadQuantity(bottomRowPanelCount: number, totalPanelCount: number): { standard: number; deep: number } {
+  if (bottomRowPanelCount <= 0) return { standard: 0, deep: 0 };
+  if (bottomRowPanelCount === 1) return { standard: 1, deep: 1 };
+  if (bottomRowPanelCount === 2) return { standard: 2, deep: 1 };
+  if (bottomRowPanelCount >= 3) {
+    const standard = bottomRowPanelCount;
+    const deep = Math.max(0, totalPanelCount - bottomRowPanelCount);
+    return { standard, deep };
+  }
+  return { standard: 0, deep: 0 }; // This should never happen, but TypeScript likes it
 }
 
 function getBottomRowPanelCount(grid: GridType): number {
@@ -256,10 +257,16 @@ function calculateBOM(cellTypesCount: CellTypesCount, grid: GridType, panelType:
       explanation: `3 nails per piece of lead for ${totalPanelCount} total panels`,
     },
     'Lead': {
-      quantity: calculateLeadQuantity(totalPanelCount),
+      quantity: calculateLeadQuantity(bottomRowPanelCount, totalPanelCount).standard,
       price: componentPrices['Lead'],
       total: 0,
-      explanation: `Lead quantity for ${totalPanelCount} total panels`,
+      explanation: `Standard lead for ${bottomRowPanelCount} bottom row panels`,
+    },
+    'Lead 600mm': {
+      quantity: calculateLeadQuantity(bottomRowPanelCount, totalPanelCount).deep,
+      price: componentPrices['Lead 600mm'],
+      total: 0,
+      explanation: `Deep lead for ${totalPanelCount - bottomRowPanelCount} non-bottom row panels`,
     },
     'Tile Kicker Bars': {
       quantity: topRowPanelCount,
