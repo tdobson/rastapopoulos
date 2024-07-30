@@ -183,13 +183,7 @@ function getBottomRowPanelCount(grid: GridType): number {
 // Calculate the number of panels without any panel directly below them
 /**
  * Returns the count of panels that are not on the bottom row and do not have a panel directly below them.
- * 
- * @param grid - The grid representing the layout of panels.
- * @returns The count of panels that meet the specified criteria.
- */
-/**
- * Returns the count of panels that are not on the bottom row and do not have a panel directly below them.
- * 
+ *
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
