@@ -874,12 +874,12 @@ function BOMCalculator() {
   return (
     <Stack gap="md">
       <Group justify="center" mb="md">
-      <Select
+        {HIDE_PRICING_INFO ? null : (  <Select
         label="Panel Type"
         value={panelType}
         onChange={(value) => setPanelType(value || 'DMEGC 405w')}
         data={Object.keys(panelPrices)}
-      />
+      />)}
       <NumberInput
         label="Number of Strings"
         value={numberOfStrings}
@@ -932,7 +932,7 @@ function BOMCalculator() {
         </>
       )}
 
-      {HIDE_PRICING_INFO ? null : <BOMTable bom={bom} />}
+       <BOMTable bom={bom} />
       <Group justify="center" mb="md">
       {HIDE_DEBUG_BUTTONS ? null : (
         <Box>

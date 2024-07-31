@@ -6,7 +6,7 @@ import classes from './NavbarSimpleColored.module.css';
 import { navigationItems } from '../../utils/navigationItems';
 
 // Define the version as a constant
-const version = '0.1.0'; // Update this manually when changing the version in package.json
+const version = '0.1.2'; // Update this manually when changing the version in package.json
 
 export function NavbarSimpleColored() {
   const [active, setActive] = useState('Billing');
