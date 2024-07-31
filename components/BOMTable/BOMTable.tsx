@@ -3,7 +3,7 @@ import { Table } from '@mantine/core';
 import { BOM } from '../../types/bomCalculator';
 //import { HIDE_PRICING_INFO } from '../BOMCalculator/BOMCalculator';
 
-const HIDE_ALL_PRICING_INFO = true;
+const HIDE_ALL_PRICING_INFO = false;
 
 interface BOMTableProps {
   bom: BOM;

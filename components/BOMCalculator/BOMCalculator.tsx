@@ -225,24 +225,24 @@ export function isCorner(grid, row, col) {
 
 /**
  * Calculates the total number of rows in the grid that contain at least one panel.
- * 
+ *
  * @param {GridType} grid - The 2D array representing the solar panel layout.
  * @returns {number} The count of rows that contain at least one panel.
- * 
+ *
  * @description
  * This function iterates through the entire grid and counts the number of rows
  * that have at least one panel (represented by a '1' in the grid).
- * 
+ *
  * The function works as follows:
  * 1. Initialize a counter for rows with panels.
  * 2. Iterate through each row of the grid.
  * 3. For each row, check if it contains at least one panel.
  * 4. If a row contains a panel, increment the counter.
  * 5. After checking all rows, return the total count.
- * 
+ *
  * This count represents the actual number of horizontal rows occupied by panels,
  * regardless of their position in the grid or any empty rows between them.
- * 
+ *
  * @example
  * const grid = [
  *   [0, 0, 0, 0],  // Empty row
@@ -560,10 +560,6 @@ export function calculateBattenQuantity(
  */
 export function getTopRowPanelCount(cellTypesCount: CellTypesCount, grid: GridType): number {
   const totalRows = getTotalRows(grid);
-  console.log(totalRows)
-  if (totalRows === 0) {
-    return 1;
-  }
   if (totalRows === 1) {
     return  cellTypesCount.SinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel;
   }
