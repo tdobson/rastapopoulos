@@ -16,17 +16,12 @@ import BOMCalculator, {
   getTotalRows,
   isBottomRow,
   getPanelCountInRow,
-  getTopRowPanelCount
+  getTopRowPanelCount,
 } from './BOMCalculator';
 
 const renderWithProvider = (ui: React.ReactElement) => {
-  return render(
-    <MantineProvider>
-      {ui}
-    </MantineProvider>
-  );
+  return render(<MantineProvider>{ui}</MantineProvider>);
 };
-
 
 // Mock the createPortal function
 jest.mock('react-dom', () => ({

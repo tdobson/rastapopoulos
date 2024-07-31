@@ -1,0 +1,36 @@
+.printable-checklist {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.printable-checklist h1 {
+  text-align: center;
+}
+
+.printable-checklist table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.printable-checklist th,
+.printable-checklist td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.printable-checklist th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.printable-checklist .check-column {
+  width: 50px;
+}
+
+@media print {
+  .printable-checklist {
+    max-width: none;
+  }
+}
