@@ -68,28 +68,37 @@ const componentPrices: ComponentPrices = {
   'Uberflex Carpet Flashing': 10.0, // Example price, adjust as needed
 };
 
-// Batten table
-const battenTable: { [key: number]: { [key: number]: number } } = {
-  1: { 1: 9, 2: 15, 3: 21, 4: 27 },
-  2: { 1: 18, 2: 30, 3: 42, 4: 54 },
-  3: { 1: 18, 2: 30, 3: 42, 4: 54 },
-  4: { 1: 27, 2: 45, 3: 63, 4: 81 },
-  5: { 1: 27, 2: 45, 3: 63, 4: 81 },
-  6: { 1: 36, 2: 60, 3: 84, 4: 108 },
-  7: { 1: 36, 2: 60, 3: 84, 4: 108 },
-  8: { 1: 45, 2: 75, 3: 105, 4: 135 },
-  9: { 1: 54, 2: 90, 3: 126, 4: 162 },
-  10: { 1: 54, 2: 90, 3: 126, 4: 162 },
-  11: { 1: 63, 2: 105, 3: 147, 4: 189 },
-  12: { 1: 63, 2: 105, 3: 147, 4: 189 },
-  13: { 1: 72, 2: 120, 3: 168, 4: 216 },
-  14: { 1: 72, 2: 120, 3: 168, 4: 216 },
-  15: { 1: 72, 2: 120, 3: 168, 4: 216 },
-  16: { 1: 81, 2: 135, 3: 189, 4: 243 },
-  17: { 1: 90, 2: 150, 3: 210, 4: 270 },
-  18: { 1: 90, 2: 150, 3: 210, 4: 270 },
-  19: { 1: 99, 2: 165, 3: 231, 4: 297 },
-  20: { 1: 99, 2: 165, 3: 231, 4: 297 },
+/**
+ * Batten table for determining the number of battens required based on the number of columns and rows in the solar panel grid.
+ * 
+ * The structure is as follows:
+ * - The outer key represents the number of columns (up to 20 columns).
+ * - The inner key represents the number of rows (up to 4 rows).
+ * - The value is the number of battens required for that specific grid configuration.
+ * 
+ * For example, battenTable[3][2] represents the number of battens needed for a grid with 3 columns and 2 rows.
+ */
+const battenTable: { [columns: number]: { [rows: number]: number } } = {
+  1: { 1: 9, 2: 18, 3: 18, 4: 27 },
+  2: { 1: 15, 2: 30, 3: 30, 4: 45 },
+  3: { 1: 21, 2: 42, 3: 42, 4: 63 },
+  4: { 1: 27, 2: 54, 3: 54, 4: 81 },
+  5: { 1: 27, 2: 54, 3: 54, 4: 81 },
+  6: { 1: 36, 2: 72, 3: 72, 4: 108 },
+  7: { 1: 36, 2: 72, 3: 72, 4: 108 },
+  8: { 1: 45, 2: 90, 3: 90, 4: 135 },
+  9: { 1: 54, 2: 108, 3: 108, 4: 162 },
+  10: { 1: 54, 2: 108, 3: 108, 4: 162 },
+  11: { 1: 63, 2: 126, 3: 126, 4: 189 },
+  12: { 1: 63, 2: 126, 3: 126, 4: 189 },
+  13: { 1: 72, 2: 144, 3: 144, 4: 216 },
+  14: { 1: 72, 2: 144, 3: 144, 4: 216 },
+  15: { 1: 72, 2: 144, 3: 144, 4: 216 },
+  16: { 1: 81, 2: 162, 3: 162, 4: 243 },
+  17: { 1: 90, 2: 180, 3: 180, 4: 270 },
+  18: { 1: 90, 2: 180, 3: 180, 4: 270 },
+  19: { 1: 99, 2: 198, 3: 198, 4: 297 },
+  20: { 1: 99, 2: 198, 3: 198, 4: 297 },
 };
 
 //number of panels vs millimetereage of lead required. eg 1 panel requires 2100mm of lead, 6 panels require 8900mm of lead, 7 panels require 8900+1375mm of lead etc
@@ -431,24 +440,24 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
  *
  * The calculation is based on the following business logic:
  * 1. If no solar panels are specified (totalPanelCount is 0), no battens are needed.
- * 2. For grids up to 20 rows and 4 columns, a predefined lookup table (battenTable) is used.
+ * 2. For grids up to 20 columns and 4 rows, a predefined lookup table (battenTable) is used.
  * 3. For larger grids, a base quantity is calculated and then adjusted:
  *    - The base quantity is the value for a 20x4 grid from the lookup table.
- *    - For each row beyond 20, 9 additional battens are added.
- *    - For each column beyond 4, 27 additional battens are added.
+ *    - For each column beyond 20, 9 additional battens are added.
+ *    - For each row beyond 4, the number of battens for the current column count is added.
  *
  * This approach ensures accurate batten quantities for standard installations
  * while providing a reasonable estimate for larger, non-standard installations.
  *
  * @example
- * // For a 3x2 grid with 6 panels
- * const battenCount = calculateBattenQuantity(3, 2, 6);
- * console.log(battenCount); // Output: 30
+ * // For a 2x3 grid with 6 panels
+ * const battenCount = calculateBattenQuantity(2, 3, 6);
+ * console.log(battenCount); // Output: 42
  *
  * @example
- * // For a 25x5 grid with 125 panels
- * const largeBattenCount = calculateBattenQuantity(25, 5, 125);
- * console.log(largeBattenCount); // Output: 252
+ * // For a 5x25 grid with 125 panels
+ * const largeBattenCount = calculateBattenQuantity(5, 25, 125);
+ * console.log(largeBattenCount); // Output: 495
  */
 export function calculateBattenQuantity(
   rows: number,
@@ -460,21 +469,21 @@ export function calculateBattenQuantity(
     return 0;
   }
 
-  const safeRows = Math.min(rows, 20);
-  const safeColumns = Math.min(columns, 4);
+  const safeColumns = Math.min(columns, 20);
+  const safeRows = Math.min(rows, 4);
 
-  if (safeRows <= 20 && safeColumns <= 4) {
-    return battenTable[safeRows][safeColumns];
+  if (safeColumns <= 20 && safeRows <= 4) {
+    return battenTable[safeColumns][safeRows];
   }
 
   let baseQuantity = battenTable[20][4];
 
-  if (rows > 20) {
-    baseQuantity += (rows - 20) * 9;
+  if (columns > 20) {
+    baseQuantity += (columns - 20) * 9;
   }
 
-  if (columns > 4) {
-    baseQuantity += (columns - 4) * 27;
+  if (rows > 4) {
+    baseQuantity += (rows - 4) * battenTable[Math.min(columns, 20)][4];
   }
 
   return baseQuantity;
