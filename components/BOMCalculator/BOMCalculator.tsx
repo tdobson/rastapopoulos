@@ -447,7 +447,11 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
  * const largeBattenCount = calculateBattenQuantity(25, 5, 125);
  * console.log(largeBattenCount); // Output: 252
  */
-export function calculateBattenQuantity(rows: number, columns: number, totalPanelCount: number): number {
+export function calculateBattenQuantity(
+  rows: number,
+  columns: number,
+  totalPanelCount: number
+): number {
   // Return 0 if no solar panels are specified
   if (totalPanelCount === 0) {
     return 0;
@@ -506,7 +510,7 @@ export function calculateBOM(
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
   const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
-  const nonTopRowPanelCount = getNonTopRowPanelCount(grid)
+  const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
 
   const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, nonBottomRowPanelCount);
 
@@ -533,21 +537,26 @@ export function calculateBOM(
     },
     'GSE Screws Black': {
       quantity:
-        cellTypesCount.SinglePanel * 3 +
-        cellTypesCount.TopSinglePanel * 3 +
-        cellTypesCount.BottomSinglePanel * 3 +
-        cellTypesCount.EndPanel * 3 +
-        cellTypesCount.EndPanel +
-        cellTypesCount.MidPanel,
+          cellTypesCount.SinglePanel * 4 +
+          cellTypesCount.TopSinglePanel * 4 +
+          cellTypesCount.BottomSinglePanel * 4 +
+          cellTypesCount.EndPanel * 2 +
+          cellTypesCount.MidPanel * 2 +
+          cellTypesCount.MiddleMidPanel * 2 +
+          cellTypesCount.TopMidPanel * 2 +
+          cellTypesCount.BottomMidPanel * 2,
       price: componentPrices['GSE Screws Black'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
     },
     'GSE Screws Silver': {
-      quantity: totalPanelCount * 3,
+      quantity:
+          cellTypesCount.SinglePanel * 6 +
+          cellTypesCount.TopSinglePanel * 6 +
+          cellTypesCount.BottomSinglePanel * 6,
       price: componentPrices['GSE Screws Silver'],
       total: 0,
-      explanation: `${totalPanelCount} total panels * 3`,
+      explanation: `3 for every GSE half portrait frame`,
     },
     'GSE End Clamp': {
       quantity:
@@ -636,16 +645,16 @@ export function calculateBOM(
       explanation: `Ceiling of ${topRowPanelCount} top row panels / 4`,
     },
     'Arc Box': {
-      quantity: numberOfStrings,
+      quantity: 2 * numberOfStrings,
       price: componentPrices['Arc Box'],
       total: 0,
-      explanation: `1 Arc Box per string, ${numberOfStrings} strings`,
+      explanation: `2 Arc Box per string, ${numberOfStrings} strings`,
     },
     'Arc Box Bracket': {
-      quantity: numberOfStrings,
+      quantity: 2 * numberOfStrings,
       price: componentPrices['Arc Box Bracket'],
       total: 0,
-      explanation: `1 Arc Box Bracket per string, ${numberOfStrings} strings`,
+      explanation: `2 Arc Box Bracket per string, ${numberOfStrings} strings`,
     },
     'Roofer Guide Sheet': {
       quantity: 1,
