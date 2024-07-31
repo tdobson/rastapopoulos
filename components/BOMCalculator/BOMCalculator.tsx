@@ -4,7 +4,6 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { createPortal } from 'react-dom';
 import {
   Grid,
   Select,
@@ -26,7 +25,6 @@ import {
 } from '../../types/bomCalculator';
 import './BOMCalculator.css';
 import BOMTable from '../BOMTable/BOMTable';
-import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
 import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
 import BOMRules from '../BOMRules/BOMRules';
 
@@ -861,16 +859,6 @@ function BOMCalculator() {
   }, []);
 
   const [opened, { toggle }] = useDisclosure(false);
-
-  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
-
-  const handlePrint = useCallback(() => {
-    setIsPrintModalOpen(true);
-  }, []);
-
-  const handleClosePrintModal = useCallback(() => {
-    setIsPrintModalOpen(false);
-  }, []);
 
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
