@@ -302,16 +302,6 @@ export function getPanelCountInRow(grid: GridType, row: number): number {
   return grid[row].filter((cell) => cell === 1).length;
 }
 
-/**
- * Calculates the number of panels in the bottom row of the grid.
- *
- * @param grid - The grid representing the layout of panels.
- * @returns The number of panels in the bottom row.
- */
-export function getTopRowPanelCount(grid: GridType): number {
-  return getPanelCountInRow(grid, 0);
-}
-
 export function getNonTopRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   const topRowIndex = 0;
@@ -335,6 +325,12 @@ export function getNonTopRowPanelCount(grid: GridType): number {
   return count;
 }
 
+/**
+ * Calculates the number of panels in the bottom row of the grid.
+ *
+ * @param grid - The grid representing the layout of panels.
+ * @returns The number of panels in the bottom row.
+ */
 export function getBottomRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   return getPanelCountInRow(grid, totalRows - 1);
