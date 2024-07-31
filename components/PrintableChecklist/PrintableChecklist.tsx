@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Modal, Button, Table, Checkbox } from '@mantine/core';
 import { BOM } from '../../types/bomCalculator';
 
+// Helper function to determine if an item should be included in the checklist
+const shouldIncludeInChecklist = (component: string) => {
+  const excludedItems = ['Wire Clout Nails 65mm']; // Add items to exclude here
+  return !excludedItems.includes(component);
+};
+
 interface PrintableChecklistProps {
     bom: BOM;
     opened: boolean;
@@ -12,7 +18,7 @@ function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
     // Filter BOM entries to include only those with a quantity greater than zero
-    const filteredBom = Object.entries(bom).filter(([, item]) => item.quantity > 0);
+    const filteredBom = Object.entries(bom).filter(([component, item]) => item.quantity > 0 && shouldIncludeInChecklist(component));
 
     const rows = filteredBom.map(([component, item]) => (
         <Table.Tr key={component}>

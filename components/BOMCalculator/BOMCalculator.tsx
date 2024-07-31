@@ -66,6 +66,7 @@ const componentPrices: ComponentPrices = {
   'Lateral Flashing Hooks': 0.5, // Example price, adjust as needed
   'Lateral Flashing Nails Galv 20mm': 0.02, // Example price, adjust as needed
   'Uberflex Carpet Flashing': 10.0, // Example price, adjust as needed
+  'Wire Clout Nails 65mm': 0.5, // 50p per item
 };
 
 /**
@@ -695,6 +696,12 @@ export function calculateBOM(
       price: componentPrices['Uberflex Carpet Flashing'],
       total: 0,
       explanation: `${cellTypesCount.BottomLeftCorner} BottomLeftCorner + ${cellTypesCount.BottomRightCorner} BottomRightCorner`,
+    },
+    'Wire Clout Nails 65mm': {
+      quantity: battenQuantity * 5,
+      price: componentPrices['Wire Clout Nails 65mm'],
+      total: 0,
+      explanation: `5 nails per batten, ${battenQuantity} battens`,
     },
     'Solar Panels': {
       quantity: totalPanelCount,

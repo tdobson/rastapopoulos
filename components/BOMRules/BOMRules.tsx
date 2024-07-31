@@ -157,6 +157,11 @@ const BOMRules: React.FC = () => {
             <strong>Solar Panels:</strong> 1 per active cell in the grid
           </Text>
         </List.Item>
+        <List.Item>
+          <Text>
+            <strong>Wire Clout Nails 65mm:</strong> 5 nails per batten
+          </Text>
+        </List.Item>
       </List>
     </Box>
   );
