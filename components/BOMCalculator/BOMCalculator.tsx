@@ -949,11 +949,11 @@ function BOMCalculator() {
       </Box>
       <Box>
         <Group justify="center" mb="md">
-          <Button variant="filled" color="gray" onClick={toggle} size="md">
+          <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
             Toggle BOM Calculation Rules
           </Button>
         </Group>
-        <Collapse in={opened}>
+        <Collapse in={openedBOMRules}>
           <BOMRules />
         </Collapse>
       </Box>
