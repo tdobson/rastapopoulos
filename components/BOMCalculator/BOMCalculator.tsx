@@ -872,6 +872,16 @@ function BOMCalculator() {
     setIsPrintModalOpen(false);
   }, []);
 
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+
+  const handlePrint = useCallback(() => {
+    setIsPrintModalOpen(true);
+  }, []);
+
+  const handleClosePrintModal = useCallback(() => {
+    setIsPrintModalOpen(false);
+  }, []);
+
   return (
     <Stack gap="md">
       <Select
