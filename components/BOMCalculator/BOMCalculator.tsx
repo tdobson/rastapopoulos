@@ -520,6 +520,7 @@ export function calculateBOM(
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
   const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
+  const nonTopRowPanelCount = getNonTopRowPanelCount(grid)
 
   const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, nonBottomRowPanelCount);
 
