@@ -8,33 +8,6 @@
   text-align: left;
 }
 
-.printable-checklist table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.printable-checklist th,
-.printable-checklist td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-  background-color: #f9f9f9;
-}
-
-.printable-checklist tr:nth-child(even) td {
-  background-color: #f2f2f2;
-}
-
-.printable-checklist th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-  text-align: left;
-}
-
-.printable-checklist .check-column {
-  width: 50px;
-}
-
 @media print {
   .printable-checklist {
     max-width: none;
