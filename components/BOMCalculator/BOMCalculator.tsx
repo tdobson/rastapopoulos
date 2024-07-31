@@ -528,22 +528,31 @@ export function calculateBattenQuantity(
     return 0;
   }
 
+  // Limit the columns and rows to the maximum values in our lookup table
   const safeColumns = Math.min(columns, 20);
   const safeRows = Math.min(rows, 4);
 
+  // If the grid size is within our lookup table, return the value directly
   if (safeColumns <= 20 && safeRows <= 4) {
-    return battenTable[safeRows][safeColumns];
+    // This line might cause undefined if battenTable[safeRows] is undefined
+    // or if battenTable[safeRows][safeColumns] is undefined
+    return battenTable[safeRows][safeColumns] || 0; // Add fallback to 0
   }
 
-  let baseQuantity = battenTable[4][20];
+  // For larger grids, start with the maximum value in our lookup table
+  let baseQuantity = battenTable[4][20] || 0; // Add fallback to 0
 
+  // Add 9 battens for each column beyond 20
   if (columns > 20) {
     baseQuantity += (columns - 20) * 9;
   }
 
+  // For each row beyond 4, add the batten count for the current column count (up to 20)
   if (rows > 4) {
     for (let i = 5; i <= rows; i++) {
-      baseQuantity += battenTable[Math.min(columns, 20)][4];
+      // This line might cause undefined if battenTable[Math.min(columns, 20)] is undefined
+      // or if battenTable[Math.min(columns, 20)][4] is undefined
+      baseQuantity += battenTable[Math.min(columns, 20)][4] || 0; // Add fallback to 0
     }
   }
 
