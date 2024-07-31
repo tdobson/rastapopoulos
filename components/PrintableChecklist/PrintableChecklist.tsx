@@ -4,7 +4,7 @@ import { BOM } from '../../types/bomCalculator';
 
 // Helper function to determine if an item should be included in the checklist
 const shouldIncludeInChecklist = (component: string) => {
-  const excludedItems = ['Wire Clout Nails 65mm']; // Add items to exclude here
+  const excludedItems = ['Wire Clout Nails 65mm', 'Panel Wedge']; // Add items to exclude here
   return !excludedItems.includes(component);
 };
 

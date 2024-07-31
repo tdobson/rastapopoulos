@@ -67,6 +67,7 @@ const componentPrices: ComponentPrices = {
   'Lateral Flashing Nails Galv 20mm': 0.02, // Example price, adjust as needed
   'Uberflex Carpet Flashing': 10.0, // Example price, adjust as needed
   'Wire Clout Nails 65mm': 0.5, // 50p per item
+  'Panel Wedge': 0.5, // 50p per item
 };
 
 /**
@@ -427,6 +428,21 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
   return { rows, columns: maxColumns };
 }
 
+export function getHorizontalRowCount(grid: GridType): number {
+  let horizontalRows = 0;
+  let previousRowHadPanel = false;
+
+  for (let row = 0; row < grid.length; row++) {
+    const hasPanel = grid[row].some(cell => cell === 1);
+    if (hasPanel && !previousRowHadPanel) {
+      horizontalRows++;
+    }
+    previousRowHadPanel = hasPanel;
+  }
+
+  return horizontalRows;
+}
+
 /**
  * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
  *
@@ -702,6 +718,12 @@ export function calculateBOM(
       price: componentPrices['Wire Clout Nails 65mm'],
       total: 0,
       explanation: `5 nails per batten, ${battenQuantity} battens`,
+    },
+    'Panel Wedge': {
+      quantity: getHorizontalRowCount(grid),
+      price: componentPrices['Panel Wedge'],
+      total: 0,
+      explanation: `1 wedge per horizontal row of panels, ${getHorizontalRowCount(grid)} rows`,
     },
     'Solar Panels': {
       quantity: totalPanelCount,

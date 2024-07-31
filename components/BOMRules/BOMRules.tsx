@@ -162,6 +162,11 @@ const BOMRules: React.FC = () => {
             <strong>Wire Clout Nails 65mm:</strong> 5 nails per batten
           </Text>
         </List.Item>
+        <List.Item>
+          <Text>
+            <strong>Panel Wedge:</strong> 1 wedge per horizontal row of panels
+          </Text>
+        </List.Item>
       </List>
     </Box>
   );
