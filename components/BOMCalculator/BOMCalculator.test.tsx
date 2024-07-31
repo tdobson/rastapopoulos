@@ -15,7 +15,7 @@ import BOMCalculator, {
   getTotalRows,
   isBottomRow,
   getPanelCountInRow,
-  getTopRowPanelCount,
+  getTopRowPanelCount
 } from './BOMCalculator';
 
 const renderWithProvider = (ui: React.ReactElement) => {
