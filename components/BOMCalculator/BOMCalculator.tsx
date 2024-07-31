@@ -224,18 +224,47 @@ export function isCorner(grid, row, col) {
 }
 
 /**
- * Returns the total number of rows in the grid that contain at least one panel.
- *
- * @param grid - The grid representing the layout of panels.
- * @returns The number of rows containing panels.
+ * Calculates the total number of rows in the grid that contain at least one panel.
+ * 
+ * @param {GridType} grid - The 2D array representing the solar panel layout.
+ * @returns {number} The count of rows that contain at least one panel.
+ * 
+ * @description
+ * This function iterates through the entire grid and counts the number of rows
+ * that have at least one panel (represented by a '1' in the grid).
+ * 
+ * The function works as follows:
+ * 1. Initialize a counter for rows with panels.
+ * 2. Iterate through each row of the grid.
+ * 3. For each row, check if it contains at least one panel.
+ * 4. If a row contains a panel, increment the counter.
+ * 5. After checking all rows, return the total count.
+ * 
+ * This count represents the actual number of horizontal rows occupied by panels,
+ * regardless of their position in the grid or any empty rows between them.
+ * 
+ * @example
+ * const grid = [
+ *   [0, 0, 0, 0],  // Empty row
+ *   [1, 1, 0, 0],  // Row with panels
+ *   [0, 0, 0, 0],  // Empty row
+ *   [0, 1, 1, 1],  // Row with panels
+ *   [1, 0, 0, 0]   // Row with panels
+ * ];
+ * const totalRows = getTotalRows(grid);  // Returns 3
  */
 export function getTotalRows(grid: GridType): number {
-  for (let row = grid.length - 1; row >= 0; row--) {
-    if (grid[row].some((cell) => cell === 1)) {
-      return row + 1;
+  let rowsWithPanels = 0;
+
+  // Iterate through each row of the grid
+  for (let row = 0; row < grid.length; row++) {
+    // Check if the current row contains at least one panel
+    if (grid[row].some(cell => cell === 1)) {
+      rowsWithPanels++;
     }
   }
-  return 0;
+
+  return rowsWithPanels;
 }
 
 /**
