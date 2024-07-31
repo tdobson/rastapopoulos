@@ -861,20 +861,23 @@ export function determineCellType(grid, row, col) {
   const left = isPanel(row, col - 1);
   const right = isPanel(row, col + 1);
 
-  if (!above && !below && !left && !right) return ['SinglePanel'];
-  if (!above && below && !left && !right) return ['TopSinglePanel'];
-  if (above && !below && !left && !right) return ['BottomSinglePanel'];
-  if (above && below && !left && !right) return ['CenterSinglePanel'];
+  // Single panels (no adjacent panels)
+  if (!above && !below && !left && !right) return ['SinglePanel'];          // Isolated panel
+  if (!above && below && !left && !right) return ['TopSinglePanel'];        // Top of a single vertical column
+  if (above && !below && !left && !right) return ['BottomSinglePanel'];     // Bottom of a single vertical column
+  if (above && below && !left && !right) return ['CenterSinglePanel'];      // Middle of a single vertical column
 
-  if (!above && !below && left && right) return ['MidPanel'];
-  if (above && below && left && right) return ['MiddleMidPanel'];
-  if (!above && below && left && right) return ['TopMidPanel'];
-  if (above && !below && left && right) return ['BottomMidPanel'];
+  // Horizontal row panels
+  if (!above && !below && left && right) return ['MidPanel'];               // Middle of a single horizontal row
+  if (above && below && left && right) return ['MiddleMidPanel'];           // Middle panel in the middle of the grid
+  if (!above && below && left && right) return ['TopMidPanel'];             // Middle panel in the top row
+  if (above && !below && left && right) return ['BottomMidPanel'];          // Middle panel in the bottom row
 
-  if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];
-  if (above && below && ((left && !right) || (!left && right))) return ['MiddleEndPanel'];
-  if (!above && below && ((left && !right) || (!left && right))) return ['TopEndPanel'];
-  if (above && !below && ((left && !right) || (!left && right))) return ['BottomEndPanel'];
+  // End panels (horizontal or vertical)
+  if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];           // End of a single horizontal row
+  if (above && below && ((left && !right) || (!left && right))) return ['MiddleEndPanel'];       // Vertical edge in the middle of the grid
+  if (!above && below && ((left && !right) || (!left && right))) return ['TopEndPanel'];         // Top corner of the grid (not including single panel)
+  if (above && !below && ((left && !right) || (!left && right))) return ['BottomEndPanel'];      // Bottom corner of the grid (not including single panel)
 
   return ['Error'];
 }
