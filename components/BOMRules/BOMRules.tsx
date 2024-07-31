@@ -79,9 +79,7 @@ const BOMRules: React.FC = () => {
               </List.Item>
               <List.Item>
                 <strong>Deep Lead (800mm width, 1500mm length):</strong> Calculated based on the
-                total width of the array, minus the bottom row. The required length is determined
-                using the leadMeterageTable and then divided by 1500mm (rounded up) to get the
-                number of pieces.
+                total width of the array, minus the bottom row. The required length is one piece of lead per panel.
               </List.Item>
               <List.Item>
                 Example calculations:

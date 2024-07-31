@@ -72,12 +72,12 @@ const componentPrices: ComponentPrices = {
 
 /**
  * Batten table for determining the number of battens required based on the number of columns and rows in the solar panel grid.
- * 
+ *
  * The structure is as follows:
  * - The outer key represents the number of columns (up to 20 columns).
  * - The inner key represents the number of rows (up to 4 rows).
  * - The value is the number of battens required for that specific grid configuration.
- * 
+ *
  * For example, battenTable[3][2] represents the number of battens needed for a grid with 3 columns and 2 rows.
  */
 const battenTable: { [columns: number]: { [rows: number]: number } } = {
@@ -490,10 +490,10 @@ export function calculateBattenQuantity(
   const safeRows = Math.min(rows, 4);
 
   if (safeColumns <= 20 && safeRows <= 4) {
-    return battenTable[safeColumns][safeRows];
+    return battenTable[safeRows][safeColumns];
   }
 
-  let baseQuantity = battenTable[20][4];
+  let baseQuantity = battenTable[4][20];
 
   if (columns > 20) {
     baseQuantity += (columns - 20) * 9;
@@ -636,10 +636,10 @@ export function calculateBOM(
       explanation: `${battenQuantity} battens for ${rows} rows and ${columns} columns`,
     },
     'Copper Nails': {
-      quantity: (leadQuantities.standard + leadQuantities.deep) * 3,
+      quantity: (leadQuantities.standard + nonBottomRowPanelCount) * 3,
       price: componentPrices['Copper Nails'],
       total: 0,
-      explanation: `3 nails per piece of lead (${leadQuantities.standard} standard + ${leadQuantities.deep} deep)`,
+      explanation: `3 nails per piece of lead (${leadQuantities.standard} standard + ${nonBottomRowPanelCount} deep)`,
     },
     Lead: {
       quantity: leadQuantities.standard,
@@ -648,7 +648,7 @@ export function calculateBOM(
       explanation: `Standard lead for ${bottomRowPanelCount} bottom row panels`,
     },
     'Lead 600mm': {
-      quantity: leadQuantities.deep,
+      quantity: nonBottomRowPanelCount,
       price: componentPrices['Lead 600mm'],
       total: 0,
       explanation: `Deep lead for ${nonBottomRowPanelCount} panels on non-bottom rows`,
