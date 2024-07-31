@@ -302,6 +302,12 @@ export function getPanelCountInRow(grid: GridType, row: number): number {
   return grid[row].filter((cell) => cell === 1).length;
 }
 
+/**
+ * Calculates the number of panels that are not in the top row and do not have a panel directly above them.
+ *
+ * @param grid - The grid representing the layout of panels.
+ * @returns The count of panels that meet the specified criteria.
+ */
 export function getNonTopRowPanelCount(grid: GridType): number {
   const totalRows = getTotalRows(grid);
   const topRowIndex = 0;
