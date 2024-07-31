@@ -631,16 +631,16 @@ export function calculateBOM(
       explanation: `Deep lead for ${nonBottomRowPanelCount} panels on non-bottom rows`,
     },
     'Tile Kicker Bars': {
-      quantity: topRowPanelCount,
+      quantity: nonTopRowPanelCount,
       price: componentPrices['Tile Kicker Bars'],
       total: 0,
-      explanation: `${topRowPanelCount} top row panels`,
+      explanation: `${nonTopRowPanelCount} non-top row panels`,
     },
     'Kicker Bar Hooks': {
-      quantity: topRowPanelCount * 2,
+      quantity: nonTopRowPanelCount * 2,
       price: componentPrices['Kicker Bar Hooks'],
       total: 0,
-      explanation: `${topRowPanelCount} top row panels * 2`,
+      explanation: `${nonTopRowPanelCount} non-top row panels * 2`,
     },
     'Flexalu Top Flashing': {
       quantity: Math.ceil(topRowPanelCount / 4),
