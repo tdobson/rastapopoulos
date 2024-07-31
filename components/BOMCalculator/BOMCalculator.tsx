@@ -866,14 +866,16 @@ function BOMCalculator() {
       printWindow.document.write('<html><head><title>Pallet Checklist</title>');
       printWindow.document.write('<style>');
       printWindow.document.write(`
-        body { font-family: Arial, sans-serif; }
-        h1 { text-align: center; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        h1 { text-align: center; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
+        @media print {
+          body { -webkit-print-color-adjust: exact; }
+        }
       `);
       printWindow.document.write('</style></head><body>');
-      printWindow.document.write('<h1>Pallet Checklist</h1>');
       createPortal(<PrintableChecklist bom={bom} />, printWindow.document.body);
       printWindow.document.write('</body></html>');
       printWindow.document.close();
