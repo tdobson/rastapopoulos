@@ -867,6 +867,7 @@ function BOMCalculator() {
 
   return (
     <Stack gap="md">
+      <Group justify="center" mb="md">
       <Select
         label="Panel Type"
         value={panelType}
@@ -880,16 +881,9 @@ function BOMCalculator() {
         min={1}
         max={10}
       />
-      <Box>
-        <Group justify="center" mb="md">
-          <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
-            Toggle BOM Calculation Rules
-          </Button>
-        </Group>
-        <Collapse in={openedBOMRules}>
-          <BOMRules />
-        </Collapse>
-      </Box>
+      </Group>
+      <Group justify="center" mb="md">
+
       <div
         className="grid-container"
         onMouseLeave={handleMouseUp}
@@ -914,29 +908,35 @@ function BOMCalculator() {
           ))
         )}
       </div>
-      <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
+      </Group>
+
       <Group justify="center" mb="md">
-        <Button variant="filled" color="yellow" onClick={clearGrid} size="md">
-          Reset Grid
-        </Button>
         <Button onClick={handlePrint} size="md">
           Open Checklist
         </Button>
+        <Button variant="filled" color="yellow" onClick={clearGrid} size="md">
+          Reset Grid
+        </Button>
       </Group>
+      <PrintableChecklist bom={bom} opened={isPrintModalOpen} onClose={handleClosePrintModal} />
+      <Text size="xl">Bill of Materials:</Text>
+      <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
+
+      <BOMTable bom={bom} />
+      <Group justify="center" mb="md">
       <Box>
-        <Group justify="center" mb="md">
           <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
             Toggle Cell Types Count and Panel Information
           </Button>
-        </Group>
+
         <Collapse in={openedCellTypes}>
           <Grid>
             {Object.entries(cellTypesCount).map(([type, count]) => (
-              <Grid.Col key={type} span={6}>
-                <Text>
-                  {type}: {count}
-                </Text>
-              </Grid.Col>
+                <Grid.Col key={type} span={6}>
+                  <Text>
+                    {type}: {count}
+                  </Text>
+                </Grid.Col>
             ))}
             <Grid.Col span={12}>
               <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
@@ -948,19 +948,18 @@ function BOMCalculator() {
         </Collapse>
       </Box>
       <Box>
-        <Group justify="center" mb="md">
+
           <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
             Toggle BOM Calculation Rules
           </Button>
-        </Group>
+
         <Collapse in={openedBOMRules}>
           <BOMRules />
         </Collapse>
-      </Box>
-      <Text size="xl">Bill of Materials:</Text>
-      <BOMTable bom={bom} />
-      <PrintableChecklist bom={bom} opened={isPrintModalOpen} onClose={handleClosePrintModal} />
-    </Stack>
+    </Box>
+    </Group>
+
+</Stack>
   );
 }
 
