@@ -500,7 +500,9 @@ export function calculateBattenQuantity(
   }
 
   if (rows > 4) {
-    baseQuantity += (rows - 4) * battenTable[Math.min(columns, 20)][4];
+    for (let i = 5; i <= rows; i++) {
+      baseQuantity += battenTable[Math.min(columns, 20)][4];
+    }
   }
 
   return baseQuantity;
