@@ -827,7 +827,7 @@ function BOMCalculator() {
   );
   const totalCost = useMemo(
     () => (HIDE_PRICING_INFO ? 0 : Object.values(bom).reduce((sum, item) => sum + item.total, 0)),
-    [bom, HIDE_PRICING_INFO]
+    [bom]
   );
 
   const handleCellClick = (row: number, col: number) => {
