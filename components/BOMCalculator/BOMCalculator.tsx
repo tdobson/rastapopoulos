@@ -251,58 +251,38 @@ export function isBottomRow(grid: GridType, row: number): boolean {
 }
 
 /**
- * Calculates the quantity of lead required for both standard and deep types based on the number of panels in the bottom row and the maximum width of non-bottom rows.
+ * Calculates the quantity of lead required based on the number of panels in the bottom row.
  *
- * Lead comes in two types that have separate uses and come in separate quantities:
- *
- * 1. **Normal Lead**:
- *    - Calculated based on the number of panels across the bottom row of the array.
- *    - It comes in 1500mm lengths.
- *    - The required length is determined using the `leadMeterageTable` constant.
- *    - The total length required for the bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `bottomRowPanelCount`.
- *    - The total length is then divided by 1500mm and rounded up to determine the number of pieces of normal lead required.
- *
- * 2. **Deep Lead (800mm width)**:
- *    - Calculated based on the total width of the array, minus the bottom row.
- *    - It also comes in 1500mm lengths.
- *    - The required length is determined using the `leadMeterageTable` constant.
- *    - The total length required for the non-bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `maxNonBottomRowWidth`.
- *    - The total length is then divided by 1500mm and rounded up to determine the number of pieces of deep lead required.
+ * Lead calculation:
+ * - Calculated based on the number of panels across the bottom row of the array.
+ * - It comes in 1500mm lengths.
+ * - The required length is determined using the `leadMeterageTable` constant.
+ * - The total length required for the bottom row panels is calculated by summing the values from the `leadMeterageTable` for each panel count up to the `bottomRowPanelCount`.
+ * - The total length is then divided by 1500mm and rounded up to determine the number of pieces of lead required.
  *
  * Example calculations:
- * - For 1 panel requiring normal lead: 2 pieces of normal lead (2100mm / 1500mm = 1.4, rounded up to 2).
- * - For 3 panels requiring normal lead: 3 pieces of normal lead (4475mm / 1500mm = 2.98, rounded up to 3).
- * - For 8 panels requiring normal lead: 8 pieces of normal lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8).
+ * - For 1 panel: 2 pieces of lead (2100mm / 1500mm = 1.4, rounded up to 2).
+ * - For 3 panels: 3 pieces of lead (4475mm / 1500mm = 2.98, rounded up to 3).
+ * - For 8 panels: 8 pieces of lead ((8900mm + 1375mm + 1375mm) / 1500mm = 7.77, rounded up to 8).
  *
  * @param bottomRowPanelCount - The number of panels in the bottom row.
- * @param nonBottomRowPanelCount - The number of panels with nothing below them that aren't on the bottom row.
- * @returns An object containing the quantities of standard and deep lead required.
+ * @returns The number of pieces of lead required.
  */
-export function calculateLeadQuantity(
-  bottomRowPanelCount: number,
-  nonBottomRowPanelCount: number
-): { standard: number; deep: number } {
-  const calculateLeadPieces = (panelCount: number): number => {
-    if (panelCount <= 0) return 0; // No panels, no lead required
+export function calculateLeadQuantity(bottomRowPanelCount: number): number {
+  if (bottomRowPanelCount <= 0) return 0; // No panels, no lead required
 
-    // Use conversion table if available
-    if (leadMeterageTable.conversionTable[panelCount] !== undefined) {
-      return leadMeterageTable.conversionTable[panelCount];
-    }
+  // Use conversion table if available
+  if (leadMeterageTable.conversionTable[bottomRowPanelCount] !== undefined) {
+    return leadMeterageTable.conversionTable[bottomRowPanelCount];
+  }
 
-    // For more panels, calculate using the default value
-    let totalLength = 0;
-    for (let i = 1; i <= panelCount; i++) {
-      totalLength += leadMeterageTable[i] || leadMeterageTable.default;
-    }
+  // For more panels, calculate using the default value
+  let totalLength = 0;
+  for (let i = 1; i <= bottomRowPanelCount; i++) {
+    totalLength += leadMeterageTable[i] || leadMeterageTable.default;
+  }
 
-    return Math.ceil(totalLength / leadMeterageTable.standardLeadLength);
-  };
-
-  const standard = calculateLeadPieces(bottomRowPanelCount);
-  const deep = calculateLeadPieces(nonBottomRowPanelCount);
-
-  return { standard, deep };
+  return Math.ceil(totalLength / leadMeterageTable.standardLeadLength);
 }
 /**
  * Calculates the number of panels in a specific row of the grid.
@@ -544,11 +524,10 @@ export function calculateBOM(
   const totalPanelCount = getTotalPanelCount(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
-  const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid);
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
 
-  const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, nonBottomRowPanelCount);
+  const leadQuantity = calculateLeadQuantity(bottomRowPanelCount);
 
   const bom: BOM = {
     'GSE Half Portrait Frames': {
@@ -641,22 +620,16 @@ export function calculateBOM(
       explanation: `${battenQuantity} battens for ${rows} rows and ${columns} columns`,
     },
     'Copper Nails': {
-      quantity: (leadQuantities.standard + nonBottomRowPanelCount) * 3,
+      quantity: leadQuantity * 3,
       price: componentPrices['Copper Nails'],
       total: 0,
-      explanation: `3 nails per piece of lead (${leadQuantities.standard} standard + ${nonBottomRowPanelCount} deep)`,
+      explanation: `3 nails per piece of lead (${leadQuantity} pieces)`,
     },
     Lead: {
-      quantity: leadQuantities.standard,
+      quantity: leadQuantity,
       price: componentPrices['Lead'],
       total: 0,
-      explanation: `Standard lead for ${bottomRowPanelCount} bottom row panels`,
-    },
-    'Lead 600mm': {
-      quantity: nonBottomRowPanelCount,
-      price: componentPrices['Lead 600mm'],
-      total: 0,
-      explanation: `Deep lead for ${nonBottomRowPanelCount} panels on non-bottom rows`,
+      explanation: `Lead for ${bottomRowPanelCount} bottom row panels`,
     },
     'Tile Kicker Bars': {
       quantity: nonTopRowPanelCount,
