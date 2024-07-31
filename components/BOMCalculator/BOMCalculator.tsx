@@ -5,7 +5,7 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 
 const HIDE_PRICING_INFO = true;
-const HIDE_DEBUG_BUTTONS = true;
+const HIDE_DEBUG_BUTTONS = false;
 import { createPortal } from 'react-dom';
 import {
   Grid,
@@ -544,7 +544,8 @@ export function calculateBOM(
           cellTypesCount.MidPanel * 2 +
           cellTypesCount.MiddleMidPanel * 2 +
           cellTypesCount.TopMidPanel * 2 +
-          cellTypesCount.BottomMidPanel * 2,
+          cellTypesCount.BottomMidPanel * 2 +
+          cellTypesCount.EndPanel,
       price: componentPrices['GSE Screws Black'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
@@ -570,7 +571,8 @@ export function calculateBOM(
         cellTypesCount.MidPanel * 2 +
         cellTypesCount.MiddleMidPanel * 2 +
         cellTypesCount.TopMidPanel * 2 +
-        cellTypesCount.BottomMidPanel * 2,
+        cellTypesCount.BottomMidPanel * 2 +
+        cellTypesCount.EndPanel ,
       price: componentPrices['GSE Mid Clamp'],
       total: 0,
       explanation: `(${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) * 2`,
