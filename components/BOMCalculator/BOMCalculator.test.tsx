@@ -1,4 +1,5 @@
 import React from 'react';
+import { CellTypesCount } from '../../types/bomCalculator';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MantineProvider } from '@mantine/core';
