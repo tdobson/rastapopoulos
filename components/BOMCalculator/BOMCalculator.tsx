@@ -408,6 +408,39 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
   return { rows, columns: maxColumns };
 }
 
+/**
+ * Calculates the number of horizontal rows of panels in the grid.
+ * 
+ * @param {GridType} grid - The 2D array representing the solar panel layout.
+ * @returns {number} The count of horizontal rows containing panels.
+ * 
+ * @description
+ * This function counts the number of distinct horizontal rows of panels in the grid.
+ * A horizontal row is counted when it contains at least one panel and is preceded
+ * by a row without panels or is the first row with panels.
+ * 
+ * The algorithm works as follows:
+ * 1. Initialize a counter for horizontal rows and a flag for the previous row's state.
+ * 2. Iterate through each row of the grid.
+ * 3. For each row, check if it contains any panels.
+ * 4. If the current row has panels and the previous row did not, increment the counter.
+ * 5. Update the previous row state for the next iteration.
+ * 6. After checking all rows, return the total count of horizontal rows.
+ * 
+ * This count is used for determining the number of panel wedges required in the BOM,
+ * as one wedge is needed per horizontal row of panels.
+ * 
+ * @example
+ * const grid = [
+ *   [1, 1, 1, 0],  // First horizontal row
+ *   [0, 0, 0, 0],
+ *   [1, 1, 0, 0],  // Second horizontal row
+ *   [1, 1, 0, 0],  // (Same horizontal row as above)
+ *   [0, 0, 0, 0],
+ *   [0, 1, 1, 1]   // Third horizontal row
+ * ];
+ * const horizontalRowCount = getHorizontalRowCount(grid);  // Returns 3
+ */
 export function getHorizontalRowCount(grid: GridType): number {
   let horizontalRows = 0;
   let previousRowHadPanel = false;
