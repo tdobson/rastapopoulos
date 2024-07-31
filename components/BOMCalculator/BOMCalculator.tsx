@@ -526,6 +526,8 @@ export function calculateBOM(
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid);
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
+  const horizontalRowCount = getHorizontalRowCount(grid);
+
 
   const leadQuantity = calculateLeadQuantity(bottomRowPanelCount);
 
@@ -700,10 +702,10 @@ export function calculateBOM(
       explanation: `5 nails per batten, ${battenQuantity} battens`,
     },
     'Panel Wedge': {
-      quantity: getHorizontalRowCount(grid),
+      quantity: horizontalRowCount,
       price: componentPrices['Panel Wedge'],
       total: 0,
-      explanation: `1 wedge per horizontal row of panels, ${getHorizontalRowCount(grid)} rows`,
+      explanation: `1 wedge per horizontal row of panels, ${horizontalRowCount} rows`,
     },
     'Solar Panels': {
       quantity: totalPanelCount,
