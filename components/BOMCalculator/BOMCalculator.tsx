@@ -836,25 +836,23 @@ export function countCellTypes(grid: GridType): CellTypesCount {
 
   return cellTypesCount;
 }
-
 /**
  * Determines the type of a cell in the grid based on its position and surrounding cells.
  *
  * @param grid - The grid representing the layout of panels.
  * @param row - The row index of the cell to determine the type for.
  * @param col - The column index of the cell to determine the type for.
- * @returns A string indicating the type of the cell.
+ * @returns An array indicating the types of the cell.
  */
-export function determineCellType(grid, row, col) {
+function determineCellType(grid, row, col) {
   if (grid[row][col] === 0) return ['EmptyCell'];
 
+  const cellTypes = [];
   const cornerTypes = isCorner(grid, row, col);
-  if (Object.keys(cornerTypes).length > 0) {
-    return Object.keys(cornerTypes);
-  }
+  cellTypes.push(...Object.keys(cornerTypes));
 
   const isPanel = (r, c) =>
-    r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] === 1;
+      r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] === 1;
 
   const above = isPanel(row - 1, col);
   const below = isPanel(row + 1, col);
@@ -862,31 +860,30 @@ export function determineCellType(grid, row, col) {
   const right = isPanel(row, col + 1);
 
   // Single panels (no adjacent panels)
-  if (!above && !below && !left && !right) return ['SinglePanel'];          // Isolated panel
+  if (!above && !below && !left && !right) cellTypes.push('SinglePanel');          // Isolated panel
 
   // vertical column panels
-  if (!above && below && !left && !right) return ['TopSinglePanel'];        // Top of a single vertical column
-  if (above && !below && !left && !right) return ['BottomSinglePanel'];     // Bottom of a single vertical column
-  if (above && below && !left && !right) return ['CenterSinglePanel'];      // Middle of a single vertical column
+  if (!above && below && !left && !right) cellTypes.push('TopSinglePanel');        // Top of a single vertical column
+  if (above && !below && !left && !right) cellTypes.push('BottomSinglePanel');     // Bottom of a single vertical column
+  if (above && below && !left && !right) cellTypes.push('CenterSinglePanel');      // Middle of a single vertical column
 
   // Horizontal row panels
-  if (!above && !below && left && right) return ['MidPanel'];               // Middle of a single horizontal row
-  if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];           // End of a single horizontal row
+  if (!above && !below && left && right) cellTypes.push('MidPanel');               // Middle of a single horizontal row
+  if (!above && !below && ((left && !right) || (!left && right))) cellTypes.push('EndPanel');           // End of a single horizontal row
 
   // grid panels
-  if (!above && below && left && right) return ['TopMidPanel'];             // Middle panel in the top row
-  if (above && !below && left && right) return ['BottomMidPanel'];          // Middle panel in the bottom row
-  if (above && below && left && right) return ['MiddleMidPanel'];           // Middle panel in the middle of the grid
-  if (above && below && ((left && !right) || (!left && right))) return ['MiddleEndPanel'];       // Vertical edge in the middle of the grid
+  if (!above && below && left && right) cellTypes.push('TopMidPanel');             // Middle panel in the top row
+  if (above && !below && left && right) cellTypes.push('BottomMidPanel');          // Middle panel in the bottom row
+  if (above && below && left && right) cellTypes.push('MiddleMidPanel');           // Middle panel in the middle of the grid
+  if (above && below && ((left && !right) || (!left && right))) cellTypes.push('MiddleEndPanel');       // Vertical edge in the middle of the grid
 
   // interesting grid panels
-  if (!above && below && ((left && !right) || (!left && right))) return ['TopEndPanel'];         // Top corner of the grid (not including single panel)
-  if (above && !below && ((left && !right) || (!left && right))) return ['BottomEndPanel'];      // Bottom corner of the grid (not including single panel)
+  if (!above && below && ((left && !right) || (!left && right))) cellTypes.push('TopEndPanel');         // Top corner of the grid (not including single panel)
+  if (above && !below && ((left && !right) || (!left && right))) cellTypes.push('BottomEndPanel');      // Bottom corner of the grid (not including single panel)
 
-  // Additional check for TopEndPanel
-  if (!above && (below || right)) return ['TopEndPanel'];                   // Top-left or top-right panel in an L or r shape
+  if (cellTypes.length === 0) cellTypes.push('Error');
 
-  return ['Error'];
+  return cellTypes;
 }
 
 // BOMCalculator component
