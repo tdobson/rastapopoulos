@@ -940,15 +940,7 @@ function BOMCalculator() {
       <Text size="xl">Bill of Materials:</Text>
       <BOMTable bom={bom} />
       <Button onClick={handlePrint}>Open Checklist</Button>
-      {isPrintModalOpen && (
-        <div className="print-modal">
-          <div className="print-modal-content">
-            <PrintableChecklist bom={bom} />
-            <Button onClick={handleClosePrintModal}>Close</Button>
-            <Button onClick={() => window.print()}>Print</Button>
-          </div>
-        </div>
-      )}
+      <PrintableChecklist bom={bom} opened={isPrintModalOpen} onClose={handleClosePrintModal} />
     </Stack>
   );
 }
