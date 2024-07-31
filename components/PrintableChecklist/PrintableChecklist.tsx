@@ -8,9 +8,9 @@ interface PrintableChecklistProps {
 
 function PrintableChecklist({ bom }: PrintableChecklistProps) {
   return (
-    <Box className="printable-checklist">
-      <Text size="xl">Pallet Checklist</Text>
-      <List>
+    <Box className="printable-checklist" style={{ padding: '20px' }}>
+      <Text size="xl" style={{ marginBottom: '20px' }}>Pallet Checklist</Text>
+      <List style={{ fontSize: '16px' }}>
         {Object.entries(bom).map(([component, item]) => (
           <List.Item key={component}>
             {component}: {item.quantity} {item.quantity > 1 ? 'pcs' : 'pc'}

@@ -865,9 +865,10 @@ function BOMCalculator() {
     if (printWindow) {
       printWindow.document.body.innerHTML = '';
       createPortal(<PrintableChecklist bom={bom} />, printWindow.document.body);
-      printWindow.onload = () => {
+      setTimeout(() => {
         printWindow.print();
-      };
+        printWindow.close();
+      }, 100);
     }
   }, [bom]);
 
