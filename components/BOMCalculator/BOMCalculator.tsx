@@ -556,7 +556,7 @@ export function calculateBOM(
           cellTypesCount.BottomSinglePanel * 6,
       price: componentPrices['GSE Screws Silver'],
       total: 0,
-      explanation: `3 for every GSE half portrait frame`,
+      explanation: `3 screws per GSE half portrait frame, totaling 6 screws for each SinglePanel, TopSinglePanel, and BottomSinglePanel`,
     },
     'GSE End Clamp': {
       quantity:
