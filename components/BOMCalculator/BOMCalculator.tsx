@@ -873,7 +873,7 @@ export function determineCellType(grid, row, col) {
   if (!above && !below && left && right) return ['MidPanel'];               // Middle of a single horizontal row
   if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];           // End of a single horizontal row
 
-// grid panels
+  // grid panels
   if (!above && below && left && right) return ['TopMidPanel'];             // Middle panel in the top row
   if (above && !below && left && right) return ['BottomMidPanel'];          // Middle panel in the bottom row
   if (above && below && left && right) return ['MiddleMidPanel'];           // Middle panel in the middle of the grid
@@ -882,6 +882,9 @@ export function determineCellType(grid, row, col) {
   // interesting grid panels
   if (!above && below && ((left && !right) || (!left && right))) return ['TopEndPanel'];         // Top corner of the grid (not including single panel)
   if (above && !below && ((left && !right) || (!left && right))) return ['BottomEndPanel'];      // Bottom corner of the grid (not including single panel)
+
+  // Additional check for TopEndPanel
+  if (!above && (below || right)) return ['TopEndPanel'];                   // Top-left or top-right panel in an L or r shape
 
   return ['Error'];
 }
