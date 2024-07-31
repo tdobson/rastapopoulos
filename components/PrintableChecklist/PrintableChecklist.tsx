@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, Text, List } from '@mantine/core';
 import { BOM } from '../../types/bomCalculator';
 
 interface PrintableChecklistProps {
@@ -8,16 +7,24 @@ interface PrintableChecklistProps {
 
 function PrintableChecklist({ bom }: PrintableChecklistProps) {
   return (
-    <Box className="printable-checklist" style={{ padding: '20px' }}>
-      <Text size="xl" style={{ marginBottom: '20px' }}>Pallet Checklist</Text>
-      <List style={{ fontSize: '16px' }}>
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Quantity</th>
+          <th>Check</th>
+        </tr>
+      </thead>
+      <tbody>
         {Object.entries(bom).map(([component, item]) => (
-          <List.Item key={component}>
-            {component}: {item.quantity} {item.quantity > 1 ? 'pcs' : 'pc'}
-          </List.Item>
+          <tr key={component}>
+            <td>{component}</td>
+            <td>{item.quantity} {item.quantity > 1 ? 'pcs' : 'pc'}</td>
+            <td style={{ width: '50px' }}></td>
+          </tr>
         ))}
-      </List>
-    </Box>
+      </tbody>
+    </table>
   );
 }
 
