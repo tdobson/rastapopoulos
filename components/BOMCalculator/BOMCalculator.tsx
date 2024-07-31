@@ -478,6 +478,7 @@ export function calculateBattenQuantity(rows: number, columns: number, totalPane
  *
  * @param cellTypesCount - An object containing counts of different cell types.
  * @returns The number of panels in the top row.
+ * @description This function counts all panels located in the top row of the grid, including TopSinglePanel, TopMidPanel, and TopEndPanel.
  */
 export function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
   return cellTypesCount.TopSinglePanel + cellTypesCount.TopMidPanel + cellTypesCount.TopEndPanel;
