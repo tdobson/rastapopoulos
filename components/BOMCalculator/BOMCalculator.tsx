@@ -863,19 +863,23 @@ export function determineCellType(grid, row, col) {
 
   // Single panels (no adjacent panels)
   if (!above && !below && !left && !right) return ['SinglePanel'];          // Isolated panel
+
+  // vertical column panels
   if (!above && below && !left && !right) return ['TopSinglePanel'];        // Top of a single vertical column
   if (above && !below && !left && !right) return ['BottomSinglePanel'];     // Bottom of a single vertical column
   if (above && below && !left && !right) return ['CenterSinglePanel'];      // Middle of a single vertical column
 
   // Horizontal row panels
   if (!above && !below && left && right) return ['MidPanel'];               // Middle of a single horizontal row
-  if (above && below && left && right) return ['MiddleMidPanel'];           // Middle panel in the middle of the grid
+  if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];           // End of a single horizontal row
+
+// grid panels
   if (!above && below && left && right) return ['TopMidPanel'];             // Middle panel in the top row
   if (above && !below && left && right) return ['BottomMidPanel'];          // Middle panel in the bottom row
-
-  // End panels (horizontal or vertical)
-  if (!above && !below && ((left && !right) || (!left && right))) return ['EndPanel'];           // End of a single horizontal row
+  if (above && below && left && right) return ['MiddleMidPanel'];           // Middle panel in the middle of the grid
   if (above && below && ((left && !right) || (!left && right))) return ['MiddleEndPanel'];       // Vertical edge in the middle of the grid
+
+  // interesting grid panels
   if (!above && below && ((left && !right) || (!left && right))) return ['TopEndPanel'];         // Top corner of the grid (not including single panel)
   if (above && !below && ((left && !right) || (!left && right))) return ['BottomEndPanel'];      // Bottom corner of the grid (not including single panel)
 
@@ -1031,40 +1035,40 @@ function BOMCalculator() {
       <BOMTable bom={bom} />
       <Group justify="center" mb="md">
         {HIDE_DEBUG_BUTTONS ? null : (
-          <Box>
-            <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
-              Toggle Cell Types Count and Panel Information
-            </Button>
+          <>
+            <Box>
+              <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
+                Toggle Cell Types Count and Panel Information
+              </Button>
 
-            <Collapse in={openedCellTypes}>
-              <Grid>
-                {Object.entries(cellTypesCount).map(([type, count]) => (
-                  <Grid.Col key={type} span={6}>
-                    <Text>
-                      {type}: {count}
-                    </Text>
+              <Collapse in={openedCellTypes}>
+                <Grid>
+                  {Object.entries(cellTypesCount).map(([type, count]) => (
+                    <Grid.Col key={type} span={6}>
+                      <Text>
+                        {type}: {count}
+                      </Text>
+                    </Grid.Col>
+                  ))}
+                  <Grid.Col span={12}>
+                    <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
                   </Grid.Col>
-                ))}
-                <Grid.Col span={12}>
-                  <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
-                </Grid.Col>
-                <Grid.Col span={12}>
-                  <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
-                </Grid.Col>
-              </Grid>
-            </Collapse>
-          </Box>
-        )}
-        {HIDE_DEBUG_BUTTONS ? null : (
-          <Box>
-            <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
-              Toggle BOM Calculation Rules
-            </Button>
+                  <Grid.Col span={12}>
+                    <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
+                  </Grid.Col>
+                </Grid>
+              </Collapse>
+            </Box>
+            <Box>
+              <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
+                Toggle BOM Calculation Rules
+              </Button>
 
-            <Collapse in={openedBOMRules}>
-              <BOMRules />
-            </Collapse>
-          </Box>
+              <Collapse in={openedBOMRules}>
+                <BOMRules />
+              </Collapse>
+            </Box>
+          </>
         )}
       </Group>
     </Stack>
