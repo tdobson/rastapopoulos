@@ -516,13 +516,10 @@ export function calculateBOM(
 
   const bom: BOM = {
     'GSE Half Portrait Frames': {
-      quantity:
-        cellTypesCount.SinglePanel * 2 +
-        cellTypesCount.TopSinglePanel * 2 +
-        cellTypesCount.BottomSinglePanel * 2,
+      quantity: totalPanelCount * 2,
       price: componentPrices['GSE Half Portrait Frames'],
       total: 0,
-      explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 2`,
+      explanation: `${totalPanelCount} total panels * 2`,
     },
     'Lateral Flashing': {
       quantity:
@@ -550,13 +547,10 @@ export function calculateBOM(
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
     },
     'GSE Screws Silver': {
-      quantity:
-          cellTypesCount.SinglePanel * 6 +
-          cellTypesCount.TopSinglePanel * 6 +
-          cellTypesCount.BottomSinglePanel * 6,
+      quantity: totalPanelCount * 6,
       price: componentPrices['GSE Screws Silver'],
       total: 0,
-      explanation: `3 screws per GSE half portrait frame, totaling 6 screws for ${cellTypesCount.SinglePanel} SinglePanel, ${cellTypesCount.TopSinglePanel} TopSinglePanel, and ${cellTypesCount.BottomSinglePanel} BottomSinglePanel`,
+      explanation: `6 screws per panel, totaling ${totalPanelCount * 6} screws for ${totalPanelCount} total panels`,
     },
     'GSE End Clamp': {
       quantity:
