@@ -4,7 +4,7 @@
 
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 
-const HIDE_PRICING_INFO = true;
+const HIDE_PRICING_INFO = false;
 const HIDE_DEBUG_BUTTONS = false;
 import { createPortal } from 'react-dom';
 import {
@@ -531,8 +531,12 @@ export function calculateBattenQuantity(
  */
 export function getTopRowPanelCount(cellTypesCount: CellTypesCount, grid: GridType): number {
   const totalRows = getTotalRows(grid);
+  console.log(totalRows)
+  if (totalRows === 0) {
+    return 1;
+  }
   if (totalRows === 1) {
-    return getTotalPanelCount(grid);
+    return  cellTypesCount.SinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel;
   }
   return cellTypesCount.TopSinglePanel + cellTypesCount.TopMidPanel + cellTypesCount.TopEndPanel;
 }
