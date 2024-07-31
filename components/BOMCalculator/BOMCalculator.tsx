@@ -387,21 +387,6 @@ export function getTotalPanelCount(grid: GridType): number {
  * @param grid - The grid representing the layout of panels.
  * @returns An object containing the number of rows and columns with panels.
  */
-export function getGridDimensions(grid: GridType): { rows: number; columns: number } {
-  let maxRow = 0;
-  let maxCol = 0;
-
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      if (grid[row][col] === 1) {
-        maxRow = Math.max(maxRow, row);
-        maxCol = Math.max(maxCol, col);
-      }
-    }
-  }
-
-  return { rows: maxRow + 1, columns: maxCol + 1 };
-}
 
 /**
  * Determines the actual dimensions of the panel layout for batten calculation.
