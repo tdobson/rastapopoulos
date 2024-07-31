@@ -410,15 +410,15 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
 
 /**
  * Calculates the number of horizontal rows of panels in the grid.
- * 
+ *
  * @param {GridType} grid - The 2D array representing the solar panel layout.
  * @returns {number} The count of horizontal rows containing panels.
- * 
+ *
  * @description
  * This function counts the number of distinct horizontal rows of panels in the grid.
  * A horizontal row is counted when it contains at least one panel and is preceded
  * by a row without panels or is the first row with panels.
- * 
+ *
  * The algorithm works as follows:
  * 1. Initialize a counter for horizontal rows and a flag for the previous row's state.
  * 2. Iterate through each row of the grid.
@@ -426,10 +426,10 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
  * 4. If the current row has panels and the previous row did not, increment the counter.
  * 5. Update the previous row state for the next iteration.
  * 6. After checking all rows, return the total count of horizontal rows.
- * 
+ *
  * This count is used for determining the number of panel wedges required in the BOM,
  * as one wedge is needed per horizontal row of panels.
- * 
+ *
  * @example
  * const grid = [
  *   [1, 1, 1, 0],  // First horizontal row
@@ -576,7 +576,10 @@ export function calculateBOM(
         (cellTypesCount.SinglePanel * 2 +
           cellTypesCount.TopSinglePanel * 2 +
           cellTypesCount.BottomSinglePanel * 2 +
-          cellTypesCount.EndPanel) *
+          cellTypesCount.BottomEndPanel * 2 +
+          cellTypesCount.TopEndPanel * 2 +
+          cellTypesCount.EndPanel
+        ) *
         2,
       price: componentPrices['Lateral Flashing'],
       total: 0,
@@ -591,8 +594,9 @@ export function calculateBOM(
           cellTypesCount.MidPanel * 2 +
           cellTypesCount.MiddleMidPanel * 2 +
           cellTypesCount.TopMidPanel * 2 +
-          cellTypesCount.BottomMidPanel * 2 +
-          cellTypesCount.EndPanel,
+          cellTypesCount.BottomEndPanel * 1 +
+          cellTypesCount.TopEndPanel * 1 +
+          cellTypesCount.BottomMidPanel * 2,
       price: componentPrices['GSE Screws Black'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 3 + ${cellTypesCount.EndPanel} EndPanel + ${cellTypesCount.MidPanel} MidPanel`,
@@ -608,6 +612,8 @@ export function calculateBOM(
         cellTypesCount.SinglePanel * 4 +
         cellTypesCount.TopSinglePanel * 4 +
         cellTypesCount.BottomSinglePanel * 4 +
+          cellTypesCount.BottomEndPanel * 2 +
+          cellTypesCount.TopEndPanel * 2 +
         cellTypesCount.EndPanel * 2,
       price: componentPrices['GSE End Clamp'],
       total: 0,
@@ -618,6 +624,8 @@ export function calculateBOM(
         cellTypesCount.MidPanel * 2 +
         cellTypesCount.MiddleMidPanel * 2 +
         cellTypesCount.TopMidPanel * 2 +
+          cellTypesCount.BottomEndPanel * 1 +
+          cellTypesCount.TopEndPanel * 1 +
         cellTypesCount.BottomMidPanel * 2 +
         cellTypesCount.EndPanel ,
       price: componentPrices['GSE Mid Clamp'],
