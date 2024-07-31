@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from '@mantine/core';
 import { BOM } from '../../types/bomCalculator';
+import { HIDE_PRICING_INFO } from '../BOMCalculator/BOMCalculator';
 
 interface BOMTableProps {
   bom: BOM;
@@ -13,9 +14,13 @@ function BOMTable({ bom }: BOMTableProps) {
         <tr>
           <th>Quantity</th>
           <th>Component</th>
-          <th>Price</th>
-          <th>Total</th>
-          <th>Explanation</th>
+          {HIDE_PRICING_INFO ? null : (
+            <>
+              <th>Price</th>
+              <th>Total</th>
+              <th>Explanation</th>
+            </>
+          )}
         </tr>
       </thead>
       <tbody>
@@ -23,9 +28,13 @@ function BOMTable({ bom }: BOMTableProps) {
           <tr key={component}>
             <td>{item.quantity}</td>
             <td>{component}</td>
-            <td>£{item.price.toFixed(2)}</td>
-            <td>£{item.total.toFixed(2)}</td>
-            <td>{item.explanation}</td>
+            {HIDE_PRICING_INFO ? null : (
+              <>
+                <td>£{item.price.toFixed(2)}</td>
+                <td>£{item.total.toFixed(2)}</td>
+                <td>{item.explanation}</td>
+              </>
+            )}
           </tr>
         ))}
       </tbody>
