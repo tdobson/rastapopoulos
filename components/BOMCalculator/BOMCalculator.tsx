@@ -852,7 +852,8 @@ function BOMCalculator() {
     setCellTypesCount(countCellTypes(emptyGrid));
   }, []);
 
-  const [opened, { toggle }] = useDisclosure(false);
+  const [openedCellTypes, { toggle: toggleCellTypes }] = useDisclosure(false);
+  const [openedBOMRules, { toggle: toggleBOMRules }] = useDisclosure(false);
 
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
@@ -880,10 +881,12 @@ function BOMCalculator() {
         max={10}
       />
       <Box>
-        <Button onClick={toggle} mb="md">
-          Toggle BOM Calculation Rules
-        </Button>
-        <Collapse in={opened}>
+        <Group justify="center" mb="md">
+          <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
+            Toggle BOM Calculation Rules
+          </Button>
+        </Group>
+        <Collapse in={openedBOMRules}>
           <BOMRules />
         </Collapse>
       </Box>
@@ -922,11 +925,11 @@ function BOMCalculator() {
       </Group>
       <Box>
         <Group justify="center" mb="md">
-          <Button variant="filled" color="gray" onClick={toggle} size="md">
+          <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
             Toggle Cell Types Count and Panel Information
           </Button>
         </Group>
-        <Collapse in={opened}>
+        <Collapse in={openedCellTypes}>
           <Grid>
             {Object.entries(cellTypesCount).map(([type, count]) => (
               <Grid.Col key={type} span={6}>
