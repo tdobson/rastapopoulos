@@ -969,46 +969,47 @@ function BOMCalculator() {
   return (
     <Stack gap="md">
       <Group justify="center" mb="md">
-        {HIDE_PRICING_INFO ? null : (  <Select
-        label="Panel Type"
-        value={panelType}
-        onChange={(value) => setPanelType(value || 'DMEGC 405w')}
-        data={Object.keys(panelPrices)}
-      />)}
-      <NumberInput
-        label="Number of Strings"
-        value={numberOfStrings}
-        onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
-        min={1}
-        max={10}
-      />
+        {HIDE_PRICING_INFO ? null : (
+          <Select
+            label="Panel Type"
+            value={panelType}
+            onChange={(value) => setPanelType(value || 'DMEGC 405w')}
+            data={Object.keys(panelPrices)}
+          />
+        )}
+        <NumberInput
+          label="Number of Strings"
+          value={numberOfStrings}
+          onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
+          min={1}
+          max={10}
+        />
       </Group>
       <Group justify="center" mb="md">
-
-      <div
-        className="grid-container"
-        onMouseLeave={handleMouseUp}
-        onMouseUp={handleMouseUp}
-        role="grid"
-      >
-        {grid.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <div
-              key={`${rowIndex}-${colIndex}`}
-              className={`grid-cell ${cell === 1 ? 'active' : ''}`}
-              onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
-              onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleMouseDown(rowIndex, colIndex);
-                }
-              }}
-            />
-          ))
-        )}
-      </div>
+        <div
+          className="grid-container"
+          onMouseLeave={handleMouseUp}
+          onMouseUp={handleMouseUp}
+          role="grid"
+        >
+          {grid.map((row, rowIndex) =>
+            row.map((cell, colIndex) => (
+              <div
+                key={`${rowIndex}-${colIndex}`}
+                className={`grid-cell ${cell === 1 ? 'active' : ''}`}
+                onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
+                onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleMouseDown(rowIndex, colIndex);
+                  }
+                }}
+              />
+            ))
+          )}
+        </div>
       </Group>
 
       <Group justify="center" mb="md">
@@ -1027,47 +1028,46 @@ function BOMCalculator() {
         </>
       )}
 
-       <BOMTable bom={bom} />
+      <BOMTable bom={bom} />
       <Group justify="center" mb="md">
-      {HIDE_DEBUG_BUTTONS ? null : (
-        <Box>
-          <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
-            Toggle Cell Types Count and Panel Information
-          </Button>
+        {HIDE_DEBUG_BUTTONS ? null : (
+          <Box>
+            <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
+              Toggle Cell Types Count and Panel Information
+            </Button>
 
-          <Collapse in={openedCellTypes}>
-            <Grid>
-              {Object.entries(cellTypesCount).map(([type, count]) => (
-                <Grid.Col key={type} span={6}>
-                  <Text>
-                    {type}: {count}
-                  </Text>
+            <Collapse in={openedCellTypes}>
+              <Grid>
+                {Object.entries(cellTypesCount).map(([type, count]) => (
+                  <Grid.Col key={type} span={6}>
+                    <Text>
+                      {type}: {count}
+                    </Text>
+                  </Grid.Col>
+                ))}
+                <Grid.Col span={12}>
+                  <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
                 </Grid.Col>
-              ))}
-              <Grid.Col span={12}>
-                <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
-              </Grid.Col>
-              <Grid.Col span={12}>
-                <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
-              </Grid.Col>
-            </Grid>
-          </Collapse>
-        </Box>
-      )}
-      {HIDE_DEBUG_BUTTONS ? null : (
-        <Box>
-          <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
-            Toggle BOM Calculation Rules
-          </Button>
+                <Grid.Col span={12}>
+                  <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
+                </Grid.Col>
+              </Grid>
+            </Collapse>
+          </Box>
+        )}
+        {HIDE_DEBUG_BUTTONS ? null : (
+          <Box>
+            <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
+              Toggle BOM Calculation Rules
+            </Button>
 
-          <Collapse in={openedBOMRules}>
-            <BOMRules />
-          </Collapse>
-        </Box>
-      )}
-    </Group>
-
-</Stack>
+            <Collapse in={openedBOMRules}>
+              <BOMRules />
+            </Collapse>
+          </Box>
+        )}
+      </Group>
+    </Stack>
   );
 }
 
