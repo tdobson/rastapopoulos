@@ -512,10 +512,15 @@ export function calculateBattenQuantity(
  * Calculates the number of panels in the top row of the grid.
  *
  * @param cellTypesCount - An object containing counts of different cell types.
+ * @param grid - The grid representing the layout of panels.
  * @returns The number of panels in the top row.
- * @description This function counts all panels located in the top row of the grid, including TopSinglePanel, TopMidPanel, and TopEndPanel.
+ * @description This function counts all panels located in the top row of the grid. If there's only one row, it returns the total panel count for that row.
  */
-export function getTopRowPanelCount(cellTypesCount: CellTypesCount): number {
+export function getTopRowPanelCount(cellTypesCount: CellTypesCount, grid: GridType): number {
+  const totalRows = getTotalRows(grid);
+  if (totalRows === 1) {
+    return getTotalPanelCount(grid);
+  }
   return cellTypesCount.TopSinglePanel + cellTypesCount.TopMidPanel + cellTypesCount.TopEndPanel;
 }
 
@@ -540,7 +545,7 @@ export function calculateBOM(
   const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
   const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid);
-  const topRowPanelCount = getTopRowPanelCount(cellTypesCount);
+  const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid);
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
 
   const leadQuantities = calculateLeadQuantity(bottomRowPanelCount, nonBottomRowPanelCount);
