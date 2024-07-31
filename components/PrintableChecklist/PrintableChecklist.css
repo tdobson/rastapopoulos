@@ -18,6 +18,11 @@
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  background-color: #f9f9f9;
+}
+
+.printable-checklist tr:nth-child(even) td {
+  background-color: #f2f2f2;
 }
 
 .printable-checklist th {
@@ -44,8 +49,8 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   z-index: 1000;
 }
 

@@ -29,7 +29,7 @@ function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
           {Object.entries(bom).map(([component, item]) => (
             <tr key={component}>
               <td>{component}</td>
-              <td>{item.quantity} {item.quantity > 1 ? 'pcs' : 'pc'}</td>
+              <td style={{ fontSize: '1.2em' }}>{item.quantity}</td>
               <td className="check-column">&#x2610;</td>
             </tr>
           ))}
