@@ -4,6 +4,7 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { createPortal } from 'react-dom';
 import {
   Grid,
   Select,
@@ -25,6 +26,7 @@ import {
 } from '../../types/bomCalculator';
 import './BOMCalculator.css';
 import BOMTable from '../BOMTable/BOMTable';
+import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
 import PrintableChecklist from '../PrintableChecklist/PrintableChecklist';
 import BOMRules from '../BOMRules/BOMRules';
 
