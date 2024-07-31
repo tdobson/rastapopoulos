@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { BOM } from '../../types/bomCalculator';
 import './PrintableChecklist.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fontawesome/react-fontawesome';
+import { faTimes } from '@fontawesome/free-solid-svg-icons';
 
 interface PrintableChecklistProps {
   bom: BOM;
