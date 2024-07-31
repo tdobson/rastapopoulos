@@ -108,12 +108,12 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Tile Kicker Bars:</strong> 1 per top row panel
+            <strong>Tile Kicker Bars:</strong> 1 per non-top row panel
           </Text>
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Kicker Bar Hooks:</strong> 2 per top row panel
+            <strong>Kicker Bar Hooks:</strong> 2 per non-top row panel
           </Text>
         </List.Item>
         <List.Item>

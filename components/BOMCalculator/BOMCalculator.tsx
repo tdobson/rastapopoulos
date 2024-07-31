@@ -630,13 +630,13 @@ export function calculateBOM(
       quantity: nonTopRowPanelCount,
       price: componentPrices['Tile Kicker Bars'],
       total: 0,
-      explanation: `${nonTopRowPanelCount} non-top row panels`,
+      explanation: `1 per non-top row panel, totaling ${nonTopRowPanelCount}`,
     },
     'Kicker Bar Hooks': {
       quantity: nonTopRowPanelCount * 2,
       price: componentPrices['Kicker Bar Hooks'],
       total: 0,
-      explanation: `${nonTopRowPanelCount} non-top row panels * 2`,
+      explanation: `2 per non-top row panel, totaling ${nonTopRowPanelCount * 2}`,
     },
     'Flexalu Top Flashing': {
       quantity: Math.ceil(topRowPanelCount / 4),
