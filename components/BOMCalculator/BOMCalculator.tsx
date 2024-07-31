@@ -5,6 +5,7 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 
 const HIDE_PRICING_INFO = true;
+const HIDE_DEBUG_BUTTONS = true;
 import { createPortal } from 'react-dom';
 import {
   Grid,
@@ -933,39 +934,42 @@ function BOMCalculator() {
 
       {HIDE_PRICING_INFO ? null : <BOMTable bom={bom} />}
       <Group justify="center" mb="md">
-      <Box>
+      {HIDE_DEBUG_BUTTONS ? null : (
+        <Box>
           <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
             Toggle Cell Types Count and Panel Information
           </Button>
 
-        <Collapse in={openedCellTypes}>
-          <Grid>
-            {Object.entries(cellTypesCount).map(([type, count]) => (
+          <Collapse in={openedCellTypes}>
+            <Grid>
+              {Object.entries(cellTypesCount).map(([type, count]) => (
                 <Grid.Col key={type} span={6}>
                   <Text>
                     {type}: {count}
                   </Text>
                 </Grid.Col>
-            ))}
-            <Grid.Col span={12}>
-              <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
-            </Grid.Col>
-            <Grid.Col span={12}>
-              <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
-            </Grid.Col>
-          </Grid>
-        </Collapse>
-      </Box>
-      <Box>
-
+              ))}
+              <Grid.Col span={12}>
+                <Text>Bottom Row Panel Count: {getBottomRowPanelCount(grid)}</Text>
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <Text>Non-Bottom Row Panel Count: {getNonBottomRowPanelCount(grid)}</Text>
+              </Grid.Col>
+            </Grid>
+          </Collapse>
+        </Box>
+      )}
+      {HIDE_DEBUG_BUTTONS ? null : (
+        <Box>
           <Button variant="filled" color="gray" onClick={toggleBOMRules} size="md">
             Toggle BOM Calculation Rules
           </Button>
 
-        <Collapse in={openedBOMRules}>
-          <BOMRules />
-        </Collapse>
-    </Box>
+          <Collapse in={openedBOMRules}>
+            <BOMRules />
+          </Collapse>
+        </Box>
+      )}
     </Group>
 
 </Stack>
