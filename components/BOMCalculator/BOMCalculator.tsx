@@ -2,7 +2,9 @@
 
 // components/BOMCalculator/BOMCalculator.tsx
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
+
+const HIDE_PRICING_INFO = true;
 import { createPortal } from 'react-dom';
 import {
   Grid,
@@ -822,7 +824,10 @@ function BOMCalculator() {
     panelType,
     typeof numberOfStrings === 'number' ? numberOfStrings : 1
   );
-  const totalCost = Object.values(bom).reduce((sum, item) => sum + item.total, 0);
+  const totalCost = useMemo(
+    () => (HIDE_PRICING_INFO ? 0 : Object.values(bom).reduce((sum, item) => sum + item.total, 0)),
+    [bom, HIDE_PRICING_INFO]
+  );
 
   const handleCellClick = (row: number, col: number) => {
     const newGrid = [...grid];
@@ -919,10 +924,14 @@ function BOMCalculator() {
         </Button>
       </Group>
       <PrintableChecklist bom={bom} opened={isPrintModalOpen} onClose={handleClosePrintModal} />
-      <Text size="xl">Bill of Materials:</Text>
-      <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
+      {HIDE_PRICING_INFO ? null : (
+        <>
+          <Text size="xl">Bill of Materials:</Text>
+          <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
+        </>
+      )}
 
-      <BOMTable bom={bom} />
+      {HIDE_PRICING_INFO ? null : <BOMTable bom={bom} />}
       <Group justify="center" mb="md">
       <Box>
           <Button variant="filled" color="gray" onClick={toggleCellTypes} size="md">
