@@ -30,7 +30,7 @@ function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
             <tr key={component}>
               <td>{component}</td>
               <td>{item.quantity} {item.quantity > 1 ? 'pcs' : 'pc'}</td>
-              <td className="check-column"></td>
+              <td className="check-column">&#x2610;</td>
             </tr>
           ))}
         </tbody>
