@@ -860,32 +860,15 @@ function BOMCalculator() {
 
   const [opened, { toggle }] = useDisclosure(false);
 
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+
   const handlePrint = useCallback(() => {
-    const printWindow = window.open('', '', 'width=800,height=600');
-    if (printWindow) {
-      printWindow.document.write('<html><head><title>Pallet Checklist</title>');
-      printWindow.document.write('<style>');
-      printWindow.document.write(`
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { text-align: center; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        @media print {
-          body { -webkit-print-color-adjust: exact; }
-        }
-      `);
-      printWindow.document.write('</style></head><body>');
-      createPortal(<PrintableChecklist bom={bom} />, printWindow.document.body);
-      printWindow.document.write('</body></html>');
-      printWindow.document.close();
-      printWindow.focus();
-      setTimeout(() => {
-        printWindow.print();
-        printWindow.close();
-      }, 250);
-    }
-  }, [bom]);
+    setIsPrintModalOpen(true);
+  }, []);
+
+  const handleClosePrintModal = useCallback(() => {
+    setIsPrintModalOpen(false);
+  }, []);
 
   return (
     <Stack gap="md">
@@ -962,7 +945,16 @@ function BOMCalculator() {
       </Box>
       <Text size="xl">Bill of Materials:</Text>
       <BOMTable bom={bom} />
-      <Button onClick={handlePrint}>Print Checklist</Button>
+      <Button onClick={handlePrint}>Open Checklist</Button>
+      {isPrintModalOpen && (
+        <div className="print-modal">
+          <div className="print-modal-content">
+            <PrintableChecklist bom={bom} />
+            <Button onClick={handleClosePrintModal}>Close</Button>
+            <Button onClick={() => window.print()}>Print</Button>
+          </div>
+        </div>
+      )}
     </Stack>
   );
 }
