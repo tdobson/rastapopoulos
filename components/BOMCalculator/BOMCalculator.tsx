@@ -912,11 +912,12 @@ function BOMCalculator() {
         )}
       </div>
       <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
-      <Button onClick={clearGrid} mb="md">
+      <Button variant="filled" color="yellow" onClick={clearGrid} mb="md">
         Reset Grid
       </Button>
+      <Button onClick={handlePrint}>Open Checklist</Button>
       <Box>
-        <Button onClick={toggle} mb="md">
+        <Button variant="filled" color="gray" onClick={toggle} mb="md">
           Toggle Cell Types Count and Panel Information
         </Button>
         <Collapse in={opened}>
@@ -937,9 +938,16 @@ function BOMCalculator() {
           </Grid>
         </Collapse>
       </Box>
+      <Box>
+        <Button variant="filled" color="gray" onClick={toggle} mb="md">
+          Toggle BOM Calculation Rules
+        </Button>
+        <Collapse in={opened}>
+          <BOMRules />
+        </Collapse>
+      </Box>
       <Text size="xl">Bill of Materials:</Text>
       <BOMTable bom={bom} />
-      <Button onClick={handlePrint}>Open Checklist</Button>
       <PrintableChecklist bom={bom} opened={isPrintModalOpen} onClose={handleClosePrintModal} />
     </Stack>
   );
