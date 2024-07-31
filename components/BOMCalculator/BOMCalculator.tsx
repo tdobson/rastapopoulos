@@ -912,14 +912,20 @@ function BOMCalculator() {
         )}
       </div>
       <Text size="xl">Total Cost: £{totalCost.toFixed(2)}</Text>
-      <Button variant="filled" color="yellow" onClick={clearGrid} mb="md">
-        Reset Grid
-      </Button>
-      <Button onClick={handlePrint}>Open Checklist</Button>
-      <Box>
-        <Button variant="filled" color="gray" onClick={toggle} mb="md">
-          Toggle Cell Types Count and Panel Information
+      <Group justify="center" mb="md">
+        <Button variant="filled" color="yellow" onClick={clearGrid} size="md">
+          Reset Grid
         </Button>
+        <Button onClick={handlePrint} size="md">
+          Open Checklist
+        </Button>
+      </Group>
+      <Box>
+        <Group justify="center" mb="md">
+          <Button variant="filled" color="gray" onClick={toggle} size="md">
+            Toggle Cell Types Count and Panel Information
+          </Button>
+        </Group>
         <Collapse in={opened}>
           <Grid>
             {Object.entries(cellTypesCount).map(([type, count]) => (
@@ -939,9 +945,11 @@ function BOMCalculator() {
         </Collapse>
       </Box>
       <Box>
-        <Button variant="filled" color="gray" onClick={toggle} mb="md">
-          Toggle BOM Calculation Rules
-        </Button>
+        <Group justify="center" mb="md">
+          <Button variant="filled" color="gray" onClick={toggle} size="md">
+            Toggle BOM Calculation Rules
+          </Button>
+        </Group>
         <Collapse in={opened}>
           <BOMRules />
         </Collapse>
