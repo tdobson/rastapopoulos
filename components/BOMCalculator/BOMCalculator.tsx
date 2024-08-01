@@ -664,6 +664,7 @@ console.log(bottomRowPanelCount)
           cellTypesCount.BottomSinglePanel * 2 +
           cellTypesCount.CenterSinglePanel * 2 +
           cellTypesCount.BottomEndPanel * 1 +
+          cellTypesCount.MiddleEndPanel * 1 +
           cellTypesCount.TopEndPanel * 1 +
           cellTypesCount.EndPanel
         ) * 2,
@@ -676,12 +677,14 @@ console.log(bottomRowPanelCount)
           cellTypesCount.SinglePanel * 4 +
           cellTypesCount.TopSinglePanel * 4 +
           cellTypesCount.BottomSinglePanel * 4 +
-          cellTypesCount.EndPanel * 2 +
+          cellTypesCount.EndPanel * 3 +
           cellTypesCount.MidPanel * 2 +
           cellTypesCount.MiddleMidPanel * 2 +
+          cellTypesCount.CenterSinglePanel * 4 +
           cellTypesCount.TopMidPanel * 2 +
           cellTypesCount.BottomEndPanel * 3 +
           cellTypesCount.TopEndPanel * 3 +
+          cellTypesCount.MiddleEndPanel * 3 +
           cellTypesCount.BottomMidPanel * 2,
       price: componentPrices['GSE Screws Black'],
       total: 0,
@@ -697,9 +700,11 @@ console.log(bottomRowPanelCount)
       quantity:
         cellTypesCount.SinglePanel * 4 +
         cellTypesCount.TopSinglePanel * 4 +
-        cellTypesCount.BottomSinglePanel * 4 +
+          cellTypesCount.CenterSinglePanel * 4 +
+          cellTypesCount.BottomSinglePanel * 4 +
           cellTypesCount.BottomEndPanel * 2 +
           cellTypesCount.TopEndPanel * 2 +
+          cellTypesCount.MiddleEndPanel * 2 +
         cellTypesCount.EndPanel * 2,
       price: componentPrices['GSE End Clamp'],
       total: 0,
@@ -710,8 +715,9 @@ console.log(bottomRowPanelCount)
         cellTypesCount.MidPanel * 2 +
         cellTypesCount.MiddleMidPanel * 2 +
         cellTypesCount.TopMidPanel * 2 +
-          cellTypesCount.BottomEndPanel * 1 +
-          cellTypesCount.TopEndPanel * 1 +
+        cellTypesCount.BottomEndPanel * 1 +
+        cellTypesCount.TopEndPanel * 1 +
+        cellTypesCount.MiddleEndPanel * 1 +
         cellTypesCount.BottomMidPanel * 2 +
         cellTypesCount.EndPanel ,
       price: componentPrices['GSE Mid Clamp'],
@@ -719,7 +725,7 @@ console.log(bottomRowPanelCount)
       explanation: `(${cellTypesCount.MidPanel} MidPanel + ${cellTypesCount.MiddleMidPanel} MiddleMidPanel + ${cellTypesCount.TopMidPanel} TopMidPanel + ${cellTypesCount.BottomMidPanel} BottomMidPanel) * 2`,
     },
     'Compressed Seal Roll': {
-      quantity: Math.ceil(totalPanelCount / 10),
+      quantity: horizontalRowCount * 1,
       price: componentPrices['Compressed Seal Roll'],
       total: 0,
       explanation: `Ceiling of ${totalPanelCount} total panels / 10`,
@@ -801,7 +807,13 @@ console.log(bottomRowPanelCount)
         cellTypesCount.EndPanel * 2 +
         cellTypesCount.SinglePanel * 4 +
         cellTypesCount.TopSinglePanel * 4 +
-        cellTypesCount.BottomSinglePanel * 4,
+        cellTypesCount.CenterSinglePanel * 4 +
+        cellTypesCount.BottomSinglePanel * 4 +
+        cellTypesCount.TopEndPanel * 2 +
+        cellTypesCount.MiddleEndPanel * 2 +
+        cellTypesCount.BottomEndPanel * 2 +
+          cellTypesCount.BottomMidPanel * 2 +
+          cellTypesCount.TopMidPanel * 2,
       price: componentPrices['Lateral Flashing Hooks'],
       total: 0,
       explanation: `(${cellTypesCount.EndPanel} EndPanel * 2) + (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4`,
@@ -811,7 +823,13 @@ console.log(bottomRowPanelCount)
         cellTypesCount.EndPanel * 2 +
         cellTypesCount.SinglePanel * 4 +
         cellTypesCount.TopSinglePanel * 4 +
-        cellTypesCount.BottomSinglePanel * 4,
+        cellTypesCount.CenterSinglePanel * 4 +
+        cellTypesCount.BottomSinglePanel * 4 +
+        cellTypesCount.TopEndPanel * 2 +
+        cellTypesCount.MiddleEndPanel * 2 +
+        cellTypesCount.BottomEndPanel * 2 +
+        cellTypesCount.BottomMidPanel * 2 +
+        cellTypesCount.TopMidPanel * 2,
       price: componentPrices['Lateral Flashing Nails Galv 20mm'],
       total: 0,
       explanation: `(${cellTypesCount.EndPanel} EndPanel * 2) + (${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel) * 4`,
