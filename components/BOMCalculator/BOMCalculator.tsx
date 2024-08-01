@@ -398,15 +398,29 @@ function getNonTopRowPanelCount(grid) {
 }
 
 /**
- * Calculates the number of panels in the bottom row of the grid.
+ * Calculates the number of panels in the last row of the grid that contains non-zero values.
  *
  * @param grid - The grid representing the layout of panels.
- * @returns The number of panels in the bottom row.
+ * @returns The count of panels in the last row containing non-zero values.
  */
-export function getBottomRowPanelCount(grid: GridType): number {
-  const totalRows = getTotalRows(grid);
-  return getPanelCountInRow(grid, totalRows - 1);
+function getBottomRowPanelCount(grid) {
+  if (grid.length === 0) return 0; // If the grid is empty, return 0
+
+  // Find the index of the last row that contains at least one panel
+  let bottomRowIndex = -1;
+  for (let row = grid.length - 1; row >= 0; row--) {
+    if (grid[row].some(cell => cell === 1)) {
+      bottomRowIndex = row;
+      break;
+    }
+  }
+
+  if (bottomRowIndex === -1) return 0; // No panels found in the grid
+
+  // Count the number of panels in the identified bottom row
+  return grid[bottomRowIndex].reduce((count, cell) => count + (cell === 1 ? 1 : 0), 0);
 }
+
 
 /**
  * Calculates the number of panels that are not on the bottom row and do not have a panel directly below them.
@@ -447,17 +461,11 @@ export function getTotalPanelCount(grid: GridType): number {
   return grid.flat().filter((cell) => cell === 1).length;
 }
 
-/**
- * Determines the dimensions (rows and columns) of the grid based on the presence of panels.
- *
- * @param grid - The grid representing the layout of panels.
- * @returns An object containing the number of rows and columns with panels.
- */
 
 /**
  * Determines the actual dimensions of the panel layout for batten calculation.
  *
- * @param grid - The grid representing the layout of panels.
+ * @param {number[][]} grid - The 2D array representing the solar panel layout.
  * @returns An object containing the number of rows with panels and the maximum number of columns with panels.
  */
 export function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
@@ -481,26 +489,21 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
 }
 
 /**
- * Calculates the number of horizontal rows of panels in the grid.
+ * Calculates the number of distinct horizontal rows of panels in the grid.
  *
- * @param {GridType} grid - The 2D array representing the solar panel layout.
+ * @param {number[][]} grid - The 2D array representing the solar panel layout.
  * @returns {number} The count of horizontal rows containing panels.
  *
  * @description
  * This function counts the number of distinct horizontal rows of panels in the grid.
- * A horizontal row is counted when it contains at least one panel and is preceded
- * by a row without panels or is the first row with panels.aaaaaaaaa
+ * A horizontal row is counted when it contains at least one panel.
  *
  * The algorithm works as follows:
- * 1. Initialize a counter for horizontal rows and a flag for the previous row's state.
+ * 1. Initialize a counter for horizontal rows.
  * 2. Iterate through each row of the grid.
  * 3. For each row, check if it contains any panels.
- * 4. If the current row has panels and the previous row did not, increment the counter.
- * 5. Update the previous row state for the next iteration.
- * 6. After checking all rows, return the total count of horizontal rows.
- *
- * This count is used for determining the number of panel wedges required in the BOM,
- * as one wedge is needed per horizontal row of panels.
+ * 4. If the current row has panels, increment the counter.
+ * 5. After checking all rows, return the total count of horizontal rows.
  *
  * @example
  * const grid = [
@@ -513,20 +516,18 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
  * ];
  * const horizontalRowCount = getHorizontalRowCount(grid);  // Returns 3
  */
-export function getHorizontalRowCount(grid: GridType): number {
+function getHorizontalRowCount(grid) {
   let horizontalRows = 0;
-  let previousRowHadPanel = false;
 
   for (let row = 0; row < grid.length; row++) {
-    const hasPanel = grid[row].some(cell => cell === 1);
-    if (hasPanel && !previousRowHadPanel) {
+    if (grid[row].some(cell => cell === 1)) {
       horizontalRows++;
     }
-    previousRowHadPanel = hasPanel;
   }
 
   return horizontalRows;
 }
+
 
 /**
  * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
@@ -607,7 +608,7 @@ export function calculateBattenQuantity(
  * Calculates the number of panels in the top row of the grid.
  *
  * @param cellTypesCount - An object containing counts of different cell types.
- * @param grid - The grid representing the layout of panels.
+ * @param {number[][]} grid - The 2D array representing the solar panel layout.
  * @returns The number of panels in the top row.
  * @description This function counts all panels located in the top row of the grid. If there's only one row, it returns the total panel count for that row.
  */
@@ -635,17 +636,18 @@ export function calculateBOM(
   panelType: string,
   numberOfStrings: number
 ): BOM {
+  console.log(grid)
   const { rows, columns } = getBattenDimensions(grid);
-  const totalPanelCount = getTotalPanelCount(grid);
+  const totalPanelCount = getTotalPanelCount(grid); //tested
   const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
-  const bottomRowPanelCount = getBottomRowPanelCount(grid);
+  const bottomRowPanelCount = getBottomRowPanelCount(grid); //improved
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid); //unsafe
-  const totalTopRowPanelCount = getTopRowPanelCountWithNothingAbove(grid)
+  const totalTopRowPanelCount = getTopRowPanelCountWithNothingAbove(grid) //improved
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
-  const horizontalRowCount = getHorizontalRowCount(grid);
-
+  const horizontalRowCount = getHorizontalRowCount(grid); //improved
+console.log(bottomRowPanelCount)
   const leadQuantity = calculateLeadQuantity(bottomRowPanelCount);
-
+ console.log(leadQuantity + " - " + bottomRowPanelCount)
  // console.log("topRowPanelCount: " + topRowPanelCount + " - totalTopRowPanelCount: " + totalTopRowPanelCount)
 
   const bom: BOM = {
