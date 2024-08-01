@@ -446,7 +446,7 @@ export function getBattenDimensions(grid: GridType): { rows: number; columns: nu
  * @description
  * This function counts the number of distinct horizontal rows of panels in the grid.
  * A horizontal row is counted when it contains at least one panel and is preceded
- * by a row without panels or is the first row with panels.
+ * by a row without panels or is the first row with panels.aaaaaaaaa
  *
  * The algorithm works as follows:
  * 1. Initialize a counter for horizontal rows and a flag for the previous row's state.
@@ -614,11 +614,10 @@ export function calculateBOM(
         (cellTypesCount.SinglePanel * 2 +
           cellTypesCount.TopSinglePanel * 2 +
           cellTypesCount.BottomSinglePanel * 2 +
-          cellTypesCount.BottomEndPanel * 2 +
-          cellTypesCount.TopEndPanel * 2 +
+          cellTypesCount.BottomEndPanel * 1 +
+          cellTypesCount.TopEndPanel * 1 +
           cellTypesCount.EndPanel
-        ) *
-        2,
+        ) * 2,
       price: componentPrices['Lateral Flashing'],
       total: 0,
       explanation: `(${cellTypesCount.SinglePanel} SinglePanel + ${cellTypesCount.TopSinglePanel} TopSinglePanel + ${cellTypesCount.BottomSinglePanel} BottomSinglePanel + ${cellTypesCount.EndPanel} EndPanel) * 2 * 2`,
