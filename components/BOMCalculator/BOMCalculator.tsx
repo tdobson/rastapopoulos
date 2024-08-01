@@ -326,25 +326,68 @@ export function getPanelCountInRow(grid: GridType, row: number): number {
 }
 
 /**
+ * Calculates the number of panels that are not in the top row and do not have a panel directly above them,
+ * including the top row panels.
+ *
+ * @param grid - The grid representing the layout of panels.
+ * @returns The count of panels that meet the specified criteria.
+ */
+function getTopRowPanelCountWithNothingAbove(grid) {
+  // Find the index of the first row that contains at least one panel
+  let topRowIndex = -1;
+  for (let row = 0; row < grid.length; row++) {
+    if (grid[row].some(cell => cell === 1)) {
+      topRowIndex = row;
+      break;
+    }
+  }
+
+  if (topRowIndex === -1) return 0; // No panels found in the grid
+
+  let count = 0;
+
+  // Count panels in the top row
+  for (let col = 0; col < grid[topRowIndex].length; col++) {
+    if (grid[topRowIndex][col] === 1) {
+      count++;
+    }
+  }
+
+  // Count panels in non-top rows without a panel directly above
+  for (let row = topRowIndex + 1; row < grid.length; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
+      if (grid[row][col] === 1 && grid[row - 1][col] === 0) {
+        count++;
+      }
+    }
+  }
+
+  return count;
+}
+
+
+/**
  * Calculates the number of panels that are not in the top row and do not have a panel directly above them.
  *
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
-export function getNonTopRowPanelCount(grid: GridType): number {
-  const totalRows = getTotalRows(grid);
-  const topRowIndex = 0;
+function getNonTopRowPanelCount(grid) {
+  // Find the index of the first row that contains at least one panel
+  let topRowIndex = -1;
+  for (let row = 0; row < grid.length; row++) {
+    if (grid[row].some(cell => cell === 1)) {
+      topRowIndex = row;
+      break;
+    }
+  }
 
-  // If there's only one row or less, return 0 as there are no non-top rows
-  if (totalRows <= 1) return 0;
+  if (topRowIndex === -1) return 0; // No panels found in the grid
 
   let count = 0;
 
-  // Iterate through each row except the top row
-  for (let row = 1; row < totalRows; row++) {
-    // Iterate through each column in the current row
+  for (let row = topRowIndex + 1; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
-      // Check if the current cell contains a panel and if there's no panel directly above it
       if (grid[row][col] === 1 && grid[row - 1][col] === 0) {
         count++;
       }
@@ -596,12 +639,14 @@ export function calculateBOM(
   const totalPanelCount = getTotalPanelCount(grid);
   const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid);
-  const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid);
+  const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid); //unsafe
+  const totalTopRowPanelCount = getTopRowPanelCountWithNothingAbove(grid)
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
   const horizontalRowCount = getHorizontalRowCount(grid);
 
-
   const leadQuantity = calculateLeadQuantity(bottomRowPanelCount);
+
+ // console.log("topRowPanelCount: " + topRowPanelCount + " - totalTopRowPanelCount: " + totalTopRowPanelCount)
 
   const bom: BOM = {
     'GSE Half Portrait Frames': {
@@ -615,6 +660,7 @@ export function calculateBOM(
         (cellTypesCount.SinglePanel * 2 +
           cellTypesCount.TopSinglePanel * 2 +
           cellTypesCount.BottomSinglePanel * 2 +
+          cellTypesCount.CenterSinglePanel * 2 +
           cellTypesCount.BottomEndPanel * 1 +
           cellTypesCount.TopEndPanel * 1 +
           cellTypesCount.EndPanel
@@ -632,8 +678,8 @@ export function calculateBOM(
           cellTypesCount.MidPanel * 2 +
           cellTypesCount.MiddleMidPanel * 2 +
           cellTypesCount.TopMidPanel * 2 +
-          cellTypesCount.BottomEndPanel * 1 +
-          cellTypesCount.TopEndPanel * 1 +
+          cellTypesCount.BottomEndPanel * 3 +
+          cellTypesCount.TopEndPanel * 3 +
           cellTypesCount.BottomMidPanel * 2,
       price: componentPrices['GSE Screws Black'],
       total: 0,
@@ -713,22 +759,22 @@ export function calculateBOM(
       explanation: `Lead for ${bottomRowPanelCount} bottom row panels`,
     },
     'Tile Kicker Bars': {
-      quantity: nonTopRowPanelCount,
+      quantity: totalTopRowPanelCount,
       price: componentPrices['Tile Kicker Bars'],
       total: 0,
-      explanation: `1 per non-top row panel, totaling ${nonTopRowPanelCount}`,
+      explanation: `1 per non-top row panel, totaling ${totalTopRowPanelCount}`,
     },
     'Kicker Bar Hooks': {
-      quantity: nonTopRowPanelCount * 2,
+      quantity: totalTopRowPanelCount * 2,
       price: componentPrices['Kicker Bar Hooks'],
       total: 0,
-      explanation: `2 per non-top row panel, totaling ${nonTopRowPanelCount * 2}`,
+      explanation: `2 per non-top row panel, totaling ${totalTopRowPanelCount * 2}`,
     },
     'Flexalu Top Flashing': {
-      quantity: Math.ceil(topRowPanelCount / 4),
+      quantity: Math.ceil(totalTopRowPanelCount / 4),
       price: componentPrices['Flexalu Top Flashing'],
       total: 0,
-      explanation: `Ceiling of ${topRowPanelCount} top row panels / 4`,
+      explanation: `Ceiling of ${totalTopRowPanelCount} top row panels / 4`,
     },
     'Arc Box': {
       quantity: 2 * numberOfStrings,
