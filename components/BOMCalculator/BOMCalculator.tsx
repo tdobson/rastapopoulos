@@ -534,6 +534,7 @@ export function calculateBattenQuantity(
 
   // If the grid size is within our lookup table, return the value directly
   if (safeColumns <= 20 && safeRows <= 4) {
+    console.log(`Debug: safeColumns = ${safeColumns}, safeRows = ${safeRows}`);
     // This line might cause undefined if battenTable[safeRows] is undefined
     // or if battenTable[safeRows][safeColumns] is undefined
     return battenTable[safeRows][safeColumns] || 0; // Add fallback to 0
