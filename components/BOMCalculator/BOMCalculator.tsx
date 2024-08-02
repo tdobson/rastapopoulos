@@ -791,6 +791,12 @@ export function calculateBOM(
       total: 0,
       explanation: `Lead for ${bottomRowPanelCount} bottom row panels`,
     },
+    'Lead 600mm': {
+      quantity: nonTopRowPanelCount,
+      price: componentPrices['Lead 600mm'],
+      total: 0,
+      explanation: `1 x 600m Lead for ${nonTopRowPanelCount}  non top row panels`,
+    },
     'Tile Kicker Bars': {
       quantity: totalTopRowPanelCount,
       price: componentPrices['Tile Kicker Bars'],
