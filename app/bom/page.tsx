@@ -11,7 +11,7 @@ export default function BOMPage() {
   return (
     <div>
       <Container>
-        <Title order={1}>Tim's Magic BOM Calculatrix</Title>
+        <Title order={1}>Tim's Magic BOM Calculator</Title>
         <BOMCalculator />
       </Container>
     </div>

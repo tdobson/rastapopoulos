@@ -14,6 +14,6 @@ export const navigationItems = [
   { link: '', label: 'Plots', icon: IconFingerprint },
   { link: '', label: 'Plots missing data', icon: IconKey },
   { link: '', label: 'Project in Permitting', icon: IconDatabaseImport },
-  { link: '/bom', label: 'BOM Calculatrix', icon: Icon2fa },
+  { link: '/bom', label: 'BOM Calculator', icon: Icon2fa },
   { link: '', label: 'People', icon: IconSettings },
 ];
