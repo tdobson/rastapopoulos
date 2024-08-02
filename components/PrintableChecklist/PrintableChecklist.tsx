@@ -17,8 +17,40 @@ interface PrintableChecklistProps {
 function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
-    // Filter BOM entries to include only those with a quantity greater than zero
-    const filteredBom = Object.entries(bom).filter(([component, item]) => item.quantity > 0 && shouldIncludeInChecklist(component));
+    // Define the order of components
+    const componentOrder = [
+        'Solar Panels',
+        'GSE Half Portrait Frames',
+        'GSE End Clamp',
+        'GSE Mid Clamp',
+        'GSE Screws Black',
+        'GSE Screws Silver',
+        'Lateral Flashing',
+        'Lateral Flashing Hooks',
+        'Lateral Flashing Nails Galv 20mm',
+        'Flexalu Top Flashing',
+        'Uberflex Carpet Flashing',
+        'Tile Kicker Bars',
+        'Kicker Bar Hooks',
+        'Compressed Seal Roll',
+        'Panel Wedge',
+        'Battens',
+        'Wire Clout Nails 65mm',
+        'Lead',
+        'Lead 600mm',
+        'Copper Nails',
+        'Pre Assembled DC Lead',
+        'DC Live Sticker',
+        'Arc Box',
+        'Arc Box Bracket',
+        'Cable Ties',
+        'Roofer Guide Sheet'
+    ];
+
+    // Filter and sort BOM entries
+    const filteredBom = componentOrder
+        .filter(component => bom[component] && bom[component].quantity > 0 && shouldIncludeInChecklist(component))
+        .map(component => [component, bom[component]]);
 
     const rows = filteredBom.map(([component, item]) => (
         <Table.Tr key={component}>
