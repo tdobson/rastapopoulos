@@ -71,37 +71,38 @@ const componentPrices: ComponentPrices = {
 };
 
 /**
- * Batten table for determining the number of battens required based on the number of columns and rows in the solar panel grid.
+ * Pivoted batten table for determining the number of battens required based on the number of rows and columns in the solar panel grid.
  *
  * The structure is as follows:
- * - The outer key represents the number of columns (up to 20 columns).
- * - The inner key represents the number of rows (up to 4 rows).
+ * - The outer key represents the number of rows (up to 20 rows).
+ * - The inner key represents the number of columns (up to 16 columns).
  * - The value is the number of battens required for that specific grid configuration.
  *
- * For example, battenTable[3][2] represents the number of battens needed for a grid with 3 columns and 2 rows.
+ * For example, pivotedBattenTable[2][3] represents the number of battens needed for a grid with 2 rows and 3 columns.
  */
-const battenTable: { [columns: number]: { [rows: number]: number } } = {
-  1: { 1: 9, 2: 18, 3: 18, 4: 27 },
-  2: { 1: 15, 2: 30, 3: 30, 4: 45 },
-  3: { 1: 21, 2: 42, 3: 42, 4: 63 },
-  4: { 1: 27, 2: 54, 3: 54, 4: 81 },
-  5: { 1: 27, 2: 54, 3: 54, 4: 81 },
-  6: { 1: 36, 2: 72, 3: 72, 4: 108 },
-  7: { 1: 36, 2: 72, 3: 72, 4: 108 },
-  8: { 1: 45, 2: 90, 3: 90, 4: 135 },
-  9: { 1: 54, 2: 108, 3: 108, 4: 162 },
-  10: { 1: 54, 2: 108, 3: 108, 4: 162 },
-  11: { 1: 63, 2: 126, 3: 126, 4: 189 },
-  12: { 1: 63, 2: 126, 3: 126, 4: 189 },
-  13: { 1: 72, 2: 144, 3: 144, 4: 216 },
-  14: { 1: 72, 2: 144, 3: 144, 4: 216 },
-  15: { 1: 72, 2: 144, 3: 144, 4: 216 },
-  16: { 1: 81, 2: 162, 3: 162, 4: 243 },
-  17: { 1: 90, 2: 180, 3: 180, 4: 270 },
-  18: { 1: 90, 2: 180, 3: 180, 4: 270 },
-  19: { 1: 99, 2: 198, 3: 198, 4: 297 },
-  20: { 1: 99, 2: 198, 3: 198, 4: 297 },
+const pivotedBattenTable = {
+  1: { 1: 9, 2: 15, 3: 21, 4: 27, 5: 33, 6: 39, 7: 45, 8: 51, 9: 57, 10: 63, 11: 69, 12: 75, 13: 81, 14: 87, 15: 93, 16: 99 },
+  2: { 1: 18, 2: 30, 3: 42, 4: 54, 5: 66, 6: 78, 7: 90, 8: 102, 9: 114, 10: 126, 11: 138, 12: 150, 13: 162, 14: 174, 15: 186, 16: 198 },
+  3: { 1: 18, 2: 30, 3: 42, 4: 54, 5: 66, 6: 78, 7: 90, 8: 102, 9: 114, 10: 126, 11: 138, 12: 150, 13: 162, 14: 174, 15: 186, 16: 198 },
+  4: { 1: 27, 2: 45, 3: 63, 4: 81, 5: 99, 6: 117, 7: 135, 8: 153, 9: 171, 10: 189, 11: 207, 12: 225, 13: 243, 14: 261, 15: 279, 16: 297 },
+  5: { 1: 27, 2: 45, 3: 63, 4: 81, 5: 99, 6: 117, 7: 135, 8: 153, 9: 171, 10: 189, 11: 207, 12: 225, 13: 243, 14: 261, 15: 279, 16: 297 },
+  6: { 1: 36, 2: 60, 3: 84, 4: 108, 5: 132, 6: 156, 7: 180, 8: 204, 9: 228, 10: 252, 11: 276, 12: 300, 13: 324, 14: 348, 15: 372, 16: 396 },
+  7: { 1: 36, 2: 60, 3: 84, 4: 108, 5: 132, 6: 156, 7: 180, 8: 204, 9: 228, 10: 252, 11: 276, 12: 300, 13: 324, 14: 348, 15: 372, 16: 396 },
+  8: { 1: 45, 2: 75, 3: 105, 4: 135, 5: 165, 6: 195, 7: 225, 8: 255, 9: 285, 10: 315, 11: 345, 12: 375, 13: 405, 14: 435, 15: 465, 16: 495 },
+  9: { 1: 54, 2: 90, 3: 126, 4: 162, 5: 198, 6: 234, 7: 270, 8: 306, 9: 342, 10: 378, 11: 414, 12: 450, 13: 486, 14: 522, 15: 558, 16: 594 },
+  10: { 1: 54, 2: 90, 3: 126, 4: 162, 5: 198, 6: 234, 7: 270, 8: 306, 9: 342, 10: 378, 11: 414, 12: 450, 13: 486, 14: 522, 15: 558, 16: 594 },
+  11: { 1: 63, 2: 105, 3: 147, 4: 189, 5: 231, 6: 273, 7: 315, 8: 357, 9: 399, 10: 441, 11: 483, 12: 525, 13: 567, 14: 609, 15: 651, 16: 693 },
+  12: { 1: 63, 2: 105, 3: 147, 4: 189, 5: 231, 6: 273, 7: 315, 8: 357, 9: 399, 10: 441, 11: 483, 12: 525, 13: 567, 14: 609, 15: 651, 16: 693 },
+  13: { 1: 72, 2: 120, 3: 168, 4: 216, 5: 264, 6: 312, 7: 360, 8: 408, 9: 456, 10: 504, 11: 552, 12: 600, 13: 648, 14: 696, 15: 744, 16: 792 },
+  14: { 1: 72, 2: 120, 3: 168, 4: 216, 5: 264, 6: 312, 7: 360, 8: 408, 9: 456, 10: 504, 11: 552, 12: 600, 13: 648, 14: 696, 15: 744, 16: 792 },
+  15: { 1: 72, 2: 120, 3: 168, 4: 216, 5: 264, 6: 312, 7: 360, 8: 408, 9: 456, 10: 504, 11: 552, 12: 600, 13: 648, 14: 696, 15: 744, 16: 792 },
+  16: { 1: 81, 2: 135, 3: 189, 4: 243, 5: 297, 6: 351, 7: 405, 8: 459, 9: 513, 10: 567, 11: 621, 12: 675, 13: 729, 14: 783, 15: 837, 16: 891 },
+  17: { 1: 90, 2: 150, 3: 210, 4: 270, 5: 330, 6: 390, 7: 450, 8: 510, 9: 570, 10: 630, 11: 690, 12: 750, 13: 810, 14: 870, 15: 930, 16: 990 },
+  18: { 1: 90, 2: 150, 3: 210, 4: 270, 5: 330, 6: 390, 7: 450, 8: 510, 9: 570, 10: 630, 11: 690, 12: 750, 13: 810, 14: 870, 15: 930, 16: 990 },
+  19: { 1: 99, 2: 165, 3: 231, 4: 297, 5: 363, 6: 429, 7: 495, 8: 561, 9: 627, 10: 693, 11: 759, 12: 825, 13: 891, 14: 957, 15: 1023, 16: 1089 },
+  20: { 1: 99, 2: 165, 3: 231, 4: 297, 5: 363, 6: 429, 7: 495, 8: 561, 9: 627, 10: 693, 11: 759, 12: 825, 13: 891, 14: 957, 15: 1023, 16: 1089 }
 };
+
 
 //number of panels vs millimetereage of lead required. eg 1 panel requires 2100mm of lead, 6 panels require 8900mm of lead, 7 panels require 8900+1375mm of lead etc
 const leadMeterageTable = {
@@ -462,31 +463,6 @@ export function getTotalPanelCount(grid: GridType): number {
 }
 
 
-/**
- * Determines the actual dimensions of the panel layout for batten calculation.
- *
- * @param {number[][]} grid - The 2D array representing the solar panel layout.
- * @returns An object containing the number of rows with panels and the maximum number of columns with panels.
- */
-export function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
-  let rows = 0;
-  let maxColumns = 0;
-
-  for (let row = 0; row < grid.length; row++) {
-    let columnsInRow = 0;
-    for (let col = 0; col < grid[row].length; col++) {
-      if (grid[row][col] === 1) {
-        columnsInRow++;
-      }
-    }
-    if (columnsInRow > 0) {
-      rows++;
-      maxColumns = Math.max(maxColumns, columnsInRow);
-    }
-  }
-
-  return { rows, columns: maxColumns };
-}
 
 /**
  * Calculates the number of distinct horizontal rows of panels in the grid.
@@ -528,7 +504,59 @@ function getHorizontalRowCount(grid) {
   return horizontalRows;
 }
 
+/**
+ * Calculates the number of vertical columns with non-zero numbers of panels in the grid.
+ *
+ * @param {number[][]} grid - The 2D array representing the solar panel layout.
+ * @returns {number} The count of vertical columns containing panels.
+ */
+function getVerticalColumnCount(grid) {
+  if (grid.length === 0) return 0; // If the grid is empty, return 0
 
+  const columnCount = grid[0].length;
+  let verticalColumns = 0;
+
+  for (let col = 0; col < columnCount; col++) {
+    let hasPanel = false;
+    for (let row = 0; row < grid.length; row++) {
+      if (grid[row][col] === 1) {
+        hasPanel = true;
+        break;
+      }
+    }
+    if (hasPanel) {
+      verticalColumns++;
+    }
+  }
+
+  return verticalColumns;
+}
+
+/**
+ * Determines the actual dimensions of the panel layout for batten calculation.
+ *
+ * @param {number[][]} grid - The 2D array representing the solar panel layout.
+ * @returns An object containing the number of rows with panels and the maximum number of columns with panels.
+ */
+export function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
+  let rows = 0;
+  let maxColumns = 0;
+
+  for (let row = 0; row < grid.length; row++) {
+    let columnsInRow = 0;
+    for (let col = 0; col < grid[row].length; col++) {
+      if (grid[row][col] === 1) {
+        columnsInRow++;
+      }
+    }
+    if (columnsInRow > 0) {
+      rows++;
+      maxColumns = Math.max(maxColumns, columnsInRow);
+    }
+  }
+
+  return { rows, columns: maxColumns };
+}
 /**
  * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
  *
@@ -543,11 +571,11 @@ function getHorizontalRowCount(grid) {
  *
  * The calculation is based on the following business logic:
  * 1. If no solar panels are specified (totalPanelCount is 0), no battens are needed.
- * 2. For grids up to 20 columns and 4 rows, a predefined lookup table (battenTable) is used.
+ * 2. For grids up to 16 columns and 20 rows, a predefined lookup table (pivotedBattenTable) is used.
  * 3. For larger grids, a base quantity is calculated and then adjusted:
- *    - The base quantity is the value for a 20x4 grid from the lookup table.
- *    - For each column beyond 20, 9 additional battens are added.
- *    - For each row beyond 4, the number of battens for the current column count is added.
+ *    - The base quantity is the value for a 16x20 grid from the lookup table.
+ *    - For each column beyond 16, 9 additional battens are added.
+ *    - For each row beyond 20, the batten count for the maximum column count (16) is added.
  *
  * This approach ensures accurate batten quantities for standard installations
  * while providing a reasonable estimate for larger, non-standard installations.
@@ -558,14 +586,14 @@ function getHorizontalRowCount(grid) {
  * console.log(battenCount); // Output: 42
  *
  * @example
- * // For a 5x25 grid with 125 panels
- * const largeBattenCount = calculateBattenQuantity(5, 25, 125);
- * console.log(largeBattenCount); // Output: 495
+ * // For a 25x5 grid with 125 panels
+ * const largeBattenCount = calculateBattenQuantity(25, 5, 125);
+ * console.log(largeBattenCount); // Output: 1125
  */
 export function calculateBattenQuantity(
-  rows: number,
-  columns: number,
-  totalPanelCount: number
+    rows: number,
+    columns: number,
+    totalPanelCount: number
 ): number {
   // Return 0 if no solar panels are specified
   if (totalPanelCount === 0) {
@@ -573,31 +601,27 @@ export function calculateBattenQuantity(
   }
 
   // Limit the columns and rows to the maximum values in our lookup table
-  const safeColumns = Math.min(columns, 20);
-  const safeRows = Math.min(rows, 4);
+  const safeColumns = Math.min(columns, 16);
+  const safeRows = Math.min(rows, 20);
 
   // If the grid size is within our lookup table, return the value directly
-  if (safeColumns <= 20 && safeRows <= 4) {
+  if (safeColumns <= 16 && safeRows <= 20) {
     console.log(`Debug: safeColumns = ${safeColumns}, safeRows = ${safeRows}`);
-    // This line might cause undefined if battenTable[safeRows] is undefined
-    // or if battenTable[safeRows][safeColumns] is undefined
-    return battenTable[safeRows][safeColumns] || 0; // Add fallback to 0
+    return pivotedBattenTable[safeColumns][safeRows] || 0;
   }
 
   // For larger grids, start with the maximum value in our lookup table
-  let baseQuantity = battenTable[4][20] || 0; // Add fallback to 0
+  let baseQuantity = pivotedBattenTable[16][20] || 0;
 
-  // Add 9 battens for each column beyond 20
-  if (columns > 20) {
-    baseQuantity += (columns - 20) * 9;
+  // Add 9 battens for each column beyond 16
+  if (columns > 16) {
+    baseQuantity += (columns - 16) * 9;
   }
 
-  // For each row beyond 4, add the batten count for the current column count (up to 20)
-  if (rows > 4) {
-    for (let i = 5; i <= rows; i++) {
-      // This line might cause undefined if battenTable[Math.min(columns, 20)] is undefined
-      // or if battenTable[Math.min(columns, 20)][4] is undefined
-      baseQuantity += battenTable[Math.min(columns, 20)][4] || 0; // Add fallback to 0
+  // For each row beyond 20, add the batten count for the maximum column count (16)
+  if (rows > 20) {
+    for (let i = 21; i <= rows; i++) {
+      baseQuantity += pivotedBattenTable[16][20] || 0;
     }
   }
 
@@ -637,17 +661,18 @@ export function calculateBOM(
   numberOfStrings: number
 ): BOM {
   console.log(grid)
-  const { rows, columns } = getBattenDimensions(grid);
+  const { rows, columns } = getBattenDimensions(grid); //questionable
   const totalPanelCount = getTotalPanelCount(grid); //tested
-  const battenQuantity = calculateBattenQuantity(rows, columns, totalPanelCount);
+  const horizontalRowCount = getHorizontalRowCount(grid); //improved
+  const verticalRowCount = getVerticalColumnCount(grid)
+  const battenQuantity = calculateBattenQuantity(horizontalRowCount, verticalRowCount, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid); //improved
   const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid); //unsafe
   const totalTopRowPanelCount = getTopRowPanelCountWithNothingAbove(grid) //improved
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
-  const horizontalRowCount = getHorizontalRowCount(grid); //improved
-console.log(bottomRowPanelCount)
+//console.log(bottomRowPanelCount)
   const leadQuantity = calculateLeadQuantity(bottomRowPanelCount);
- console.log(leadQuantity + " - " + bottomRowPanelCount)
+ //console.log(leadQuantity + " - " + bottomRowPanelCount)
  // console.log("topRowPanelCount: " + topRowPanelCount + " - totalTopRowPanelCount: " + totalTopRowPanelCount)
 
   const bom: BOM = {
