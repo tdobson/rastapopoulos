@@ -50,9 +50,9 @@ function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
     // Filter and sort BOM entries
     const filteredBom = componentOrder
         .filter(component => bom[component] && bom[component].quantity > 0 && shouldIncludeInChecklist(component))
-        .map(component => [component, bom[component]]);
+        .map(component => ({ component, item: bom[component] }));
 
-    const rows = filteredBom.map(([component, item]) => (
+    const rows = filteredBom.map(({ component, item }) => (
         <Table.Tr key={component}>
             <Table.Td>{component}</Table.Td>
             <Table.Td style={{ fontSize: '1.2em' }}>{item.quantity}</Table.Td>
