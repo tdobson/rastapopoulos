@@ -633,50 +633,17 @@ export function calculateBOM(
 
 
   const bom: BOM = {
+    'Solar Panels': {
+      quantity: totalPanelCount,
+      price: panelPrices[panelType],
+      total: 0,
+      explanation: `1 panel per active cell: ${totalPanelCount} total panels`,
+    },
     'GSE Half Portrait Frames': {
       quantity: totalPanelCount * 2,
       price: componentPrices['GSE Half Portrait Frames'],
       total: 0,
       explanation: `2 frames per panel: ${totalPanelCount} total panels * 2 = ${totalPanelCount * 2}`,
-    },
-    'Lateral Flashing': {
-      quantity:
-        (cellTypesCount.SinglePanel * 2 +
-          cellTypesCount.TopSinglePanel * 2 +
-          cellTypesCount.BottomSinglePanel * 2 +
-          cellTypesCount.CenterSinglePanel * 2 +
-          cellTypesCount.BottomEndPanel * 1 +
-          cellTypesCount.MiddleEndPanel * 1 +
-          cellTypesCount.TopEndPanel * 1 +
-          cellTypesCount.EndPanel
-        ) * 2,
-      price: componentPrices['Lateral Flashing'],
-      total: 0,
-      explanation: `2 flashings for single panels, 1 for end panels, doubled for both sides: ((${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.BottomSinglePanel} + ${cellTypesCount.CenterSinglePanel}) * 2 + (${cellTypesCount.BottomEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.EndPanel})) * 2`,
-    },
-    'GSE Screws Black': {
-      quantity:
-          cellTypesCount.SinglePanel * 4 +
-          cellTypesCount.TopSinglePanel * 4 +
-          cellTypesCount.BottomSinglePanel * 4 +
-          cellTypesCount.EndPanel * 3 +
-          cellTypesCount.MidPanel * 2 +
-          cellTypesCount.MiddleMidPanel * 2 +
-          cellTypesCount.CenterSinglePanel * 4 +
-          cellTypesCount.TopMidPanel * 2 +
-          cellTypesCount.BottomEndPanel * 3 +
-          cellTypesCount.TopEndPanel * 3 +
-          cellTypesCount.MiddleEndPanel * 3 +
-          cellTypesCount.BottomMidPanel * 2,
-      price: componentPrices['GSE Screws Black'],
-      total: 0,
-      explanation: `4 screws for single panels, 3 for end panels, 2 for mid panels: (${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.BottomSinglePanel} + ${cellTypesCount.CenterSinglePanel}) * 4 + (${cellTypesCount.EndPanel} + ${cellTypesCount.BottomEndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel}) * 3 + (${cellTypesCount.MidPanel} + ${cellTypesCount.MiddleMidPanel} + ${cellTypesCount.TopMidPanel} + ${cellTypesCount.BottomMidPanel}) * 2`,
-    },
-    'GSE Screws Silver': {
-      quantity: totalPanelCount * 6,
-      price: componentPrices['GSE Screws Silver'],
-      total: 0,
-      explanation: `6 silver screws per panel: ${totalPanelCount} total panels * 6 = ${totalPanelCount * 6}`,
     },
     'GSE End Clamp': {
       quantity:
@@ -706,89 +673,44 @@ export function calculateBOM(
       total: 0,
       explanation: `2 mid clamps for mid panels, 1 for end panels: (${cellTypesCount.MidPanel} + ${cellTypesCount.MiddleMidPanel} + ${cellTypesCount.TopMidPanel} + ${cellTypesCount.BottomMidPanel}) * 2 + (${cellTypesCount.BottomEndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.EndPanel}) * 1`,
     },
-    'Compressed Seal Roll': {
-      quantity: horizontalRowCount * 1,
-      price: componentPrices['Compressed Seal Roll'],
+    'GSE Screws Black': {
+      quantity:
+          cellTypesCount.SinglePanel * 4 +
+          cellTypesCount.TopSinglePanel * 4 +
+          cellTypesCount.BottomSinglePanel * 4 +
+          cellTypesCount.EndPanel * 3 +
+          cellTypesCount.MidPanel * 2 +
+          cellTypesCount.MiddleMidPanel * 2 +
+          cellTypesCount.CenterSinglePanel * 4 +
+          cellTypesCount.TopMidPanel * 2 +
+          cellTypesCount.BottomEndPanel * 3 +
+          cellTypesCount.TopEndPanel * 3 +
+          cellTypesCount.MiddleEndPanel * 3 +
+          cellTypesCount.BottomMidPanel * 2,
+      price: componentPrices['GSE Screws Black'],
       total: 0,
-      explanation: `1 roll per horizontal row: ${horizontalRowCount} horizontal rows * 1 = ${horizontalRowCount}`,
+      explanation: `4 screws for single panels, 3 for end panels, 2 for mid panels: (${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.BottomSinglePanel} + ${cellTypesCount.CenterSinglePanel}) * 4 + (${cellTypesCount.EndPanel} + ${cellTypesCount.BottomEndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel}) * 3 + (${cellTypesCount.MidPanel} + ${cellTypesCount.MiddleMidPanel} + ${cellTypesCount.TopMidPanel} + ${cellTypesCount.BottomMidPanel}) * 2`,
     },
-    'Pre Assembled DC Lead': {
-      quantity: numberOfStrings * 2,
-      price: componentPrices['Pre Assembled DC Lead'],
+    'GSE Screws Silver': {
+      quantity: totalPanelCount * 6,
+      price: componentPrices['GSE Screws Silver'],
       total: 0,
-      explanation: `2 leads per string: ${numberOfStrings} strings * 2 = ${numberOfStrings * 2}`,
+      explanation: `6 silver screws per panel: ${totalPanelCount} total panels * 6 = ${totalPanelCount * 6}`,
     },
-    'DC Live Sticker': {
-      quantity: numberOfStrings,
-      price: componentPrices['DC Live Sticker'],
+    'Lateral Flashing': {
+      quantity:
+        (cellTypesCount.SinglePanel * 2 +
+          cellTypesCount.TopSinglePanel * 2 +
+          cellTypesCount.BottomSinglePanel * 2 +
+          cellTypesCount.CenterSinglePanel * 2 +
+          cellTypesCount.BottomEndPanel * 1 +
+          cellTypesCount.MiddleEndPanel * 1 +
+          cellTypesCount.TopEndPanel * 1 +
+          cellTypesCount.EndPanel
+        ) * 2,
+      price: componentPrices['Lateral Flashing'],
       total: 0,
-      explanation: `1 sticker per string: ${numberOfStrings} strings * 1 = ${numberOfStrings}`,
-    },
-    'Cable Ties': {
-      quantity: Math.ceil(totalPanelCount / 10) * 5,
-      price: componentPrices['Cable Ties'],
-      total: 0,
-      explanation: `5 ties per 10 panels, rounded up: Ceiling of (${totalPanelCount} total panels / 10) * 5 = ${Math.ceil(totalPanelCount / 10) * 5}`,
-    },
-    Battens: {
-      quantity: battenQuantity,
-      price: componentPrices['Battens'],
-      total: 0,
-      explanation: `${battenQuantity} battens calculated based on ${horizontalRowCount} rows and ${verticalRowCount} columns using the batten lookup table`,
-    },
-    'Copper Nails': {
-      quantity: leadQuantity * 3,
-      price: componentPrices['Copper Nails'],
-      total: 0,
-      explanation: `3 nails per piece of lead: ${leadQuantity} pieces of lead * 3 = ${leadQuantity * 3}`,
-    },
-    Lead: {
-      quantity: leadQuantity,
-      price: componentPrices['Lead'],
-      total: 0,
-      explanation: `Lead quantity calculated based on ${bottomRowPanelCount} bottom row panels using the lead meterage table`,
-    },
-    'Lead 600mm': {
-      quantity: nonTopRowPanelCount,
-      price: componentPrices['Lead 600mm'],
-      total: 0,
-      explanation: `1 x 600mm Lead for each non-top row panel: ${nonTopRowPanelCount} non-top row panels`,
-    },
-    'Tile Kicker Bars': {
-      quantity: totalTopRowPanelCount,
-      price: componentPrices['Tile Kicker Bars'],
-      total: 0,
-      explanation: `1 kicker bar per top row panel and panels with no panel above: ${totalTopRowPanelCount} panels`,
-    },
-    'Kicker Bar Hooks': {
-      quantity: totalTopRowPanelCount * 2,
-      price: componentPrices['Kicker Bar Hooks'],
-      total: 0,
-      explanation: `2 hooks per kicker bar: ${totalTopRowPanelCount} kicker bars * 2 = ${totalTopRowPanelCount * 2}`,
-    },
-    'Flexalu Top Flashing': {
-      quantity: Math.ceil(totalTopRowPanelCount / 4),
-      price: componentPrices['Flexalu Top Flashing'],
-      total: 0,
-      explanation: `1 flashing per 4 top row panels, rounded up: Ceiling of ${totalTopRowPanelCount} top row panels / 4 = ${Math.ceil(totalTopRowPanelCount / 4)}`,
-    },
-    'Arc Box': {
-      quantity: 2 * numberOfStrings,
-      price: componentPrices['Arc Box'],
-      total: 0,
-      explanation: `2 Arc Boxes per string: ${numberOfStrings} strings * 2 = ${2 * numberOfStrings}`,
-    },
-    'Arc Box Bracket': {
-      quantity: 2 * numberOfStrings,
-      price: componentPrices['Arc Box Bracket'],
-      total: 0,
-      explanation: `2 Arc Box Brackets per string: ${numberOfStrings} strings * 2 = ${2 * numberOfStrings}`,
-    },
-    'Roofer Guide Sheet': {
-      quantity: 1,
-      price: componentPrices['Roofer Guide Sheet'],
-      total: 0,
-      explanation: `1 guide sheet per installation`,
+      explanation: `2 flashings for single panels, 1 for end panels, doubled for both sides: ((${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.BottomSinglePanel} + ${cellTypesCount.CenterSinglePanel}) * 2 + (${cellTypesCount.BottomEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.EndPanel})) * 2`,
     },
     'Lateral Flashing Hooks': {
       quantity:
@@ -818,17 +740,35 @@ export function calculateBOM(
       total: 0,
       explanation: `4 nails for single panels, 2 for end and mid panels: (${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.CenterSinglePanel} + ${cellTypesCount.BottomSinglePanel}) * 4 + (${cellTypesCount.EndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.BottomEndPanel} + ${cellTypesCount.BottomMidPanel} + ${cellTypesCount.TopMidPanel}) * 2`,
     },
+    'Flexalu Top Flashing': {
+      quantity: Math.ceil(totalTopRowPanelCount / 4),
+      price: componentPrices['Flexalu Top Flashing'],
+      total: 0,
+      explanation: `1 flashing per 4 top row panels, rounded up: Ceiling of ${totalTopRowPanelCount} top row panels / 4 = ${Math.ceil(totalTopRowPanelCount / 4)}`,
+    },
     'Uberflex Carpet Flashing': {
       quantity: cellTypesCount.BottomLeftCorner + cellTypesCount.BottomRightCorner,
       price: componentPrices['Uberflex Carpet Flashing'],
       total: 0,
       explanation: `1 flashing for each bottom corner: ${cellTypesCount.BottomLeftCorner} bottom left corners + ${cellTypesCount.BottomRightCorner} bottom right corners = ${cellTypesCount.BottomLeftCorner + cellTypesCount.BottomRightCorner}`,
     },
-    'Wire Clout Nails 65mm': {
-      quantity: battenQuantity * 5,
-      price: componentPrices['Wire Clout Nails 65mm'],
+    'Tile Kicker Bars': {
+      quantity: totalTopRowPanelCount,
+      price: componentPrices['Tile Kicker Bars'],
       total: 0,
-      explanation: `5 nails per batten: ${battenQuantity} battens * 5 = ${battenQuantity * 5}`,
+      explanation: `1 kicker bar per top row panel and panels with no panel above: ${totalTopRowPanelCount} panels`,
+    },
+    'Kicker Bar Hooks': {
+      quantity: totalTopRowPanelCount * 2,
+      price: componentPrices['Kicker Bar Hooks'],
+      total: 0,
+      explanation: `2 hooks per kicker bar: ${totalTopRowPanelCount} kicker bars * 2 = ${totalTopRowPanelCount * 2}`,
+    },
+    'Compressed Seal Roll': {
+      quantity: horizontalRowCount * 1,
+      price: componentPrices['Compressed Seal Roll'],
+      total: 0,
+      explanation: `1 roll per horizontal row: ${horizontalRowCount} horizontal rows * 1 = ${horizontalRowCount}`,
     },
     'Panel Wedge': {
       quantity: horizontalRowCount,
@@ -836,11 +776,71 @@ export function calculateBOM(
       total: 0,
       explanation: `1 wedge per horizontal row of panels: ${horizontalRowCount} horizontal rows`,
     },
-    'Solar Panels': {
-      quantity: totalPanelCount,
-      price: panelPrices[panelType],
+    Battens: {
+      quantity: battenQuantity,
+      price: componentPrices['Battens'],
       total: 0,
-      explanation: `1 panel per active cell: ${totalPanelCount} total panels`,
+      explanation: `${battenQuantity} battens calculated based on ${horizontalRowCount} rows and ${verticalRowCount} columns using the batten lookup table`,
+    },
+    'Wire Clout Nails 65mm': {
+      quantity: battenQuantity * 5,
+      price: componentPrices['Wire Clout Nails 65mm'],
+      total: 0,
+      explanation: `5 nails per batten: ${battenQuantity} battens * 5 = ${battenQuantity * 5}`,
+    },
+    Lead: {
+      quantity: leadQuantity,
+      price: componentPrices['Lead'],
+      total: 0,
+      explanation: `Lead quantity calculated based on ${bottomRowPanelCount} bottom row panels using the lead meterage table`,
+    },
+    'Lead 600mm': {
+      quantity: nonTopRowPanelCount,
+      price: componentPrices['Lead 600mm'],
+      total: 0,
+      explanation: `1 x 600mm Lead for each non-top row panel: ${nonTopRowPanelCount} non-top row panels`,
+    },
+    'Copper Nails': {
+      quantity: leadQuantity * 3,
+      price: componentPrices['Copper Nails'],
+      total: 0,
+      explanation: `3 nails per piece of lead: ${leadQuantity} pieces of lead * 3 = ${leadQuantity * 3}`,
+    },
+    'Pre Assembled DC Lead': {
+      quantity: numberOfStrings * 2,
+      price: componentPrices['Pre Assembled DC Lead'],
+      total: 0,
+      explanation: `2 leads per string: ${numberOfStrings} strings * 2 = ${numberOfStrings * 2}`,
+    },
+    'DC Live Sticker': {
+      quantity: numberOfStrings,
+      price: componentPrices['DC Live Sticker'],
+      total: 0,
+      explanation: `1 sticker per string: ${numberOfStrings} strings * 1 = ${numberOfStrings}`,
+    },
+    'Arc Box': {
+      quantity: 2 * numberOfStrings,
+      price: componentPrices['Arc Box'],
+      total: 0,
+      explanation: `2 Arc Boxes per string: ${numberOfStrings} strings * 2 = ${2 * numberOfStrings}`,
+    },
+    'Arc Box Bracket': {
+      quantity: 2 * numberOfStrings,
+      price: componentPrices['Arc Box Bracket'],
+      total: 0,
+      explanation: `2 Arc Box Brackets per string: ${numberOfStrings} strings * 2 = ${2 * numberOfStrings}`,
+    },
+    'Cable Ties': {
+      quantity: Math.ceil(totalPanelCount / 10) * 5,
+      price: componentPrices['Cable Ties'],
+      total: 0,
+      explanation: `5 ties per 10 panels, rounded up: Ceiling of (${totalPanelCount} total panels / 10) * 5 = ${Math.ceil(totalPanelCount / 10) * 5}`,
+    },
+    'Roofer Guide Sheet': {
+      quantity: 1,
+      price: componentPrices['Roofer Guide Sheet'],
+      total: 0,
+      explanation: `1 guide sheet per installation`,
     },
   };
 
