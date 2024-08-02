@@ -533,31 +533,6 @@ function getVerticalColumnCount(grid) {
 }
 
 /**
- * Determines the actual dimensions of the panel layout for batten calculation.
- *
- * @param {number[][]} grid - The 2D array representing the solar panel layout.
- * @returns An object containing the number of rows with panels and the maximum number of columns with panels.
- */
-export function getBattenDimensions(grid: GridType): { rows: number; columns: number } {
-  let rows = 0;
-  let maxColumns = 0;
-
-  for (let row = 0; row < grid.length; row++) {
-    let columnsInRow = 0;
-    for (let col = 0; col < grid[row].length; col++) {
-      if (grid[row][col] === 1) {
-        columnsInRow++;
-      }
-    }
-    if (columnsInRow > 0) {
-      rows++;
-      maxColumns = Math.max(maxColumns, columnsInRow);
-    }
-  }
-
-  return { rows, columns: maxColumns };
-}
-/**
  * Calculates the quantity of battens required based on the dimensions of the solar panel grid.
  *
  * @param {number} rows - The number of rows in the solar panel grid.
@@ -628,21 +603,6 @@ export function calculateBattenQuantity(
   return baseQuantity;
 }
 
-/**
- * Calculates the number of panels in the top row of the grid.
- *
- * @param cellTypesCount - An object containing counts of different cell types.
- * @param {number[][]} grid - The 2D array representing the solar panel layout.
- * @returns The number of panels in the top row.
- * @description This function counts all panels located in the top row of the grid. If there's only one row, it returns the total panel count for that row.
- */
-export function getTopRowPanelCount(cellTypesCount: CellTypesCount, grid: GridType): number {
-  const totalRows = getTotalRows(grid);
-  if (totalRows === 1) {
-    return  cellTypesCount.SinglePanel + cellTypesCount.EndPanel + cellTypesCount.MidPanel;
-  }
-  return cellTypesCount.TopSinglePanel + cellTypesCount.TopMidPanel + cellTypesCount.TopEndPanel;
-}
 
 // Updated calculateBOM function
 /**
@@ -661,13 +621,11 @@ export function calculateBOM(
   numberOfStrings: number
 ): BOM {
   console.log(grid)
-  const { rows, columns } = getBattenDimensions(grid); //questionable
   const totalPanelCount = getTotalPanelCount(grid); //tested
   const horizontalRowCount = getHorizontalRowCount(grid); //improved
   const verticalRowCount = getVerticalColumnCount(grid)
   const battenQuantity = calculateBattenQuantity(horizontalRowCount, verticalRowCount, totalPanelCount);
   const bottomRowPanelCount = getBottomRowPanelCount(grid); //improved
-  const topRowPanelCount = getTopRowPanelCount(cellTypesCount, grid); //unsafe
   const totalTopRowPanelCount = getTopRowPanelCountWithNothingAbove(grid) //improved
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
 
