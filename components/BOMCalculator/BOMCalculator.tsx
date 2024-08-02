@@ -799,9 +799,7 @@ export function calculateBOM(
         cellTypesCount.BottomSinglePanel * 4 +
         cellTypesCount.TopEndPanel * 2 +
         cellTypesCount.MiddleEndPanel * 2 +
-        cellTypesCount.BottomEndPanel * 2 +
-        cellTypesCount.BottomMidPanel * 2 +
-        cellTypesCount.TopMidPanel * 2,
+        cellTypesCount.BottomEndPanel * 2,
       price: componentPrices['Lateral Flashing Hooks'],
       total: 0,
       explanation: `4 hooks for single panels, 2 for end and mid panels: (${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.CenterSinglePanel} + ${cellTypesCount.BottomSinglePanel}) * 4 + (${cellTypesCount.EndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.BottomEndPanel} + ${cellTypesCount.BottomMidPanel} + ${cellTypesCount.TopMidPanel}) * 2`,
@@ -815,9 +813,7 @@ export function calculateBOM(
         cellTypesCount.BottomSinglePanel * 4 +
         cellTypesCount.TopEndPanel * 2 +
         cellTypesCount.MiddleEndPanel * 2 +
-        cellTypesCount.BottomEndPanel * 2 +
-        cellTypesCount.BottomMidPanel * 2 +
-        cellTypesCount.TopMidPanel * 2,
+        cellTypesCount.BottomEndPanel * 2,
       price: componentPrices['Lateral Flashing Nails Galv 20mm'],
       total: 0,
       explanation: `4 nails for single panels, 2 for end and mid panels: (${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.CenterSinglePanel} + ${cellTypesCount.BottomSinglePanel}) * 4 + (${cellTypesCount.EndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.BottomEndPanel} + ${cellTypesCount.BottomMidPanel} + ${cellTypesCount.TopMidPanel}) * 2`,
