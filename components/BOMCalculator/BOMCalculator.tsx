@@ -419,26 +419,49 @@ function getBottomRowPanelCount(grid) {
 
 
 /**
- * Calculates the number of panels that are not on the bottom row and do not have a panel directly below them.
+ * Calculates the number of panels that are not on the bottom row and do not have a panel directly below them,
+ * considering the second lowest row up to the highest row with a value.
  *
  * @param grid - The grid representing the layout of panels.
  * @returns The count of panels that meet the specified criteria.
  */
-export function getNonBottomRowPanelCount(grid: GridType): number {
-  const totalRows = getTotalRows(grid);
-  const bottomRowIndex = totalRows - 1;
+export function getNonBottomRowPanelCount(grid: number[][]): number {
+  const totalRows = grid.length;
 
-  // If there's only one row or less, return 0 as there are no non-bottom rows
-  if (totalRows <= 1) return 0;
+  // If there are no rows, return 0
+  if (totalRows === 0) return 0;
+
+  // Find the lowest row with a value
+  let bottomRowIndex = -1;
+  for (let r = totalRows - 1; r >= 0; r--) {
+    if (grid[r].some(cell => cell === 1)) {
+      bottomRowIndex = r;
+      break;
+    }
+  }
+
+  // If no rows with panels found, return 0
+  if (bottomRowIndex === -1) return 0;
+
+  // Find the second lowest row with a value
+  let secondBottomRowIndex = -1;
+  for (let r = bottomRowIndex - 1; r >= 0; r--) {
+    if (grid[r].some(cell => cell === 1)) {
+      secondBottomRowIndex = r;
+      break;
+    }
+  }
+
+  // If only one row with panels found, return 0
+  if (secondBottomRowIndex === -1) return 0;
 
   let count = 0;
 
-  // Iterate through each row except the bottom row
-  for (let row = 0; row < bottomRowIndex; row++) {
-    // Iterate through each column in the current row
+  // Iterate through each row from the second lowest row to the top
+  for (let row = secondBottomRowIndex; row >= 0; row--) {
     for (let col = 0; col < grid[row].length; col++) {
       // Check if the current cell contains a panel and if there's no panel directly below it
-      if (grid[row][col] === 1 && grid[row + 1][col] === 0) {
+      if (grid[row][col] === 1 && (row === totalRows - 1 || grid[row + 1][col] === 0)) {
         count++;
       }
     }
@@ -446,6 +469,7 @@ export function getNonBottomRowPanelCount(grid: GridType): number {
 
   return count;
 }
+
 
 /**
  * Calculates the total number of active cells (panels) in the grid.
@@ -623,7 +647,8 @@ export function calculateBOM(
   const bottomRowPanelCount = getBottomRowPanelCount(grid); //improved
   const totalTopRowPanelCount = getTopRowPanelCountWithNothingAbove(grid) //improved
   const nonTopRowPanelCount = getNonTopRowPanelCount(grid);
-
+  const nonBottomRowPanelCount = getNonBottomRowPanelCount(grid)
+console.log(nonBottomRowPanelCount)
   const leadQuantity = calculateLeadQuantity(bottomRowPanelCount);
 
 
@@ -790,10 +815,10 @@ export function calculateBOM(
       explanation: `Lead quantity calculated based on ${bottomRowPanelCount} bottom row panels using the lead meterage table`,
     },
     'Lead 600mm': {
-      quantity: nonTopRowPanelCount,
+      quantity: nonBottomRowPanelCount,
       price: componentPrices['Lead 600mm'],
       total: 0,
-      explanation: `1 x 600mm Lead for each non-top row panel: ${nonTopRowPanelCount} non-top row panels`,
+      explanation: `1 x 600mm Lead for each non-bottom row panel: ${nonBottomRowPanelCount} non-bottom row panels`,
     },
     'Copper Nails': {
       quantity: leadQuantity * 3,
