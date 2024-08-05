@@ -4,8 +4,8 @@
 
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 
-const HIDE_PRICING_INFO = false;
-const HIDE_DEBUG_BUTTONS = false;
+const HIDE_PRICING_INFO = true;
+const HIDE_DEBUG_BUTTONS = true;
 import { createPortal } from 'react-dom';
 import {
   Grid,
@@ -853,7 +853,7 @@ console.log(nonBottomRowPanelCount)
       explanation: `2 Arc Box Brackets per string: ${numberOfStrings} strings * 2 = ${2 * numberOfStrings}`,
     },
     'Cable Ties': {
-      quantity: Math.ceil(totalPanelCount / 10) * 5,
+      quantity: numberOfStrings * 5,
       price: componentPrices['Cable Ties'],
       total: 0,
       explanation: `5 ties per 10 panels, rounded up: Ceiling of (${totalPanelCount} total panels / 10) * 5 = ${Math.ceil(totalPanelCount / 10) * 5}`,
