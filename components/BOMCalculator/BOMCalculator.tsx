@@ -59,6 +59,7 @@ const componentPrices: ComponentPrices = {
   'Lead 600mm': 42.8, // Example price, adjust as needed
   'Tile Kicker Bars': 5.0, // Example price, adjust as needed
   'Kicker Bar Hooks': 1.5, // Example price, adjust as needed
+  'Tile Kicker Bar Nails Galv 20mm': 0.02, // Example price, adjust as needed
   'Flexalu Top Flashing': 15.0, // Example price, adjust as needed
   'Arc Box': 20.0, // Example price, adjust as needed
   'Arc Box Bracket': 5.0, // Example price, adjust as needed
@@ -784,6 +785,12 @@ console.log(nonBottomRowPanelCount)
       price: componentPrices['Kicker Bar Hooks'],
       total: 0,
       explanation: `2 hooks per kicker bar: ${totalTopRowPanelCount} kicker bars * 2 = ${totalTopRowPanelCount * 2}`,
+    },
+    'Tile Kicker Bar Nails Galv 20mm': {
+      quantity: totalTopRowPanelCount * 2,
+      price: componentPrices['Tile Kicker Bar Nails Galv 20mm'],
+      total: 0,
+      explanation: `2 nails for every tile kicker bar: ${totalTopRowPanelCount} kicker bars * 2 = ${totalTopRowPanelCount * 2}`,
     },
     'Compressed Seal Roll': {
       quantity: horizontalRowCount * 1,

@@ -73,6 +73,11 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
+            <strong>Tile Kicker Bar Nails Galv 20mm:</strong> 2 nails for every tile kicker bar (totalTopRowPanelCount * 2)
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text>
             <strong>Compressed Seal Roll:</strong> 1 per horizontal row (horizontalRowCount * 1)
           </Text>
         </List.Item>
