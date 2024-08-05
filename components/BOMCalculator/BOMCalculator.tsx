@@ -755,7 +755,9 @@ console.log(nonBottomRowPanelCount)
         cellTypesCount.BottomSinglePanel * 4 +
         cellTypesCount.TopEndPanel * 2 +
         cellTypesCount.MiddleEndPanel * 2 +
-        cellTypesCount.BottomEndPanel * 2,
+        cellTypesCount.BottomEndPanel * 2 +
+          totalTopRowPanelCount * 2, //per kicker bar
+
       price: componentPrices['Lateral Flashing Nails Galv 20mm'],
       total: 0,
       explanation: `4 nails for single panels, 2 for end and mid panels: (${cellTypesCount.SinglePanel} + ${cellTypesCount.TopSinglePanel} + ${cellTypesCount.CenterSinglePanel} + ${cellTypesCount.BottomSinglePanel}) * 4 + (${cellTypesCount.EndPanel} + ${cellTypesCount.TopEndPanel} + ${cellTypesCount.MiddleEndPanel} + ${cellTypesCount.BottomEndPanel} + ${cellTypesCount.BottomMidPanel} + ${cellTypesCount.TopMidPanel}) * 2`,
