@@ -105,7 +105,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
                                     <tr>
                                         <td>${component}</td>
                                         <td>${item.quantity}</td>
-                                        <td>[ ]</td>
+                                        <td>☐</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
