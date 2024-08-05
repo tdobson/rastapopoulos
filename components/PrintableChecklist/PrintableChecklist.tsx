@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Table, Checkbox } from '@mantine/core';
+import { Modal, Button, Table, Checkbox, Text, Group } from '@mantine/core';
 import { BOM } from '../../types/bomCalculator';
 
 // Helper function to determine if an item should be included in the checklist
@@ -12,9 +12,11 @@ interface PrintableChecklistProps {
     bom: BOM;
     opened: boolean;
     onClose: () => void;
+    projectNumber: string;
+    plotNumber: string;
 }
 
-function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
+function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }: PrintableChecklistProps) {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
     // Define the order of components
@@ -80,6 +82,10 @@ function PrintableChecklist({ bom, opened, onClose }: PrintableChecklistProps) {
             size="lg"
             padding="lg"
         >
+            <Group mb="md">
+                <Text size="lg" weight={700}>Project Number: {projectNumber}</Text>
+                <Text size="lg" weight={700}>Plot Number: {plotNumber}</Text>
+            </Group>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

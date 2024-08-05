@@ -17,6 +17,7 @@ import {
   Box,
   Stack,
   NumberInput,
+  TextInput,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
@@ -1003,6 +1004,8 @@ function BOMCalculator() {
   });
   const [panelType, setPanelType] = useState<string>('DMEGC 405w');
   const [numberOfStrings, setNumberOfStrings] = useState<number | ''>(1);
+  const [projectNumber, setProjectNumber] = useState<string>('');
+  const [plotNumber, setPlotNumber] = useState<string>('');
   const isDraggingRef = useRef(false);
 
   const bom = calculateBOM(
@@ -1042,6 +1045,8 @@ function BOMCalculator() {
     const emptyGrid = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
     setGrid(emptyGrid);
     setCellTypesCount(countCellTypes(emptyGrid));
+    setProjectNumber('');
+    setPlotNumber('');
   }, []);
 
   const [openedCellTypes, { toggle: toggleCellTypes }] = useDisclosure(false);
@@ -1104,6 +1109,20 @@ function BOMCalculator() {
       </Group>
 
       <Group justify="center" mb="md">
+        <TextInput
+          placeholder="Enter Project Number"
+          label="Project Number"
+          value={projectNumber}
+          onChange={(event) => setProjectNumber(event.currentTarget.value)}
+        />
+        <TextInput
+          placeholder="Enter Plot Number"
+          label="Plot Number"
+          value={plotNumber}
+          onChange={(event) => setPlotNumber(event.currentTarget.value)}
+        />
+      </Group>
+      <Group justify="center" mb="md">
         <Button onClick={handlePrint} size="md">
           Open Checklist
         </Button>
@@ -1111,7 +1130,13 @@ function BOMCalculator() {
           Reset Grid
         </Button>
       </Group>
-      <PrintableChecklist bom={bom} opened={isPrintModalOpen} onClose={handleClosePrintModal} />
+      <PrintableChecklist
+        bom={bom}
+        opened={isPrintModalOpen}
+        onClose={handleClosePrintModal}
+        projectNumber={projectNumber}
+        plotNumber={plotNumber}
+      />
       {HIDE_PRICING_INFO ? null : (
         <>
           <Text size="xl">Bill of Materials:</Text>
