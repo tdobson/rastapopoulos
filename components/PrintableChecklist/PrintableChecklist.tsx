@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Table, Checkbox, Text, Group } from '@mantine/core';
+import {Modal, Button, Table, Checkbox, Text, Group, Space} from '@mantine/core';
 import { BOM } from '../../types/bomCalculator';
 
 // Helper function to determine if an item should be included in the checklist
@@ -134,6 +134,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
                 </Group>
             )}
             <Button onClick={handlePrint} mt="md">Print</Button>
+            <Space />
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>
