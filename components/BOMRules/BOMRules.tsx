@@ -93,7 +93,7 @@ const BOMRules: React.FC = () => {
         </List.Item>
         <List.Item>
           <Text>
-            <strong>Lead:</strong> Calculated based on bottom row panels using a meterage table (leadQuantity)
+            <strong>Lead 450mm:</strong> Calculated based on bottom row panels using a meterage table (leadQuantity)
           </Text>
         </List.Item>
         <List.Item>

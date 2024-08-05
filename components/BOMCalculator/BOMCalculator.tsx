@@ -55,7 +55,7 @@ const componentPrices: ComponentPrices = {
   Battens: 0.24,
   'Galvanised Nails': 0.01,
   'Copper Nails': 0.02,
-  Lead: 34.2, // per 1500mm length
+  'Lead 450mm': 34.2, // per 1500mm length
   'Lead 600mm': 42.8, // Example price, adjust as needed
   'Tile Kicker Bars': 5.0, // Example price, adjust as needed
   'Kicker Bar Hooks': 1.5, // Example price, adjust as needed
@@ -755,8 +755,7 @@ console.log(nonBottomRowPanelCount)
         cellTypesCount.BottomSinglePanel * 4 +
         cellTypesCount.TopEndPanel * 2 +
         cellTypesCount.MiddleEndPanel * 2 +
-        cellTypesCount.BottomEndPanel * 2 +
-          totalTopRowPanelCount * 2, //per kicker bar
+        cellTypesCount.BottomEndPanel * 2,
 
       price: componentPrices['Lateral Flashing Nails Galv 20mm'],
       total: 0,
@@ -810,11 +809,11 @@ console.log(nonBottomRowPanelCount)
       total: 0,
       explanation: `5 nails per batten: ${battenQuantity} battens * 5 = ${battenQuantity * 5}`,
     },
-    Lead: {
+    'Lead 450mm': {
       quantity: leadQuantity,
-      price: componentPrices['Lead'],
+      price: componentPrices['Lead 450mm'],
       total: 0,
-      explanation: `Lead quantity calculated based on ${bottomRowPanelCount} bottom row panels using the lead meterage table`,
+      explanation: `Lead 450mm quantity calculated based on ${bottomRowPanelCount} bottom row panels using the lead meterage table`,
     },
     'Lead 600mm': {
       quantity: nonBottomRowPanelCount,
