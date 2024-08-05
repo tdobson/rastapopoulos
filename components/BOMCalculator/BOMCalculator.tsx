@@ -74,8 +74,8 @@ const componentPrices: ComponentPrices = {
  * Pivoted batten table for determining the number of battens required based on the number of rows and columns in the solar panel grid.
  *
  * The structure is as follows:
- * - The outer key represents the number of rows (up to 20 rows).
- * - The inner key represents the number of columns (up to 16 columns).
+ * - The outer key represents the number of columns (up to 20 columns).
+ * - The inner key represents the number of rows (up to 16 rows).
  * - The value is the number of battens required for that specific grid configuration.
  *
  * For example, pivotedBattenTable[2][3] represents the number of battens needed for a grid with 2 rows and 3 columns.
