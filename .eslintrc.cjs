@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ['next', 'plugin:jest/recommended'],
-  plugins: ['testing-library', 'jest'],
+  extends: ['next', 'plugin:jest/recommended', 'prettier'],
+  plugins: ['testing-library', 'jest', 'prettier'],
   overrides: [
     {
       files: ['**/?(*.)+(spec|test).[jt]s?(x)'],
@@ -22,5 +22,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'react/require-default-props': 'off',
     'react/no-unescaped-entities': 'off',
+    'prettier/prettier': 'error',
   },
 };
