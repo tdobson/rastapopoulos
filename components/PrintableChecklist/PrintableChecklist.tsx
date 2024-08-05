@@ -74,6 +74,50 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
         </Table.Tr>
     ));
 
+    const handlePrint = () => {
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Pallet Checklist</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; }
+                            table { width: 100%; border-collapse: collapse; }
+                            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Pallet Checklist</h1>
+                        ${projectNumber ? `<p><strong>Project Number:</strong> ${projectNumber}</p>` : ''}
+                        ${plotNumber ? `<p><strong>Plot Number:</strong> ${plotNumber}</p>` : ''}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Quantity</th>
+                                    <th>Check</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filteredBom.map(({ component, item }) => `
+                                    <tr>
+                                        <td>${component}</td>
+                                        <td>${item.quantity}</td>
+                                        <td>[ ]</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+    };
+
     return (
         <Modal
             opened={opened}
@@ -98,7 +142,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
-            <Button onClick={() => window.print()} mt="md">Print</Button>
+            <Button onClick={handlePrint} mt="md">Print</Button>
         </Modal>
     );
 }
