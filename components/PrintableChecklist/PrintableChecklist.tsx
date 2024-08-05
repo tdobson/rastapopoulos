@@ -38,7 +38,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
         'Panel Wedge',
         'Battens',
         'Wire Clout Nails 65mm',
-        'Lead',
+        'Lead 450mm',
         'Lead 600mm',
         'Copper Nails',
         'Pre Assembled DC Lead',
