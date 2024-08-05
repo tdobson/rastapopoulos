@@ -30,6 +30,7 @@ export type PanelPrices = {
 
 export type ComponentPrices = {
   [key: string]: number;
+  'Lead 450mm': number;
 };
 
 export type BOMItem = {
