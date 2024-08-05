@@ -82,10 +82,12 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
             size="lg"
             padding="lg"
         >
-            <Group mb="md">
-                <Text size="lg" weight={700}>Project Number: {projectNumber}</Text>
-                <Text size="lg" weight={700}>Plot Number: {plotNumber}</Text>
-            </Group>
+            {(projectNumber || plotNumber) && (
+                <Group mb="md">
+                    {projectNumber && <Text size="lg" weight={700}>Project Number: {projectNumber}</Text>}
+                    {plotNumber && <Text size="lg" weight={700}>Plot Number: {plotNumber}</Text>}
+                </Group>
+            )}
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>
