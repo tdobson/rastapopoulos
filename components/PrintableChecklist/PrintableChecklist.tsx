@@ -128,8 +128,8 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
         >
             {(projectNumber || plotNumber) && (
                 <Group mb="md">
-                    {projectNumber && <Text size="lg" weight={700}>Project Number: {projectNumber}</Text>}
-                    {plotNumber && <Text size="lg" weight={700}>Plot Number: {plotNumber}</Text>}
+                    {projectNumber && <Text size="lg" fw={700}>Project Number: {projectNumber}</Text>}
+                    {plotNumber && <Text size="lg" fw={700}>Plot Number: {plotNumber}</Text>}
                 </Group>
             )}
             <Button onClick={handlePrint} mt="md">Print</Button>
