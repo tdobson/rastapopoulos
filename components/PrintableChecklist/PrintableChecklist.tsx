@@ -33,6 +33,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
         'Flexalu Top Flashing',
         'Uberflex Carpet Flashing',
         'Tile Kicker Bars',
+        'Tile Kicker Bar Nails Galv 20mm',
         'Kicker Bar Hooks',
         'Compressed Seal Roll',
         'Panel Wedge',
