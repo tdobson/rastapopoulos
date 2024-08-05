@@ -1073,12 +1073,25 @@ function BOMCalculator() {
             data={Object.keys(panelPrices)}
           />
         )}
+
+        <TextInput
+            placeholder="eg PV2023"
+            label="Project Number"
+            value={projectNumber}
+            onChange={(event) => setProjectNumber(event.currentTarget.value)}
+        />
+        <TextInput
+            placeholder="eg 123"
+            label="Plot Number"
+            value={plotNumber}
+            onChange={(event) => setPlotNumber(event.currentTarget.value)}
+        />
         <NumberInput
-          label="Number of Strings"
-          value={numberOfStrings}
-          onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
-          min={1}
-          max={10}
+            label="Number of Strings"
+            value={numberOfStrings}
+            onChange={(value) => setNumberOfStrings(value !== '' ? Number(value) : '')}
+            min={1}
+            max={10}
         />
       </Group>
       <Group justify="center" mb="md">
@@ -1108,20 +1121,7 @@ function BOMCalculator() {
         </div>
       </Group>
 
-      <Group justify="center" mb="md">
-        <TextInput
-          placeholder="Enter Project Number"
-          label="Project Number"
-          value={projectNumber}
-          onChange={(event) => setProjectNumber(event.currentTarget.value)}
-        />
-        <TextInput
-          placeholder="Enter Plot Number"
-          label="Plot Number"
-          value={plotNumber}
-          onChange={(event) => setPlotNumber(event.currentTarget.value)}
-        />
-      </Group>
+
       <Group justify="center" mb="md">
         <Button onClick={handlePrint} size="md">
           Open Checklist
