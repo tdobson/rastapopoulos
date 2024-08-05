@@ -132,6 +132,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
                     {plotNumber && <Text size="lg" weight={700}>Plot Number: {plotNumber}</Text>}
                 </Group>
             )}
+            <Button onClick={handlePrint} mt="md">Print</Button>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>
@@ -142,7 +143,6 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
-            <Button onClick={handlePrint} mt="md">Print</Button>
         </Modal>
     );
 }
