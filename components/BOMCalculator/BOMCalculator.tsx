@@ -52,7 +52,7 @@ const componentPrices: ComponentPrices = {
   'Compressed Seal Roll': 9.15,
   'Pre Assembled DC Lead': 9.03,
   'DC Live Sticker': 0.24,
-  'Cable Ties': 0.03,
+  'Cable Ties 300mm': 0.03,
   Battens: 0.24,
   'Galvanised Nails': 0.01,
   'Copper Nails': 0.02,
@@ -67,7 +67,7 @@ const componentPrices: ComponentPrices = {
   'Roofer Guide Sheet': 1.0, // Example price, adjust as needed
   'Lateral Flashing Hooks': 0.5, // Example price, adjust as needed
   'Lateral Flashing Nails Galv 20mm': 0.02, // Example price, adjust as needed
-  'Lead Free Flashing': 10.0, // Example price, adjust as needed
+  'Lead Free Flashing': 10.0,
   'Wire Clout Nails 65mm': 0.5, // 50p per item
   'Panel Wedge': 0.5, // 50p per item
 };
