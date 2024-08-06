@@ -31,7 +31,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
         'Lateral Flashing Hooks',
         'Lateral Flashing Nails Galv 20mm',
         'Flexalu Top Flashing',
-        'Uberflex Carpet Flashing',
+        'Lead Free Flashing',
         'Tile Kicker Bars',
         'Tile Kicker Bar Nails Galv 20mm',
         'Kicker Bar Hooks',
@@ -46,7 +46,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
         'DC Live Sticker',
         'Arc Box',
         'Arc Box Bracket',
-        'Cable Ties',
+        'Cable Ties 300mm',
         'Roofer Guide Sheet'
     ];
 
