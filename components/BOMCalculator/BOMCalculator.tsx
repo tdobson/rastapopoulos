@@ -67,7 +67,7 @@ const componentPrices: ComponentPrices = {
   'Roofer Guide Sheet': 1.0, // Example price, adjust as needed
   'Lateral Flashing Hooks': 0.5, // Example price, adjust as needed
   'Lateral Flashing Nails Galv 20mm': 0.02, // Example price, adjust as needed
-  'Uberflex Carpet Flashing': 10.0, // Example price, adjust as needed
+  'Lead Free Flashing': 10.0, // Example price, adjust as needed
   'Wire Clout Nails 65mm': 0.5, // 50p per item
   'Panel Wedge': 0.5, // 50p per item
 };
@@ -771,7 +771,7 @@ console.log(nonBottomRowPanelCount)
     },
     'Lead Free Flashing': {
       quantity: cellTypesCount.BottomLeftCorner + cellTypesCount.BottomRightCorner,
-      price: componentPrices['Uberflex Carpet Flashing'],
+      price: componentPrices['Lead Free Flashing'],
       total: 0,
       explanation: `1 flashing for each bottom corner: ${cellTypesCount.BottomLeftCorner} bottom left corners + ${cellTypesCount.BottomRightCorner} bottom right corners = ${cellTypesCount.BottomLeftCorner + cellTypesCount.BottomRightCorner}`,
     },
@@ -861,7 +861,7 @@ console.log(nonBottomRowPanelCount)
     },
     'Cable Ties 300mm': {
       quantity: numberOfStrings * 5,
-      price: componentPrices['Cable Ties'],
+      price: componentPrices['Cable Ties 300mm'],
       total: 0,
       explanation: `5 ties per 10 panels, rounded up: Ceiling of (${totalPanelCount} total panels / 10) * 5 = ${Math.ceil(totalPanelCount / 10) * 5}`,
     },
