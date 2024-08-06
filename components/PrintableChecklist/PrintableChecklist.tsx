@@ -14,9 +14,10 @@ interface PrintableChecklistProps {
     onClose: () => void;
     projectNumber: string;
     plotNumber: string;
+    elevationNumber: string;
 }
 
-function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }: PrintableChecklistProps) {
+function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber, elevationNumber }: PrintableChecklistProps) {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
     // Define the order of components
@@ -93,6 +94,7 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
                         <h1>Pallet Checklist</h1>
                         ${projectNumber ? `<p><strong>Project Number:</strong> ${projectNumber}</p>` : ''}
                         ${plotNumber ? `<p><strong>Plot Number:</strong> ${plotNumber}</p>` : ''}
+                        ${elevationNumber ? `<p><strong>Elevation Number:</strong> ${elevationNumber}</p>` : ''}
                         <table>
                             <thead>
                                 <tr>
@@ -127,10 +129,11 @@ function PrintableChecklist({ bom, opened, onClose, projectNumber, plotNumber }:
             size="lg"
             padding="lg"
         >
-            {(projectNumber || plotNumber) && (
+            {(projectNumber || plotNumber || elevationNumber) && (
                 <Group mb="md">
                     {projectNumber && <Text size="lg" fw={700}>Project Number: {projectNumber}</Text>}
                     {plotNumber && <Text size="lg" fw={700}>Plot Number: {plotNumber}</Text>}
+                    {elevationNumber && <Text size="lg" fw={700}>Elevation Number: {elevationNumber}</Text>}
                 </Group>
             )}
             <Button onClick={handlePrint} mt="md">Print</Button>

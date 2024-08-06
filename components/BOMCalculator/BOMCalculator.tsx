@@ -1006,6 +1006,7 @@ function BOMCalculator() {
   const [numberOfStrings, setNumberOfStrings] = useState<number | ''>(1);
   const [projectNumber, setProjectNumber] = useState<string>('');
   const [plotNumber, setPlotNumber] = useState<string>('');
+  const [elevationNumber, setElevationNumber] = useState<string>('');
   const isDraggingRef = useRef(false);
 
   const bom = calculateBOM(
@@ -1047,6 +1048,7 @@ function BOMCalculator() {
     setCellTypesCount(countCellTypes(emptyGrid));
     setProjectNumber('');
     setPlotNumber('');
+    setElevationNumber('');
   }, []);
 
   const [openedCellTypes, { toggle: toggleCellTypes }] = useDisclosure(false);
@@ -1085,6 +1087,12 @@ function BOMCalculator() {
             label="Plot Number"
             value={plotNumber}
             onChange={(event) => setPlotNumber(event.currentTarget.value)}
+        />
+        <TextInput
+            placeholder="eg A"
+            label="Elevation Number"
+            value={elevationNumber}
+            onChange={(event) => setElevationNumber(event.currentTarget.value)}
         />
         <NumberInput
             label="Number of Strings"
@@ -1136,6 +1144,7 @@ function BOMCalculator() {
         onClose={handleClosePrintModal}
         projectNumber={projectNumber}
         plotNumber={plotNumber}
+        elevationNumber={elevationNumber}
       />
       {HIDE_PRICING_INFO ? null : (
         <>
