@@ -769,7 +769,7 @@ console.log(nonBottomRowPanelCount)
       total: 0,
       explanation: `1 flashing per 4 top row panels, rounded up: Ceiling of ${totalTopRowPanelCount} top row panels / 4 = ${Math.ceil(totalTopRowPanelCount / 4)}`,
     },
-    'Uberflex Carpet Flashing': {
+    'Lead Free Flashing': {
       quantity: cellTypesCount.BottomLeftCorner + cellTypesCount.BottomRightCorner,
       price: componentPrices['Uberflex Carpet Flashing'],
       total: 0,
@@ -859,7 +859,7 @@ console.log(nonBottomRowPanelCount)
       total: 0,
       explanation: `2 Arc Box Brackets per string: ${numberOfStrings} strings * 2 = ${2 * numberOfStrings}`,
     },
-    'Cable Ties': {
+    'Cable Ties 300mm': {
       quantity: numberOfStrings * 5,
       price: componentPrices['Cable Ties'],
       total: 0,
