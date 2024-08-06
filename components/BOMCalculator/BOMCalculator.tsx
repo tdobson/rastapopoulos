@@ -1089,7 +1089,7 @@ function BOMCalculator() {
             onChange={(event) => setPlotNumber(event.currentTarget.value)}
         />
         <TextInput
-            placeholder="eg A"
+            placeholder="eg 1"
             label="Elevation Number"
             value={elevationNumber}
             onChange={(event) => setElevationNumber(event.currentTarget.value)}
