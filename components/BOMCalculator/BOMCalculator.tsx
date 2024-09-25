@@ -119,7 +119,7 @@ const leadMeterageTable = {
   conversionTable: {
     1: 2, // 1 panel requires 2 rolls of lead
     2: 3, // 2 panels require 3 rolls of lead
-    3: 4, // 3 panels require 3 rolls of lead
+    3: 3, // 3 panels require 3 rolls of lead
     4: 4, // 4 panels require 4 rolls of lead
     5: 5, // 5 panels require 5 rolls of lead
     6: 6, // 6 panels require 6 rolls of lead
